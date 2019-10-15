@@ -12,13 +12,13 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_leaderboard"
         android:name="com.bignerdranch.android.codingcity.bottomnavigation.dashboard.LeaderboardFragment"
         android:label="@string/title_leaderboard"
         tools:layout="@layout/fragment_leaderboard" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_profile"
         android:name="com.bignerdranch.android.codingcity.bottomnavigation.notifications.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
