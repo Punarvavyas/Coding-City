@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -16,20 +19,73 @@ import com.bignerdranch.android.codingcity.R;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+//    private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+
+//        homeViewModel =
+//                ViewModelProviders.of(this).get(HomeViewModel.class);
+//        View rootView = inflater.inflate(R.layout.fragment_home, container,
+//                false);
+//        final TextView textView = rootView.findViewById(R.id.text_home);
+//        homeViewModel.getText().observe(this, new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String s) {
+//                textView.setText(s);
+//            }
+//        });
+
+        View rootView = inflater.inflate(R.layout.fragment_home, container,
+                false);
+//        String[] values = new String[] { "Course1",  "Course2", "Course3"};
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+//                R.layout.list_item, values);
+//        ListView list = rootView.findViewById(R.id.list_course);
+        ListView lv = rootView.findViewById(R.id.list_course);
+        lv.setAdapter(new MyListAdpter());
+//        list.setAdapter(adapter);
+        return rootView;
+    }
+
+    private class MyListAdpter extends BaseAdapter {
+
+        @Override
+        //How many items are in the data set represented by this Adapter.
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        //Get the data item associated with the specified position in the data set.
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        //Get the row id associated with the specified position in the list.
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        //Get a View that displays the data at the specified position in the data set.
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View v;
+
+            if(convertView == null){
+
+                v = View.inflate(getContext(), R.layout.list_item, null);
+
+                //v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item, null);
+
+                //LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                //inflater.inflate(R.layout.item, null);
+            }else{
+                v = convertView;
             }
-        });
-        return root;
+
+            return v;
+        }
     }
 }
