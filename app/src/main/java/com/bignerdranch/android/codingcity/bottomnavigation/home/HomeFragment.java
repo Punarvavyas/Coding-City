@@ -16,7 +16,11 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.bignerdranch.android.codingcity.R;
-
+/**
+ * This is the home page which show what course we have right now
+ * @author Ruize Nie
+ *
+ */
 public class HomeFragment extends Fragment {
 
 //    private HomeViewModel homeViewModel;
@@ -53,7 +57,7 @@ public class HomeFragment extends Fragment {
         @Override
         //How many items are in the data set represented by this Adapter.
         public int getCount() {
-            return 3;
+            return 1;
         }
 
         @Override
