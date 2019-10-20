@@ -1,13 +1,17 @@
 package com.bignerdranch.android.codingcity.bottomnavigation.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -16,7 +20,13 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.bignerdranch.android.codingcity.R;
+import com.bignerdranch.android.codingcity.courseinfo.CourseContent;
 
+/**
+ * This is the home page which show what course we have right now
+ * @author Ruize Nie
+ *
+ */
 public class HomeFragment extends Fragment {
 
 //    private HomeViewModel homeViewModel;
@@ -44,6 +54,15 @@ public class HomeFragment extends Fragment {
 //        ListView list = rootView.findViewById(R.id.list_course);
         ListView lv = rootView.findViewById(R.id.list_course);
         lv.setAdapter(new MyListAdpter());
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), CourseContent.class);
+                startActivity(intent);
+                //startActivityForResult(intent, 1); get the result
+            }
+        });
+
 //        list.setAdapter(adapter);
         return rootView;
     }
@@ -53,7 +72,7 @@ public class HomeFragment extends Fragment {
         @Override
         //How many items are in the data set represented by this Adapter.
         public int getCount() {
-            return 3;
+            return 1;
         }
 
         @Override
