@@ -6,30 +6,34 @@
 
     <ImageView
         android:id="@+id/iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/ic_python_course_page"
+        />
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
-        android:text="Course1"
-        android:layout_toRightOf="@+id/iv"
-        android:textSize="30dp"
+        android:text="Learning Python"
+        android:layout_below="@+id/iv"
+        android:textSize="25dp"
+        android:layout_centerHorizontal="true"
         android:singleLine="true"
         android:textColor="#000000"/>
 
     <TextView
         android:id="@+id/tv_message"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Description"
-        android:layout_toRightOf="@+id/iv"
         android:layout_below="@+id/tv_title"
-        android:textSize="25dp"
+        android:textSize="15dp"
         android:singleLine="true"
+        android:layout_centerHorizontal="true"
         android:textColor="#999999"/>
 
 </RelativeLayout>
