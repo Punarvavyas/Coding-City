@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "703276631743",
+    "firebase_url": "https://codingcity-d8100.firebaseio.com",
+    "project_id": "codingcity-d8100",
+    "storage_bucket": "codingcity-d8100.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:703276631743:android:2aa6846b8af6ea1c61e80a",
+        "android_client_info": {
+          "package_name": "com.bignerdranch.android.codingcity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "703276631743-sb50ut7angui9hvju6e1fk1aapj8qhrg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bignerdranch.android.codingcity",
+            "certificate_hash": "2be4efae99c304b3dd61ea2dbdcd4aa63adaf233"
+          }
+        },
+        {
+          "client_id": "703276631743-mkj1r44uscf4ptchtmaece3e22s90kvd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2jlIDb8BVNv97vqqOOaGRl6QDcOgrtG8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "703276631743-mkj1r44uscf4ptchtmaece3e22s90kvd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
