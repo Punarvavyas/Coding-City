@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.cardview.widget.CardView
+    android:id="@+id/ly_root"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/iv"
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@mipmap/ic_python_course_page"
-        />
-
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="20dp"
+    android:padding="10dp">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="wrap_content"
+            android:layout_height="160dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/javascript"/>
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
-        android:text="Learning Python"
-        android:layout_below="@+id/iv"
+        android:text="Course1"
         android:textSize="25dp"
-        android:layout_centerHorizontal="true"
         android:singleLine="true"
         android:textColor="#000000"/>
 
@@ -29,12 +33,7 @@
         android:id="@+id/tv_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Description"
-        android:layout_below="@+id/tv_title"
-        android:textSize="15dp"
-        android:singleLine="true"
-        android:layout_centerHorizontal="true"
-        android:textColor="#999999"/>
+        android:text="Description"/>
 
-
-</RelativeLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
