@@ -1,12 +1,18 @@
 package com.bignerdranch.android.codingcity.courseinfo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.bignerdranch.android.codingcity.R;
+import com.bignerdranch.android.codingcity.bean.MyAdapter;
+import com.bignerdranch.android.codingcity.quizinfo.QuizActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 /**
@@ -14,50 +20,39 @@ import androidx.appcompat.app.AppCompatActivity;
  * @author Ruize Nie
  */
 public class CourseContent extends AppCompatActivity {
+
+    private ListView listView;
+    private List<String> mList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_content);
+        initList();
 
-        ListView lv = findViewById(R.id.list_lesson);
-        lv.setAdapter(new MyListAdpter());
+        this.listView = findViewById(R.id.list_lesson);
+        final MyAdapter adapter = new MyAdapter(this, mList);
+        listView.setAdapter(adapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(CourseContent.this, "Click item" + i, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        adapter.setOnItemClickListener(new MyAdapter.onItemClickListener() {
+            @Override
+            public void onLessonClick(int i) {
+                Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    private class MyListAdpter extends BaseAdapter {
-
-        @Override
-        //How many items are in the data set represented by this Adapter.
-        public int getCount() {
-            return 4;
-        }
-
-        @Override
-        //Get the data item associated with the specified position in the data set.
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        //Get the row id associated with the specified position in the list.
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        //Get a View that displays the data at the specified position in the data set.
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View v;
-
-            if(convertView == null){
-                //第一种写法
-                v = View.inflate(getApplicationContext(), R.layout.lsit_lesson_item, null);
-
-            }else{
-                v = convertView;
-            }
-
-            return v;
+    private void initList() {
+        for (int i = 1; i < 5; i++) {
+            mList.add(i + "");
         }
     }
 }

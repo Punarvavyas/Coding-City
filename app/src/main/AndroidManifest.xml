@@ -23,6 +23,7 @@
             android:name=".courseinfo.CourseContent"
             android:label="@string/app_name">
         </activity>
+        <activity android:name=".quizinfo.QuizActivity"></activity>
     </application>
 
 </manifest>
