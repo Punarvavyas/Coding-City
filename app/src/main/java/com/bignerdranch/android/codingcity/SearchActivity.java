@@ -2,12 +2,16 @@ package com.bignerdranch.android.codingcity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.bignerdranch.android.codingcity.courseinfo.CourseContent;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -17,7 +21,13 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         ListView listView = (ListView) findViewById(R.id.search_courses);
         listView.setAdapter(new CourseAdapter());
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), CourseEnrollmentActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     //TODO: search filter implementation
 

@@ -13,4 +13,7 @@
     <string name="next_button">NEXT</string>
     <string name="correct_toast">Correct!</string>
     <string name="incorrect_toast">Incorrect!</string>
+    <string name="sample_text_medium">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Velit dignissim sodales ut eu sem integer vitae justo.
+        Lacus viverra vitae congue eu consequat. Convallis aenean et tortor at risus viverra adipiscing.</string>
 </resources>
