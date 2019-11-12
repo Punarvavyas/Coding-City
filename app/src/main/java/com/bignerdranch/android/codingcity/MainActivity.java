@@ -1,9 +1,11 @@
 package com.bignerdranch.android.codingcity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -42,8 +44,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
+        // Actually top menu
+        //TODO: rename file
         inflater.inflate(R.menu.bottom_nav_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        Log.e("menu item", "" + item.getTitle());
+        switch (item.getItemId()) {
+            case R.id.search_item:
+                Intent myIntent = new Intent(getBaseContext(), SearchActivity.class);
+//              myIntent.putExtra("key", value); //Optional parameters
+                startActivity(myIntent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

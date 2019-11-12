@@ -39,12 +39,13 @@ public class HomeFragment extends Fragment {
         return rootView;
     }
 
+    //TODO: duplicated in search activity
     private class MyListAdpter extends BaseAdapter {
 
         @Override
         //How many items are in the data set represented by this Adapter.
         public int getCount() {
-            return 1;
+            return 3;
         }
 
         @Override
