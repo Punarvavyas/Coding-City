@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     Log.e("ds", postSnapshot.toString());// values fetched
                 }
-                Log.e("main activity", "Value is: ");
+//                Log.e("main activity", "Value is: ");
             }
 
             @Override
@@ -83,6 +83,5 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("main activity", "Failed to read value.", error.toException());
             }
         });
-
     }
 }

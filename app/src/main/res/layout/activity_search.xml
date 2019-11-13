@@ -17,5 +17,5 @@
         android:layout_height="match_parent"
         android:divider="@android:color/transparent"
         android:dividerHeight="15dp"
-        android:layout_margin="20dp"></ListView>
+        android:layout_margin="20dp"/>
 </LinearLayout>
