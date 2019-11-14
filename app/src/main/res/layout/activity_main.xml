@@ -5,6 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 <!--    android:paddingTop="?attr/actionBarSize"-->
+
+    <Button
+        android:id="@+id/signin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign In"/>
+
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
