@@ -1,4 +1,4 @@
-package com.bignerdranch.android.codingcity;
+package com.bignerdranch.android.codingcity.enrollment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,7 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.bignerdranch.android.codingcity.courseinfo.CourseContent;
+import com.bignerdranch.android.codingcity.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,7 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -58,7 +57,9 @@ public class SearchActivity extends AppCompatActivity {
 //                    courseData.add(new Course(postSnapshot.getValue()))
                     Log.e("ds", postSnapshot.toString());// values fetched
                         //TODO: img and description
-                    courseData.add(new Course(postSnapshot.child("courseName").getValue().toString(), "description example", postSnapshot.child("courseName").getValue().toString(),"javascript", postSnapshot.child("courseId").getValue().toString()));
+                    courseData.add(new Course(postSnapshot.child("courseName").getValue().toString(),
+                            "description example", postSnapshot.child("courseName").getValue().toString(),
+                            "javascript", postSnapshot.child("courseId").getValue().toString()));
                 }
                 listView.setAdapter(new CourseAdapter(SearchActivity.this, courseData, courseData.size()));
             }
@@ -123,39 +124,5 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-    private class Course {
-        String name = "";
-        String description = "";
-        Boolean premium = false;
-        String img = "";
-        String id = "";
 
-        Course(String a, String b, String c, String d, String e) {
-            name = a;
-            description = b;
-            premium = c.equals("0");
-            img = d;
-            id = e;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public String getImg() {
-            return img;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public Boolean getPremium() {
-            return premium;
-        }
-    }
 }
