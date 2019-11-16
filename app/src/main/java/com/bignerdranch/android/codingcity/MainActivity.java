@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        help=findViewById(R.id.button_help);
+        help = findViewById(R.id.button_help);
         help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(
                         AuthUI.getInstance()
                                 .createSignInIntentBuilder()
+                                .setIsSmartLockEnabled(false)
                                 .setAvailableProviders(providers)
                                 .build(),
                         RC_SIGN_IN);
@@ -148,14 +149,14 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 user = FirebaseAuth.getInstance().getCurrentUser();
+                rootDatabase.child("users").child(user.getUid()).child("courses").child("crs1001").setValue("");
+                UserLogin.getInstance(getApplicationContext()).setUser(user);
                 Log.e("Main", "Logged in");
-                //TODO: put user sign in singleton class
                 //TODO: if new user then create firebase entry or get old user id
 
                 Log.e("Main", user.getUid());
                 signInButton.setText("Sign Out");
             } else {
-
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
                 // response.getError().getErrorCode() and handle the error.
