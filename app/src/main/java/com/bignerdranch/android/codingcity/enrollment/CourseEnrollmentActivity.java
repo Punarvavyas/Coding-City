@@ -2,30 +2,23 @@ package com.bignerdranch.android.codingcity.enrollment;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.bignerdranch.android.codingcity.R;
-import com.bignerdranch.android.codingcity.bean.MyAdapter;
-import com.bignerdranch.android.codingcity.courseinfo.CourseContent;
-import com.bignerdranch.android.codingcity.quizinfo.QuizActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.bignerdranch.android.codingcity.R;
+import com.bignerdranch.android.codingcity.bean.MyAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +26,7 @@ import java.util.List;
 public class CourseEnrollmentActivity extends AppCompatActivity {
 
     private List<String> mList = new ArrayList<>();
+    DataSnapshot courseData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,19 +35,16 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.enrollment_page_content_listview);
         final MyAdapter adapter = new MyAdapter(this, mList);
         listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        Button btn = findViewById(R.id.enroll_button);
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(), "Click item" + i, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        adapter.setOnItemClickListener(new MyAdapter.onItemClickListener() {
-            @Override
-            public void onLessonClick(int i) {
-//                Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
-//                startActivity(intent);
+            public void onClick(View view) {
+                if (courseData.child("isPremium").getValue().toString().equals("0")) {
+                    Toast.makeText(CourseEnrollmentActivity.this, "You have been enrolled in this course", Toast.LENGTH_LONG);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), Payments.class);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -67,7 +58,7 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.e("search act", dataSnapshot.toString());
+                courseData = dataSnapshot;
                 ImageView img = findViewById(R.id.enroll_img);
                 img.setImageResource(R.drawable.javascript);
                 TextView title = findViewById(R.id.enroll_title);
@@ -75,28 +66,15 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
                 TextView des = findViewById(R.id.enroll_description);
                 des.setText("not available in database");
                 Button enroll = findViewById(R.id.enroll_button);
-                if(dataSnapshot.child("isPremium").getValue().toString() == "0"){
+                Log.e("x", "" + Integer.parseInt(dataSnapshot.child("isPremium").getValue().toString()));
+                if (dataSnapshot.child("isPremium").getValue().toString().equals("0")) {
                     enroll.setText("Enroll Free");
-                    // TODO: add data to firebase
-                    Toast.makeText(CourseEnrollmentActivity.this, "Course added in user id", Toast.LENGTH_LONG);
-                }
-                else {
+                } else {
                     enroll.setText("Buy $3");
-                    Toast.makeText(CourseEnrollmentActivity.this, "Buy page to be implemented", Toast.LENGTH_LONG);
                 }
                 //TODO: course comparison logic, can be helpful on home screen
                 //                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-////                    courseData.add(new Course(postSnapshot.getValue()))
-//                    if(postSnapshot.child("courseId").getValue().toString() == intent.getStringExtra("courseId")) {
-//                        selectedCourse = new Course(postSnapshot.child("courseName").getValue().toString(),
-//                                "description example", postSnapshot.child("courseName").getValue().toString(),
-//                                "javascript", postSnapshot.child("courseId").getValue().toString());
-//                    }
-//                }
-
-
-//                listView.setAdapter(new SearchActivity.CourseAdapter(SearchActivity.this, courseData, courseData.size()));
-            }
+}
 
             @Override
             public void onCancelled(DatabaseError error) {

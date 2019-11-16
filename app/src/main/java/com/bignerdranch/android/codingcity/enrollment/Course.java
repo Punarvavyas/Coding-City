@@ -2,18 +2,18 @@ package com.bignerdranch.android.codingcity.enrollment;
 
 public class Course {
 
-    String name = "";
-    String description = "";
-    Boolean premium = false;
-    String img = "";
-    String id = "";
+    private String name;
+    private String description;
+    private String premium;
+    private String img;
+    private String id;
 
-    Course(String a, String b, String c, String d, String e) {
-        name = a;
-        description = b;
-        premium = c.equals("0");
-        img = d;
-        id = e;
+    Course(String cname, String cDescription, String cPremium, String cImgSrc, String cId) {
+        name = cname;
+        description = cDescription;
+        premium = cPremium;
+        img = cImgSrc;
+        id = cId;
     }
 
     public String getId() {
@@ -24,7 +24,7 @@ public class Course {
         return description;
     }
 
-    public String getImg() {
+    public String getImgSrc() {
         return img;
     }
 
@@ -32,7 +32,7 @@ public class Course {
         return name;
     }
 
-    public Boolean getPremium() {
+    public String getPremium() {
         return premium;
     }
 }

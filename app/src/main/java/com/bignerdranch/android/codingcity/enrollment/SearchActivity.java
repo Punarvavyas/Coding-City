@@ -1,18 +1,21 @@
 package com.bignerdranch.android.codingcity.enrollment;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bignerdranch.android.codingcity.R;
 import com.google.firebase.database.DataSnapshot;
@@ -28,14 +31,20 @@ public class SearchActivity extends AppCompatActivity {
     DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
     DatabaseReference myRef = rootDatabase.child("courses");
     ArrayList<Course> courseData = new ArrayList<>();
+    ArrayList<Course> courseFilteredData = new ArrayList<>();
     ListView listView;
+    EditText searchbar;
     DataSnapshot CourseDataSnapshot;
+    CourseAdapter courseAdpaterData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        listView = (ListView) findViewById(R.id.search_courses);
-        listView.setAdapter(new CourseAdapter( SearchActivity.this, courseData, courseData.size()));
+        listView = findViewById(R.id.search_courses);
+        courseFilteredData = courseData;
+        courseAdpaterData = new CourseAdapter(SearchActivity.this, courseFilteredData, courseFilteredData.size());
+        listView.setAdapter(courseAdpaterData);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -44,6 +53,8 @@ public class SearchActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        searchbar = findViewById(R.id.search_edit_text);
+        
     }
 
     @Override
@@ -53,10 +64,8 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 CourseDataSnapshot = dataSnapshot;
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-//                    courseData.add(new Course(postSnapshot.getValue()))
-                    Log.e("ds", postSnapshot.toString());// values fetched
-                        //TODO: img and description
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    //TODO: img and description
                     courseData.add(new Course(postSnapshot.child("courseName").getValue().toString(),
                             "description example", postSnapshot.child("courseName").getValue().toString(),
                             "javascript", postSnapshot.child("courseId").getValue().toString()));
@@ -71,18 +80,18 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
     }
-    //TODO: search filter implementation
 
     private class CourseAdapter extends BaseAdapter {
 
         Context context;
-        ArrayList<Course> al;
+        ArrayList<Course> courseList;
         LayoutInflater inflater;
-        int limit;
-        CourseAdapter(Context context, ArrayList<Course> al, int size){
+        int listSize;
+
+        CourseAdapter(Context context, ArrayList<Course> courseList, int size) {
             this.context = context;
-            this.al = al;
-            this.limit = size;
+            this.courseList = courseList;
+            this.listSize = size;
             inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
@@ -90,39 +99,33 @@ public class SearchActivity extends AppCompatActivity {
         @Override
         //How many items are in the data set represented by this Adapter.
         public int getCount() {
-            return limit;
+            return listSize;
         }
 
         @Override
         //Get the data item associated with the specified position in the data set.
         public Object getItem(int position) {
-            return al.get(position);
+            return courseList.get(position);
         }
 
         @Override
         //Get the row id associated with the specified position in the list.
         public long getItemId(int position) {
-            return 0; //al.get(position).getId();
+            return 0; //courseList.get(position).getId();
         }
 
         @Override
         //Get a View that displays the data at the specified position in the data set.
         public View getView(int position, View convertView, ViewGroup parent) {
             View v;
-
-            if(convertView == null){
-
+            if (convertView == null) {
                 v = View.inflate(parent.getContext(), R.layout.list_course_item, null);
-
             } else {
                 v = convertView;
-                TextView tv = (TextView) v.findViewById(R.id.tv_title_course);
-                tv.setText(al.get(position).getName());
             }
-
+            TextView tv = (TextView) v.findViewById(R.id.tv_title_course);
+            tv.setText(courseList.get(position).getName());
             return v;
         }
     }
-
-
 }
