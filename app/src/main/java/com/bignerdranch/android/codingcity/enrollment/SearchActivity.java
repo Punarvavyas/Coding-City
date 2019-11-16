@@ -54,7 +54,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
         searchbar = findViewById(R.id.search_edit_text);
-        
+
     }
 
     @Override
