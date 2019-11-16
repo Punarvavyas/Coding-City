@@ -41,10 +41,19 @@ public class MainActivity extends AppCompatActivity {
     Button signInButton;
     private static final int RC_SIGN_IN = 123;
     FirebaseUser user;
+    Button help;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        help=findViewById(R.id.button_help);
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,Help.class));
+            }
+        });
         signInButton = findViewById(R.id.signin);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("Main", "Logged in");
                 //TODO: put user sign in singleton class
                 //TODO: if new user then create firebase entry or get old user id
+
                 Log.e("Main", user.getUid());
                 signInButton.setText("Sign Out");
             } else {
