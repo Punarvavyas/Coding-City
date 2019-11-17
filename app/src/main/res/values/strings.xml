@@ -16,4 +16,7 @@
     <string name="sample_text_medium">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Velit dignissim sodales ut eu sem integer vitae justo.
         Lacus viverra vitae congue eu consequat. Convallis aenean et tortor at risus viverra adipiscing.</string>
+    <string name="signout">Signout</string>
+    <string name="settings">Settings</string>
+    <string name="signin">Signin</string>
 </resources>

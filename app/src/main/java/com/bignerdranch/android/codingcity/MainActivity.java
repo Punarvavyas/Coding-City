@@ -99,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         // Actually top menu
-        //TODO: rename file
-        inflater.inflate(R.menu.bottom_nav_menu, menu);
+        //TODO: created menu but develop the logic to change sign in and sign out when user is loginor out
+        inflater.inflate(R.menu.searchfun, menu);
         return true;
     }
 
