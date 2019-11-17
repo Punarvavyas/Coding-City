@@ -7,9 +7,9 @@
 
         android:title="@string/signin" />
 
-  
+
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/settings"
 
         android:title="@string/settings" />
 
