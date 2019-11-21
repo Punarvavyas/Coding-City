@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 user = FirebaseAuth.getInstance().getCurrentUser();
+                //TODO: repetition of data
                 rootDatabase.child("users").child(user.getUid()).child("courses").child("crs1001").setValue("");
                 UserLogin.getInstance(getApplicationContext()).setUser(user);
                 Log.e("Main", "Logged in");
