@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.bignerdranch.android.codingcity.enrollment.SearchActivity;
+import com.bignerdranch.android.codingcity.setting.SettingActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -99,9 +100,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        // Actually top menu
-        //TODO: rename file
-        inflater.inflate(R.menu.bottom_nav_menu, menu);
+        inflater.inflate(R.menu.menu_top_right, menu);
         return true;
     }
 
@@ -114,6 +113,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent myIntent = new Intent(getBaseContext(), SearchActivity.class);
 //              myIntent.putExtra("key", value); //Optional parameters
                 startActivity(myIntent);
+                return true;
+            case R.id.setting:
+                Intent intent = new Intent(this, SettingActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
