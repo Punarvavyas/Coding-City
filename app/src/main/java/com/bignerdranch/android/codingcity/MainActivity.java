@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.bignerdranch.android.codingcity.enrollment.SearchActivity;
+import com.bignerdranch.android.codingcity.setting.SettingActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        help=findViewById(R.id.button_help);
+        help = findViewById(R.id.button_help);
         help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(
                         AuthUI.getInstance()
                                 .createSignInIntentBuilder()
+                                .setIsSmartLockEnabled(false)
                                 .setAvailableProviders(providers)
                                 .build(),
                         RC_SIGN_IN);
@@ -98,9 +100,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        // Actually top menu
-        //TODO: rename file
-        inflater.inflate(R.menu.bottom_nav_menu, menu);
+        inflater.inflate(R.menu.menu_top_right, menu);
         return true;
     }
 
@@ -113,6 +113,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent myIntent = new Intent(getBaseContext(), SearchActivity.class);
 //              myIntent.putExtra("key", value); //Optional parameters
                 startActivity(myIntent);
+                return true;
+            case R.id.setting:
+                Intent intent = new Intent(this, SettingActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -148,14 +152,15 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 user = FirebaseAuth.getInstance().getCurrentUser();
+                //TODO: repetition of data
+                rootDatabase.child("users").child(user.getUid()).child("courses").child("crs1001").setValue("");
+                UserLogin.getInstance(getApplicationContext()).setUser(user);
                 Log.e("Main", "Logged in");
-                //TODO: put user sign in singleton class
                 //TODO: if new user then create firebase entry or get old user id
 
                 Log.e("Main", user.getUid());
                 signInButton.setText("Sign Out");
             } else {
-
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
                 // response.getError().getErrorCode() and handle the error.
