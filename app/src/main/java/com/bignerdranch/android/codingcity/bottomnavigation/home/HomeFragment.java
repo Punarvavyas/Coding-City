@@ -39,6 +39,7 @@ public class HomeFragment extends Fragment {
 
     DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
     DatabaseReference myRef = rootDatabase.child("courses");
+    DatabaseReference userRef = rootDatabase.child("users");
     ArrayList<Course> courseData = new ArrayList<>();
     ListView listView;
 
@@ -99,13 +100,17 @@ public class HomeFragment extends Fragment {
      * To be implemented
      * @param userId
      */
-    private void getCourseByUserId(String userId){
+    private void getCourseByUserId(final String userId){
+        /*
         final Intent intent = getActivity().getIntent();
         final List<String> enrolledCourses = Arrays.asList(intent.getStringArrayExtra("courseId"));
+        */
+
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 courseData.clear();
+                List<String> enrolledCourses = getEnrolledCourses(userId);
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     Log.e("courseId", postSnapshot.child("courseId").getValue().toString());// values fetched
                     String courseId = postSnapshot.child("courseId").getValue().toString().trim();
@@ -132,6 +137,31 @@ public class HomeFragment extends Fragment {
 
             }
         });
+    }
+
+    private List<String> getEnrolledCourses(final String userId){
+        final List<String> enrolledCourses = new ArrayList<>();
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    String userIdentifier = postSnapshot.getKey();
+                    if(userIdentifier == userId){
+                        for(DataSnapshot course : postSnapshot.child("courses").getChildren()){
+                            enrolledCourses.add(course.getValue().toString());
+                        }
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        return enrolledCourses;
     }
 
     private class CourseAdapter extends BaseAdapter {
