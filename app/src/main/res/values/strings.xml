@@ -3,4 +3,17 @@
     <string name="title_home">Home</string>
     <string name="title_leaderboard">LeaderBoard</string>
     <string name="title_profile">Profile</string>
+    <string name="question_1">Question1.</string>
+    <string name="question_2">Question2.</string>
+    <string name="question_3">Question3.</string>
+    <string name="question_4">Question4.</string>
+    <string name="question_5">Question5.</string>
+    <string name="true_button">TRUE</string>
+    <string name="false_button">FALSE</string>
+    <string name="next_button">NEXT</string>
+    <string name="correct_toast">Correct!</string>
+    <string name="incorrect_toast">Incorrect!</string>
+    <string name="sample_text_medium">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Velit dignissim sodales ut eu sem integer vitae justo.
+        Lacus viverra vitae congue eu consequat. Convallis aenean et tortor at risus viverra adipiscing.</string>
 </resources>

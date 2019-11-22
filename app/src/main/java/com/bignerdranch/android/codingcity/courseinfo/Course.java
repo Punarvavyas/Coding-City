@@ -1,7 +1,5 @@
 package com.bignerdranch.android.codingcity.courseinfo;
 
-import java.util.List;
-
 public class Course {
     String courseId;
     String courseName;
