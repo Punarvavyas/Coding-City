@@ -33,6 +33,7 @@ import java.util.List;
 /**
  * This is the home page which show what course we have right now
  * @author Ruize Nie
+ * @Modified by Akshay Singh
  */
 public class HomeFragment extends Fragment {
 
