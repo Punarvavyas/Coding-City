@@ -35,12 +35,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/next_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="NEXT"
-            android:drawablePadding="4dp" />
 
         <!--            android:src="@drawable/arrow_right"  //ImageButton-->
 
