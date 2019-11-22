@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "168284367451-rcgigq5mob1rg7gmkgaiqen4mrrdllgm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bignerdranch.android.codingcity",
+            "certificate_hash": "8725fe7bf54b374c87a7e075246df3601b8f807d"
+          }
+        },
+        {
           "client_id": "168284367451-ok7u6aht6ia59a5tt6gg60ogshlq5bqh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

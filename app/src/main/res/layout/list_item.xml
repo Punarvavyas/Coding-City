@@ -9,8 +9,7 @@
         android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@mipmap/ic_python_course_page"
-        />
+        android:src="@mipmap/ic_python_course_page" />
 
     <TextView
         android:id="@+id/tv_title"
