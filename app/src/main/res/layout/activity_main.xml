@@ -8,15 +8,6 @@
 <!--    android:paddingTop="?attr/actionBarSize"-->
 
     <Button
-        android:id="@+id/signin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sign In"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="272dp" />
-
-    <Button
         android:id="@+id/button_help"
         android:layout_width="65dp"
         android:layout_height="63dp"
