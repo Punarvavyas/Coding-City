@@ -1,4 +1,4 @@
-package com.bignerdranch.android.codingcity;
+package com.bignerdranch.android.codingcity.authentication;
 
 import android.content.Context;
 

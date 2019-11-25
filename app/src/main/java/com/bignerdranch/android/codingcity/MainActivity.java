@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bignerdranch.android.codingcity.authentication.UserLogin;
 import com.bignerdranch.android.codingcity.enrollment.SearchActivity;
 import com.bignerdranch.android.codingcity.setting.SettingActivity;
 import com.firebase.ui.auth.AuthUI;
