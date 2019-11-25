@@ -14,6 +14,7 @@ import android.widget.Button;
 
 import com.bignerdranch.android.codingcity.MainActivity;
 import com.bignerdranch.android.codingcity.R;
+import com.bignerdranch.android.codingcity.authentication.LoginActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class IntroActivity extends AppCompatActivity {
 
 
 //        if (readCache()) {
-//            Intent mainActivity = new Intent(getApplicationContext(),MainActivity.class);
+//            Intent mainActivity = new Intent(getApplicationContext(),LoginActivity.class);
 //            startActivity(mainActivity);
 //            finish();
 //        }
@@ -97,9 +98,9 @@ public class IntroActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                Intent mainActivity = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(mainActivity);
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 //saveCache();
                 finish();
             }

@@ -12,6 +12,10 @@ import com.bignerdranch.android.codingcity.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * This is the Quiz activity which interact with user doing quiz
+ * @author Ruize Nie
+ */
 public class QuizActivity extends AppCompatActivity {
 
     private Button mTrueButton;

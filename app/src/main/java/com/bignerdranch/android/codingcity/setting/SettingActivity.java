@@ -11,6 +11,10 @@ import android.widget.Toast;
 
 import com.bignerdranch.android.codingcity.R;
 
+/**
+ * This is the Setting page which show basic setting component
+ * @author Ruize Nie
+ */
 public class SettingActivity extends AppCompatActivity {
 
     private SwitchCompat mSwitchV;

@@ -11,7 +11,7 @@
         android:id="@+id/login_title"
         android:layout_width="317dp"
         android:layout_height="61dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,7 +33,7 @@
         android:layout_height="105dp"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_desc"
         app:srcCompat="@drawable/auth_logo_left" />
@@ -53,8 +53,8 @@
 
     <ImageView
         android:id="@+id/login_back_img"
-        android:layout_width="228dp"
-        android:layout_height="266dp"
+        android:layout_width="225dp"
+        android:layout_height="253dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/login_desc"
@@ -64,7 +64,7 @@
         android:id="@+id/login_right_img"
         android:layout_width="61dp"
         android:layout_height="105dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -117,16 +117,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_password" />
 
+
     <Button
         android:id="@+id/btn_sign_in"
-        android:layout_width="76dp"
-        android:layout_height="66dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/btn_auth"
+        android:layout_width="55dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/btn_auth_selector"
         android:drawableRight="@drawable/ic_arrow_forward"
-        android:paddingRight="25dp"
+        android:paddingRight="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.883"
+        app:layout_constraintHorizontal_bias="0.928"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/forget_password" />
 
@@ -134,9 +135,9 @@
         android:id="@+id/tv_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="212dp"
-        android:layout_marginLeft="212dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="240dp"
+        android:layout_marginLeft="240dp"
+        android:layout_marginTop="20dp"
         android:text="Sign In"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -168,4 +169,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/login_tv" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
