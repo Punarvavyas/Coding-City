@@ -1,4 +1,4 @@
-package com.bignerdranch.android.codingcity.bottomnavigation.dashboard;
+package com.bignerdranch.android.codingcity.leaderboard;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,15 +11,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import com.bignerdranch.android.codingcity.R;
-import com.bignerdranch.android.codingcity.leaderboard.LeaderboardActivity;
-import com.bignerdranch.android.codingcity.leaderboard.UserData;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,31 +21,31 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class LeaderboardFragment extends Fragment {
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
-    private LeaderboardViewModel leaderboardViewModel;
+public class LeaderboardActivity extends AppCompatActivity {
+
+
     DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
     DatabaseReference myRef = rootDatabase.child("users");
 
 
     ArrayList<UserData> userDataList = new ArrayList<>();
     ListView listView;
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        leaderboardViewModel =
-                ViewModelProviders.of(this).get(LeaderboardViewModel.class);
-        View root = inflater.inflate(R.layout.leaderboard_content, container, false);
-        listView = (ListView) root.findViewById(R.id.lv_user_scores);
-        return root;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.leaderboard_content);
+        listView = (ListView) findViewById(R.id.lv_user_scores);
     }
 
     @Override
-    public void onStart() {
+    protected void onStart() {
         super.onStart();
-        getLeaderBoardDate();
-    }
-
-    private void getLeaderBoardDate(){
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -68,7 +60,7 @@ public class LeaderboardFragment extends Fragment {
                     UserData data = new UserData(userId, userName, userScore, userProfileImage);
                     userDataList.add(data);
                 }
-                listView.setAdapter(new LeaderboardFragment.LeaderBoardAdapter(getContext(), userDataList, userDataList.size()));
+                listView.setAdapter(new LeaderboardActivity.LeaderBoardAdapter(LeaderboardActivity.this, userDataList, userDataList.size()));
             }
 
             @Override
@@ -76,7 +68,22 @@ public class LeaderboardFragment extends Fragment {
 
             }
         });
+
+
+
+        /*
+        String userId = "sdfssdf88745454bjjbh4bhb4h";
+        String userName = "Akshay SIngh";
+        int userScore = 85;
+        String userProfileImage = "drawable/icons_user";
+
+        UserData data = new UserData(userId, userName, userScore, userProfileImage);
+        userDataList.add(data);
+        listView.setAdapter(new LeaderboardActivity.LeaderBoardAdapter(LeaderboardActivity.this, userDataList, userDataList.size()));
+
+         */
     }
+
 
     private class LeaderBoardAdapter extends BaseAdapter {
 
@@ -125,7 +132,7 @@ public class LeaderboardFragment extends Fragment {
         @Override
         //Get a View that displays the data at the specified position in the data set.
         public View getView(int position, View convertView, ViewGroup parent) {
-            inflater = LayoutInflater.from(getContext());
+            inflater = LayoutInflater.from(getApplicationContext());
             View thisView = View.inflate(parent.getContext(), R.layout.list_leaderboard_item, null);
             TextView tvRank = (TextView) thisView.findViewById(R.id.tv_rank);
             TextView tvUserName = (TextView) thisView.findViewById(R.id.tv_username);
@@ -134,7 +141,7 @@ public class LeaderboardFragment extends Fragment {
 
             // User profile image
             String uri = userDataList.get(position).getUserProfileImage();
-            int icon = getResources().getIdentifier(uri, "drawable", getActivity().getPackageName());
+            int icon = getResources().getIdentifier(uri, "drawable", getPackageName());
             imageView.setImageResource(icon);
 
             // User rank

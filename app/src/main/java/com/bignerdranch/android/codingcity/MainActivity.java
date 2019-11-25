@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bignerdranch.android.codingcity.bottomnavigation.home.HomeFragment;
 import com.bignerdranch.android.codingcity.enrollment.SearchActivity;
 import com.bignerdranch.android.codingcity.setting.SettingActivity;
 import com.firebase.ui.auth.AuthUI;
@@ -27,6 +28,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -125,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        /*
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -139,6 +144,15 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("main activity", "Failed to read value.", error.toException());
             }
         });
+         */
+        /*
+        Fragment homeFragment = new HomeFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.nav_host_fragment, homeFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+         */
+
     }
 
     @Override

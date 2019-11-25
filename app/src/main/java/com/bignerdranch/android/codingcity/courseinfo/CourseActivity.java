@@ -1,4 +1,4 @@
-package com.bignerdranch.android.codingcity.bottomnavigation.home;
+package com.bignerdranch.android.codingcity.courseinfo;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,13 +13,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import com.bignerdranch.android.codingcity.R;
-import com.bignerdranch.android.codingcity.courseinfo.Course;
-import com.bignerdranch.android.codingcity.courseinfo.CourseActivity;
-import com.bignerdranch.android.codingcity.courseinfo.CourseContent;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,87 +24,38 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * This is the home page which show what course we have right now
- * @author Ruize Nie
- * @Modified by Akshay Singh
- */
-public class HomeFragment extends Fragment {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class CourseActivity extends AppCompatActivity {
 
     DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
     DatabaseReference myRef = rootDatabase.child("courses");
-    DatabaseReference userRef = rootDatabase.child("users");
     ArrayList<Course> courseData = new ArrayList<>();
     ListView listView;
-
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-
-        View rootView = inflater.inflate(R.layout.fragment_home, container,
-                false);
-        listView = rootView.findViewById(R.id.list_course);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_course);
+        listView = (ListView) findViewById(R.id.lv_course_list);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getContext(), CourseContent.class);
+                Intent intent = new Intent(getApplicationContext(), CourseContent.class);
                 intent.putExtra("courseId", courseData.get(position).getCourseId());
                 startActivity(intent);
             }
         });
-
-        return rootView;
     }
 
     @Override
-    public void onStart() {
+    protected void onStart() {
         super.onStart();
-        getAllCourses();
-    }
-
-    private void getAllCourses(){
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                courseData.clear();
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    Log.e("courseId", postSnapshot.child("courseId").getValue().toString());// values fetched
-                    String courseId = postSnapshot.child("courseId").getValue().toString().trim();
-
-                    courseData.add(
-                            new Course(
-                                    courseId,
-                                    postSnapshot.child("courseName").getValue().toString(),
-                                    postSnapshot.child("courseDescription").getValue().toString(),
-                                    postSnapshot.child("courseImageUri").getValue().toString(),
-                                    postSnapshot.child("isPremium").getValue().toString())
-                    );
-                }
-
-                listView.setAdapter(new HomeFragment.CourseAdapter(getContext(), courseData, courseData.size()));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    /**
-     * To be implemented
-     * @param userId
-     */
-    private void getCourseByUserId(final String userId){
-        /*
-        final Intent intent = getActivity().getIntent();
+        final Intent intent = getIntent();
         final List<String> enrolledCourses = Arrays.asList(intent.getStringArrayExtra("courseId"));
-        */
-
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 courseData.clear();
-                List<String> enrolledCourses = getEnrolledCourses(userId);
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     Log.e("courseId", postSnapshot.child("courseId").getValue().toString());// values fetched
                     String courseId = postSnapshot.child("courseId").getValue().toString().trim();
@@ -128,41 +73,17 @@ public class HomeFragment extends Fragment {
                         }
                     }
                 }
-
-                listView.setAdapter(new HomeFragment.CourseAdapter(getContext(), courseData, courseData.size()));
+                listView.setAdapter(new CourseAdapter(CourseActivity.this, courseData, courseData.size()));
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.e("main activity", "Failed to read value.", error.toException());
             }
         });
     }
-
-    private List<String> getEnrolledCourses(final String userId){
-        final List<String> enrolledCourses = new ArrayList<>();
-        userRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    String userIdentifier = postSnapshot.getKey();
-                    if(userIdentifier == userId){
-                        for(DataSnapshot course : postSnapshot.child("courses").getChildren()){
-                            enrolledCourses.add(course.getValue().toString());
-                        }
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        return enrolledCourses;
-    }
+    //TODO: search filter implementation
 
     private class CourseAdapter extends BaseAdapter {
 
@@ -197,7 +118,7 @@ public class HomeFragment extends Fragment {
         @Override
         //Get a View that displays the data at the specified position in the data set.
         public View getView(int position, View convertView, ViewGroup parent) {
-            inflater = LayoutInflater.from(getContext());
+            inflater = LayoutInflater.from(getApplicationContext());
             View thisView = View.inflate(parent.getContext(), R.layout.list_course_item, null);
             TextView tvCourseName = (TextView) thisView.findViewById(R.id.tv_title_course);
             TextView tvCourceDescription = (TextView) thisView.findViewById(R.id.tv_description_course);
@@ -205,10 +126,12 @@ public class HomeFragment extends Fragment {
             tvCourseName.setText(courseList.get(position).getCourseName());
             tvCourceDescription.setText(courseList.get(position).getCourseDescription());
             String uri = courseList.get(position).getCourseImageUrl();
-            int icon = getResources().getIdentifier(uri, "drawable", getActivity().getPackageName());
+            int icon = getResources().getIdentifier(uri, "drawable", getPackageName());
             imageView.setImageResource(icon);
 
             return thisView;
         }
     }
+
+
 }

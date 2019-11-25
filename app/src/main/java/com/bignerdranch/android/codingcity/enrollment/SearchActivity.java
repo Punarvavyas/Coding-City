@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bignerdranch.android.codingcity.R;
+import com.bignerdranch.android.codingcity.courseinfo.Course;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,7 +48,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), CourseEnrollmentActivity.class);
-                intent.putExtra("courseId", courseData.get(position).getId());
+                intent.putExtra("courseId", courseData.get(position).getCourseId());
                 startActivity(intent);
             }
         });
@@ -64,9 +65,13 @@ public class SearchActivity extends AppCompatActivity {
                 CourseDataSnapshot = dataSnapshot;
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     //TODO: img and description
-                    courseData.add(new Course(postSnapshot.child("courseName").getValue().toString(),
-                            "description example", postSnapshot.child("courseName").getValue().toString(),
-                            "javascript", postSnapshot.child("courseId").getValue().toString()));
+                    courseData.add(
+                            new Course(
+                                    postSnapshot.child("courseId").getValue().toString(),
+                                    postSnapshot.child("courseName").getValue().toString(),
+                                    postSnapshot.child("courseDescription").getValue().toString(),
+                                    postSnapshot.child("courseImageUri").getValue().toString(),
+                                    postSnapshot.child("isPremium").getValue().toString()));
                 }
                 listView.setAdapter(new CourseAdapter(SearchActivity.this, courseData, courseData.size()));
             }
@@ -122,7 +127,7 @@ public class SearchActivity extends AppCompatActivity {
                 v = convertView;
             }
             TextView tv = (TextView) v.findViewById(R.id.tv_title_course);
-            tv.setText(courseList.get(position).getName());
+            tv.setText(courseList.get(position).getCourseName());
             return v;
         }
     }

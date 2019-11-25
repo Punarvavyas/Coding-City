@@ -29,8 +29,21 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".courseinfo.LessonContent"
+            android:label="Lesson Content">
+        </activity>
+        <activity
+            android:name=".leaderboard.LeaderboardActivity"
+            android:label="Leader Board">
+        </activity>
+        <activity
+            android:name=".courseinfo.CourseActivity"
+            android:label="Course List">
+        </activity>
+        <activity
             android:name=".courseinfo.CourseContent"
-            android:label="@string/app_name" />
+            android:label="Course Content">
+        </activity>
         <activity android:name=".quizinfo.QuizActivity" />
         <activity
             android:name=".Help"
