@@ -2,7 +2,11 @@ package com.bignerdranch.android.codingcity.courseinfo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.SpannedString;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.bignerdranch.android.codingcity.R;
 import com.google.firebase.database.annotations.NotNull;
@@ -27,6 +31,7 @@ public class LessonContent extends AppCompatActivity {
         CodeProcessor.init(this);
         setContentView(R.layout.lesson_content);
         lessonText = (CodeView)findViewById(R.id.ml_lesson_content);
+        //lessonText = (TextView)findViewById(R.id.ml_lesson_content);
         //lessonText.setMovementMethod(new ScrollingMovementMethod());
     }
 
@@ -35,10 +40,13 @@ public class LessonContent extends AppCompatActivity {
         super.onStart();
         Intent intent = getIntent();
         String lessonContent = intent.getStringExtra("lessonContent").trim();
+        Spanned htmlString = Html.fromHtml(lessonContent);
         //lessonText.append(lessonContent);
         //lessonText.setCode(lessonContent);
 
         // expanded form of initialization
+
+
         lessonText.setOptions(new Options(
                 this,                                   // context
                 lessonContent,                                  // code
@@ -57,5 +65,7 @@ public class LessonContent extends AppCompatActivity {
                         Log.i("ListingsActivity", "On " + (n + 1) + " line clicked");
                     }
                 }));
+
+        //lessonText.setText(htmlString);
     }
 }
