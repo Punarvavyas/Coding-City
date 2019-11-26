@@ -26,12 +26,21 @@ import java.util.List;
  */
 public class HomeFragment extends Fragment {
 
+    private ViewPager mViewPager;
+    private List<SlideItem> lstSlides;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        lstSlides = new ArrayList<>();
+        lstSlides.add(new SlideItem(R.drawable.course_javascript,"Slide Title \nmore text here"));
+        lstSlides.add(new SlideItem(R.drawable.course_python,"Slide Title \nmore text here"));
+        lstSlides.add(new SlideItem(R.drawable.course_android,"Slide Title \nmore text here"));
 
+        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        mViewPager = rootView.findViewById(R.id.view_pager);
+        ViewPagerAdapter myadapter = new ViewPagerAdapter(getContext(), lstSlides);
+        mViewPager.setAdapter(myadapter);
         ListView lv = rootView.findViewById(R.id.list_course);
         lv.setAdapter(new MyListAdpter());
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
