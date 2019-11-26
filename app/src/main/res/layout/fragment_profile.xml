@@ -1,140 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    tools:targetApi="11">
+
 
     <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="-53dp">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="50dp"
 
-        <TextView
-            android:id="@+id/text_profile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginBottom="50dp"
+        android:gravity="center">
 
         <ImageView
-            android:id="@+id/ivProfile"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
+            android:id="@+id/img_plus"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignBottom="@id/img_profile"
+            android:layout_marginRight="180dp"
+            android:layout_marginLeft="90dp"
+            android:src="@drawable/ic_plus"
+             />
+
+        <ImageView
+            android:id="@+id/img_profile"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="145dp"
-            android:layout_marginLeft="145dp"
-            android:layout_marginTop="200dp"
-            android:layout_marginEnd="146dp"
-            android:layout_marginRight="146dp"
-            android:padding="5dp"
-            app:srcCompat="@android:drawable/sym_def_app_icon" />
-
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ivProfile"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="Riya"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvName"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="ry623754@dal.ca"
-            android:textSize="18sp"
-            android:textStyle="italic" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnRemoveCourse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="98dp"
-            android:layout_marginLeft="98dp"
-            android:layout_marginTop="123dp"
-            android:layout_marginEnd="281dp"
-            android:layout_marginRight="281dp"
-            android:layout_marginBottom="193dp"
-            android:clickable="true"
-            android:visibility="visible"
-            app:srcCompat="@drawable/fui_idp_button_background_anonymous" />
-
-        <TextView
-            android:id="@+id/tvAddRemoveCourses"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvName"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="148dp"
-            android:layout_marginEnd="81dp"
-            android:layout_marginRight="81dp"
-            android:layout_marginBottom="200dp"
-            android:gravity="center"
-            android:text="Add / Remove Courses"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btn_scoreboard"
-            android:layout_width="153dp"
-            android:layout_height="76dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="131dp"
-            android:layout_marginLeft="131dp"
-            android:layout_marginTop="17dp"
-            android:layout_marginEnd="126dp"
-            android:layout_marginRight="126dp"
-            android:layout_marginBottom="255dp"
-            android:text="ScoreBoard" />
-
-        <Button
-            android:id="@+id/btn_editProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="317dp"
-            android:layout_marginLeft="317dp"
-            android:layout_marginEnd="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_marginBottom="675dp"
-            android:text="Edit" />
-
+            android:layout_marginLeft="90dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginRight="95dp"
+            android:layout_marginBottom="16dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/baseline_account_circle_black_48"
+            tools:visibility="visible" />
     </RelativeLayout>
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="Riya"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:hint="Change your name here"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="245dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="ry623754@dal.ca"
+        android:textSize="18sp"
+        android:textStyle="italic" />
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="Change your email here"
+        android:layout_marginTop="245dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:visibility="invisible"/>
+
+    <Button
+        android:id="@+id/btn_editProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="317dp"
+        android:layout_marginLeft="317dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="675dp"
+        android:text="Edit" />
+
+    <Button
+        android:id="@+id/btn_saveProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="317dp"
+        android:layout_marginLeft="317dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="675dp"
+        android:text="Save"
+        android:visibility="invisible"/>
+    <Button
+        android:id="@+id/btn_removeCourse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="285dp"
+        android:layout_centerHorizontal="true"
+        android:text="Remove Courses"/>
+    <Button
+        android:id="@+id/btn_deleteAccount"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="350dp"
+        android:layout_centerHorizontal="true"
+        android:text="DELETE MY ACCOUNT"/>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--        <ImageView-->
+<!--            android:id="@+id/ivProfile"-->
+<!--            android:layout_width="120dp"-->
+<!--            android:layout_height="120dp"-->
+<!--            android:layout_alignParentStart="true"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_marginStart="145dp"-->
+<!--            android:layout_marginLeft="145dp"-->
+<!--            android:layout_marginTop="200dp"-->
+<!--            android:layout_marginEnd="146dp"-->
+<!--            android:layout_marginRight="146dp"-->
+<!--            android:padding="5dp"-->
+<!--            app:srcCompat="@android:drawable/sym_def_app_icon" />-->
+
+
+</RelativeLayout>
 

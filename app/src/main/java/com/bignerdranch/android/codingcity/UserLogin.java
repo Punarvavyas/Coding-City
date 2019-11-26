@@ -10,7 +10,7 @@ public class UserLogin {
     private static Context mCtx;
     FirebaseUser user;
 
-    private UserLogin(Context context) {
+    public UserLogin(Context context) {
         mCtx = context.getApplicationContext();
     }
 
