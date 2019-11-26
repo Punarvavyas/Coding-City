@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         //create the account
-        create_account = findViewById(R.id.tv_create_account);
+        create_account = findViewById(R.id.login_create_account_tv);
         create_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        sign_in = findViewById(R.id.btn_sign_in);
+        sign_in = findViewById(R.id.login_btn_sign_in);
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
