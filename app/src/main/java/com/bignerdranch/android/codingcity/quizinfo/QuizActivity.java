@@ -1,6 +1,8 @@
 package com.bignerdranch.android.codingcity.quizinfo;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,11 +12,16 @@ import com.bignerdranch.android.codingcity.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * This is the Quiz activity which interact with user doing quiz
+ * @author Ruize Nie
+ */
 public class QuizActivity extends AppCompatActivity {
 
     private Button mTrueButton;
     private Button mFalseButton;
-    private Button mNextButton;
+
+
     private TextView mQuestionTextView;
 
     private Question[] mQuestionBank = new Question[]{
@@ -38,8 +45,13 @@ public class QuizActivity extends AppCompatActivity {
 
         if (userPressedTrue == answerIsTrue) {
             messageResId = R.string.correct_toast;
+
         } else {
             messageResId = R.string.incorrect_toast;
+            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            if (vibrator.hasVibrator()) {
+                vibrator.vibrate(500); // for 500 ms
+            }
         }
 
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
@@ -57,6 +69,12 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkAnswer(true);
+                if((mCurrentIndex + 1) == mQuestionBank.length){
+                    finish();
+                }else{
+                    mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                    updateQuestion();
+                }
             }
         });
 
@@ -65,17 +83,17 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkAnswer(false);
+                if((mCurrentIndex + 1) == mQuestionBank.length){
+                    finish();
+                }else{
+                    mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                    updateQuestion();
+                }
             }
         });
 
-        mNextButton = findViewById(R.id.next_button);
-        mNextButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                updateQuestion();
-            }
-        });
+
+
 
         updateQuestion();
     }

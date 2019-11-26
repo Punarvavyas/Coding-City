@@ -13,6 +13,10 @@ import com.bignerdranch.android.codingcity.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is Adapter using for list view
+ * @author Ruize Nie
+ */
 public class MyAdapter extends BaseAdapter {
 
     private Context mContext;

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".authentication.SignUpActivity"
+    android:background="@color/colorWhite">
+
+    <EditText
+        android:id="@+id/signup_user_name"
+        android:layout_width="366dp"
+        android:layout_height="60dp"
+        android:background="@drawable/auth_input"
+        android:drawableLeft="@drawable/auth_user"
+        android:drawablePadding="@dimen/activity_horizontal_margin"
+        android:ems="10"
+        android:hint="USERNAME"
+        android:inputType="textPersonName"
+        android:paddingLeft="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.531"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_img" />
+
+    <EditText
+        android:id="@+id/signup_user_email"
+        android:layout_width="364dp"
+        android:layout_height="60dp"
+        android:background="@drawable/auth_input"
+        android:drawableLeft="@drawable/auth_email"
+        android:drawablePadding="@dimen/activity_horizontal_margin"
+        android:ems="10"
+        android:hint="EMAIL"
+        android:inputType="textEmailAddress"
+        android:paddingLeft="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.531"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_user_name" />
+
+    <EditText
+        android:id="@+id/signup_user_password"
+        android:layout_width="364dp"
+        android:layout_height="60dp"
+        android:background="@drawable/auth_input"
+        android:drawableLeft="@drawable/auth_password"
+        android:drawablePadding="@dimen/activity_horizontal_margin"
+        android:ems="10"
+        android:hint="PASSWORD"
+        android:inputType="textPassword"
+        android:paddingLeft="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.531"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_user_email" />
+
+    <Button
+        android:id="@+id/signup_btn"
+        android:layout_width="367dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/auth_btn_signup"
+        android:text="SIGN UP"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_radio_btn" />
+
+    <RadioButton
+        android:id="@+id/signup_radio_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="8dp"
+        android:text="I agree with Privacy Polices"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_user_password" />
+
+    <TextView
+        android:id="@+id/signup_title_1"
+        android:layout_width="274dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="16dp"
+        android:text="WE ARE GLAD"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/signup_img"
+        android:layout_width="340dp"
+        android:layout_height="209dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_title_2"
+        app:srcCompat="@drawable/auth_signup" />
+
+    <TextView
+        android:id="@+id/signup_title_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TO MEET YOU"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.688"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_title_1" />
+
+    <ProgressBar
+        android:id="@+id/signup_progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="62dp"
+        android:layout_height="59dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_radio_btn"
+        app:layout_constraintVertical_bias="0.317" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

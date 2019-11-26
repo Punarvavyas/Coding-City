@@ -3,14 +3,22 @@ package com.bignerdranch.android.codingcity.setting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bignerdranch.android.codingcity.R;
+import com.bignerdranch.android.codingcity.authentication.LoginActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * This is the Setting page which show basic setting component
+ * @author Ruize Nie
+ */
 public class SettingActivity extends AppCompatActivity {
 
     private SwitchCompat mSwitchV;
@@ -21,6 +29,7 @@ public class SettingActivity extends AppCompatActivity {
     private RelativeLayout documentation;
     private RelativeLayout aboutUs;
     private RelativeLayout feedback;
+    private Button switchAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +42,16 @@ public class SettingActivity extends AppCompatActivity {
         documentation= findViewById(R.id.documentation);
         aboutUs= findViewById(R.id.about_us);
         feedback= findViewById(R.id.feedback);
+        switchAccount = findViewById(R.id.btn_switch_account);
+
+        switchAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent loginActivity = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(loginActivity);
+            }
+        });
 
         privacy.setOnClickListener(new View.OnClickListener() {
             @Override

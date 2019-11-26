@@ -44,6 +44,7 @@ public class CourseContent extends AppCompatActivity {
         adapter.setOnItemClickListener(new MyAdapter.onItemClickListener() {
             @Override
             public void onLessonClick(int i) {
+
                 Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
                 startActivity(intent);
             }

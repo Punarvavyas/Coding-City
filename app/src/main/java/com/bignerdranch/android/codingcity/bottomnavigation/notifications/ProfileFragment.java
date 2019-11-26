@@ -35,7 +35,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.bignerdranch.android.codingcity.MainActivity;
 import com.bignerdranch.android.codingcity.R;
-import com.bignerdranch.android.codingcity.UserLogin;
+import com.bignerdranch.android.codingcity.authentication.UserLogin;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseUser;
 import com.karumi.dexter.Dexter;

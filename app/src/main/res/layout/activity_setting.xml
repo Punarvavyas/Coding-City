@@ -218,6 +218,7 @@
         android:background="@android:color/darker_gray"/>
 
     <Button
+        android:id="@+id/btn_switch_account"
         android:layout_marginTop="20dp"
         android:layout_height="60dp"
         android:textSize="18dp"
