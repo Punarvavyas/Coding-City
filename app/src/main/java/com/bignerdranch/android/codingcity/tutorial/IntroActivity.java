@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -39,12 +40,11 @@ public class IntroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-//        if (readCache()) {
-//            Intent mainActivity = new Intent(getApplicationContext(),LoginActivity.class);
-//            startActivity(mainActivity);
-//            finish();
-//        }
+        if (readCache()) {
+            Intent mainActivity = new Intent(getApplicationContext(),LoginActivity.class);
+            startActivity(mainActivity);
+            finish();
+        }
 
         setContentView(R.layout.activity_intro);
         getSupportActionBar().hide();
@@ -107,16 +107,16 @@ public class IntroActivity extends AppCompatActivity {
         });
     }
 
-//    private void saveCache() {
-//        SharedPreferences pref = getApplicationContext().getSharedPreferences("IntroState",MODE_PRIVATE);
-//        SharedPreferences.Editor editor = pref.edit();
-//        editor.putBoolean("Opened",true);
-//        editor.commit();
-//    }
-//
-//    private boolean readCache() {
-//        SharedPreferences pref = getApplicationContext().getSharedPreferences("IntroState",MODE_PRIVATE);
-//        boolean open = pref.getBoolean("Opened",false);
-//        return  open;
-//    }
+    private void saveCache() {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("IntroState",MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("Opened",true);
+        editor.commit();
+    }
+
+    private boolean readCache() {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("IntroState",MODE_PRIVATE);
+        boolean open = pref.getBoolean("Opened",false);
+        return  open;
+    }
 }
