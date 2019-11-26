@@ -101,7 +101,7 @@ public class IntroActivity extends AppCompatActivity {
                 Intent mainActivity = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(mainActivity);
                 overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-                //saveCache();
+                saveCache();
                 finish();
             }
         });

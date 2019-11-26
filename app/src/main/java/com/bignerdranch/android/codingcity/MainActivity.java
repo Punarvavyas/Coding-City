@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_top_right, menu);
-        mainMenu = menu;
-        loginOption = mainMenu.findItem(R.id.login);
+//        mainMenu = menu;
+//        loginOption = mainMenu.findItem(R.id.login);
         return true;
     }
 
@@ -92,32 +92,32 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, SettingActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.login:
-                if(user == null) {
-                    List<AuthUI.IdpConfig> providers = Arrays.asList(
-                            new AuthUI.IdpConfig.EmailBuilder().build(),
-                            new AuthUI.IdpConfig.PhoneBuilder().build());
-// Create and launch sign-in intent
-                    startActivityForResult(
-                            AuthUI.getInstance()
-                                    .createSignInIntentBuilder()
-                                    .setIsSmartLockEnabled(false)
-                                    .setAvailableProviders(providers)
-                                    .build(),
-                            RC_SIGN_IN);
-                }
-                else {
-//                    signInButton.setText("Sign In");
-                    AuthUI.getInstance()
-                            .signOut(MainActivity.this)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    Toast.makeText(MainActivity.this, "Signed Out", Toast.LENGTH_LONG).show();
-                                }
-                            });
-                    loginOption.setTitle("Log in");
-                    user = null;
-                }
+//            case R.id.login:
+//                if(user == null) {
+//                    List<AuthUI.IdpConfig> providers = Arrays.asList(
+//                            new AuthUI.IdpConfig.EmailBuilder().build(),
+//                            new AuthUI.IdpConfig.PhoneBuilder().build());
+//// Create and launch sign-in intent
+//                    startActivityForResult(
+//                            AuthUI.getInstance()
+//                                    .createSignInIntentBuilder()
+//                                    .setIsSmartLockEnabled(false)
+//                                    .setAvailableProviders(providers)
+//                                    .build(),
+//                            RC_SIGN_IN);
+//                }
+//                else {
+////                    signInButton.setText("Sign In");
+//                    AuthUI.getInstance()
+//                            .signOut(MainActivity.this)
+//                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                public void onComplete(@NonNull Task<Void> task) {
+//                                    Toast.makeText(MainActivity.this, "Signed Out", Toast.LENGTH_LONG).show();
+//                                }
+//                            });
+//                    loginOption.setTitle("Log in");
+//                    user = null;
+//                }
             default:
                 return super.onOptionsItemSelected(item);
         }
