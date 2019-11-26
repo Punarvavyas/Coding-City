@@ -28,6 +28,7 @@ public class HomeFragment extends Fragment {
 
     private ViewPager mViewPager;
     private List<SlideItem> lstSlides;
+    private TabLayout indicator;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +43,8 @@ public class HomeFragment extends Fragment {
         ViewPagerAdapter myadapter = new ViewPagerAdapter(getContext(), lstSlides);
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         mViewPager.setAdapter(myadapter);
+        indicator = rootView.findViewById(R.id.indicator);
+        indicator.setupWithViewPager(mViewPager,true);
 
         ListView lv = rootView.findViewById(R.id.list_course);
         lv.setAdapter(new MyListAdpter());
@@ -107,7 +110,7 @@ public class HomeFragment extends Fragment {
                 view.setAlpha(0f);
 
             } else if (position <= 1) { // [-1,1]
-                // Modify the default slide transition to shrink the page as well
+                // Modify the default layout_slide transition to shrink the page as well
                 float scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position));
                 float vertMargin = pageHeight * (1 - scaleFactor) / 2;
                 float horzMargin = pageWidth * (1 - scaleFactor) / 2;

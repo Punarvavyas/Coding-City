@@ -5,13 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bignerdranch.android.codingcity.R;
 
 import java.util.List;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.PagerAdapter;
 
 public class ViewPagerAdapter extends PagerAdapter {
@@ -37,11 +37,10 @@ public class ViewPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.slide, container, false);
+        View view = inflater.inflate(R.layout.layout_slide, container, false);
 
-        LinearLayout layoutslide = view.findViewById(R.id.slidelinearlayout);
-        ImageView imgslide = view.findViewById(R.id.slideimg);
-        TextView txttitle = view.findViewById(R.id.txttitle);
+        ImageView imgslide = view.findViewById(R.id.slide_img);
+        TextView txttitle = view.findViewById(R.id.slide_title);
 
         imgslide.setImageResource(mList.get(position).getImage());
         txttitle.setText(mList.get(position).getTitle());
@@ -52,6 +51,6 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((LinearLayout) object);
+        container.removeView((ConstraintLayout) object);
     }
 }
