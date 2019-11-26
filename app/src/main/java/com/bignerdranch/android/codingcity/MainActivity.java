@@ -51,13 +51,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         loginOption = findViewById(R.id.login);
-        help = findViewById(R.id.button_help);
-        help.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,Help.class));
-            }
-        });
+        //help = findViewById(R.id.button_help);
+//        help.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(MainActivity.this,Help.class));
+//            }
+//        });
 //        signInButton = findViewById(R.id.signin);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -93,32 +93,32 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, SettingActivity.class);
                 startActivity(intent);
                 return true;
-//            case R.id.login:
-//                if(user == null) {
-//                    List<AuthUI.IdpConfig> providers = Arrays.asList(
-//                            new AuthUI.IdpConfig.EmailBuilder().build(),
-//                            new AuthUI.IdpConfig.PhoneBuilder().build());
-//// Create and launch sign-in intent
-//                    startActivityForResult(
-//                            AuthUI.getInstance()
-//                                    .createSignInIntentBuilder()
-//                                    .setIsSmartLockEnabled(false)
-//                                    .setAvailableProviders(providers)
-//                                    .build(),
-//                            RC_SIGN_IN);
-//                }
-//                else {
-////                    signInButton.setText("Sign In");
-//                    AuthUI.getInstance()
-//                            .signOut(MainActivity.this)
-//                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                public void onComplete(@NonNull Task<Void> task) {
-//                                    Toast.makeText(MainActivity.this, "Signed Out", Toast.LENGTH_LONG).show();
-//                                }
-//                            });
-//                    loginOption.setTitle("Log in");
-//                    user = null;
-//                }
+            case R.id.login:
+                if(user == null) {
+                    List<AuthUI.IdpConfig> providers = Arrays.asList(
+                            new AuthUI.IdpConfig.EmailBuilder().build(),
+                            new AuthUI.IdpConfig.PhoneBuilder().build());
+// Create and launch sign-in intent
+                    startActivityForResult(
+                            AuthUI.getInstance()
+                                    .createSignInIntentBuilder()
+                                    .setIsSmartLockEnabled(false)
+                                    .setAvailableProviders(providers)
+                                    .build(),
+                            RC_SIGN_IN);
+                }
+                else {
+//                    signInButton.setText("Sign In");
+                    AuthUI.getInstance()
+                            .signOut(MainActivity.this)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Toast.makeText(MainActivity.this, "Signed Out", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                    loginOption.setTitle("Log in");
+                    user = null;
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -34,9 +34,9 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         lstSlides = new ArrayList<>();
-        lstSlides.add(new SlideItem(R.drawable.course_javascript,"Slide Title \nmore text here"));
-        lstSlides.add(new SlideItem(R.drawable.course_python,"Slide Title \nmore text here"));
-        lstSlides.add(new SlideItem(R.drawable.course_android,"Slide Title \nmore text here"));
+        lstSlides.add(new SlideItem(R.drawable.course_javascript,"JavaScript"));
+        lstSlides.add(new SlideItem(R.drawable.course_python,"Python"));
+        lstSlides.add(new SlideItem(R.drawable.course_android,"Android"));
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         mViewPager = rootView.findViewById(R.id.view_pager);
@@ -47,7 +47,9 @@ public class HomeFragment extends Fragment {
         indicator.setupWithViewPager(mViewPager,true);
 
         ListView lv = rootView.findViewById(R.id.list_course);
-        lv.setAdapter(new MyListAdpter());
+        MyListAdpter adpter = new MyListAdpter();
+        adpter.notifyDataSetChanged();
+        lv.setAdapter(adpter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
