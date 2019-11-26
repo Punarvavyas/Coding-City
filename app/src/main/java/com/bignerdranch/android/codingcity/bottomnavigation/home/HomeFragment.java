@@ -11,9 +11,14 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bignerdranch.android.codingcity.R;
 import com.bignerdranch.android.codingcity.courseinfo.CourseContent;
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is the home page which show what course we have right now
@@ -21,11 +26,12 @@ import com.bignerdranch.android.codingcity.courseinfo.CourseContent;
  */
 public class HomeFragment extends Fragment {
 
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_home, container,
-                false);
+        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
         ListView lv = rootView.findViewById(R.id.list_course);
         lv.setAdapter(new MyListAdpter());
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
