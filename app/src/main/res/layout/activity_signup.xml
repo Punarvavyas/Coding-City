@@ -9,8 +9,8 @@
 
     <EditText
         android:id="@+id/signup_user_name"
-        android:layout_width="364dp"
-        android:layout_height="67dp"
+        android:layout_width="366dp"
+        android:layout_height="60dp"
         android:background="@drawable/auth_input"
         android:drawableLeft="@drawable/auth_user"
         android:drawablePadding="@dimen/activity_horizontal_margin"
@@ -27,7 +27,7 @@
     <EditText
         android:id="@+id/signup_user_email"
         android:layout_width="364dp"
-        android:layout_height="67dp"
+        android:layout_height="60dp"
         android:background="@drawable/auth_input"
         android:drawableLeft="@drawable/auth_email"
         android:drawablePadding="@dimen/activity_horizontal_margin"
@@ -44,7 +44,7 @@
     <EditText
         android:id="@+id/signup_user_password"
         android:layout_width="364dp"
-        android:layout_height="67dp"
+        android:layout_height="60dp"
         android:background="@drawable/auth_input"
         android:drawableLeft="@drawable/auth_password"
         android:drawablePadding="@dimen/activity_horizontal_margin"
@@ -62,7 +62,7 @@
         android:id="@+id/signup_btn"
         android:layout_width="367dp"
         android:layout_height="59dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/auth_btn_signup"
         android:text="SIGN UP"
         android:textColor="@color/colorWhite"
@@ -75,8 +75,9 @@
         android:id="@+id/signup_radio_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="8dp"
         android:text="I agree with Privacy Polices"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signup_user_password" />
