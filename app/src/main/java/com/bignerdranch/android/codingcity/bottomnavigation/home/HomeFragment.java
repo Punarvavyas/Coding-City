@@ -1,9 +1,22 @@
 package com.bignerdranch.android.codingcity.bottomnavigation.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.bignerdranch.android.codingcity.R;
+import com.bignerdranch.android.codingcity.courseinfo.Course;
+import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -11,15 +24,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.bignerdranch.android.codingcity.R;
-import com.google.android.material.tabs.TabLayout;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * This is the home page which show what course we have right now
- * @author Ruize Nie
+ * @author Akshay Singh
  */
 public class HomeFragment extends Fragment {
 
@@ -27,6 +34,11 @@ public class HomeFragment extends Fragment {
     private List<SlideItem> lstSlides;
     private TabLayout indicator;
     private RecyclerView homeRecycleView;
+    ArrayList<Course> courseData = new ArrayList<>();
+    DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference coursesRef = rootDatabase.child("courses");
+    DatabaseReference userRef = rootDatabase.child("users");
+    //ArrayList<Course> courseData = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,18 +56,48 @@ public class HomeFragment extends Fragment {
         indicator = rootView.findViewById(R.id.indicator);
         indicator.setupWithViewPager(mViewPager,true);
 
+        /*
         List<CourseHomeItem> lstCourses = new ArrayList<>();
 
         lstCourses.add(new CourseHomeItem("Python", "Descript for python", R.drawable.course_python));
         lstCourses.add(new CourseHomeItem("JavaScript", "Descript for javascript", R.drawable.course_javascript));
-        lstCourses.add(new CourseHomeItem("Android", "Descript for Android", R.drawable.course_android));
+      */
 
+        getAllCourses();
         homeRecycleView = rootView.findViewById(R.id.list_course);
-        RecycleAdapter reAdapter = new RecycleAdapter(getContext(), lstCourses);
-        homeRecycleView.setAdapter(reAdapter);
-        homeRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         return rootView;
+    }
+
+    private void getAllCourses(){
+        coursesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                courseData.clear();
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    Log.e("courseId", postSnapshot.child("courseId").getValue().toString());
+                    String courseId = postSnapshot.child("courseId").getValue().toString().trim();
+
+                    courseData.add(
+                            new Course(
+                                    courseId,
+                                    postSnapshot.child("courseName").getValue().toString(),
+                                    postSnapshot.child("courseDescription").getValue().toString(),
+                                    postSnapshot.child("courseImageUri").getValue().toString(),
+                                    postSnapshot.child("isPremium").getValue().toString())
+                    );
+                }
+
+                RecycleAdapter reAdapter = new RecycleAdapter(getContext(), courseData);
+                homeRecycleView.setAdapter(reAdapter);
+                homeRecycleView.setScrollContainer(false);
+                homeRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
