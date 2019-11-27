@@ -14,6 +14,10 @@ import java.util.List;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.PagerAdapter;
 
+/**
+ * This is pager adapter for slide show in home dashboard
+ * @author Ruize Nie
+ */
 public class ViewPagerAdapter extends PagerAdapter {
     Context context;
     private List<SlideItem> mList ;

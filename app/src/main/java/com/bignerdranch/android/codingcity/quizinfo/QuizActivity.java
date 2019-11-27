@@ -1,6 +1,8 @@
 package com.bignerdranch.android.codingcity.quizinfo;
 
+
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
@@ -9,17 +11,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bignerdranch.android.codingcity.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-/**
- * This is the Quiz activity which interact with user doing quiz
- * @author Ruize Nie
- */
+import static android.app.PendingIntent.getActivity;
+
 public class QuizActivity extends AppCompatActivity {
 
     private Button mTrueButton;
     private Button mFalseButton;
+    public int  score=0;
 
 
     private TextView mQuestionTextView;
@@ -45,6 +49,8 @@ public class QuizActivity extends AppCompatActivity {
 
         if (userPressedTrue == answerIsTrue) {
             messageResId = R.string.correct_toast;
+            score++;
+
 
         } else {
             messageResId = R.string.incorrect_toast;
@@ -70,7 +76,19 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View v) {
                 checkAnswer(true);
                 if((mCurrentIndex + 1) == mQuestionBank.length){
-                    finish();
+                    final AlertDialog.Builder builder=new AlertDialog.Builder(QuizActivity.this);
+                    builder.setMessage("Your Score is: " + score).setTitle("Quiz result").setPositiveButton("OK", new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    });
+                    AlertDialog alertDialog=builder.create();
+                    alertDialog.show();
+
+
+
+
                 }else{
                     mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
                     updateQuestion();
@@ -84,11 +102,33 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View v) {
                 checkAnswer(false);
                 if((mCurrentIndex + 1) == mQuestionBank.length){
-                    finish();
+
+                    final AlertDialog.Builder builder=new AlertDialog.Builder(QuizActivity.this);
+                    builder.setMessage("Your Score is:" + score).setTitle("Quiz result").setPositiveButton("OK", new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference myRef = database.getReference("message");
+
+
+                        }
+                    });
+                    AlertDialog alertDialog=builder.create();
+                    alertDialog.show();
+
+
+
+
+
+
+
                 }else{
                     mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
                     updateQuestion();
                 }
+
+
             }
         });
 
