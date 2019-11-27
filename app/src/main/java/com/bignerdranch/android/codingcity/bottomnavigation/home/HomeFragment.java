@@ -36,7 +36,9 @@ public class HomeFragment extends Fragment {
     private RecyclerView homeRecycleView;
     ArrayList<Course> courseData = new ArrayList<>();
     DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
+    //show specific course that user registered
     DatabaseReference coursesRef = rootDatabase.child("courses");
+    //check the enrollment status
     DatabaseReference userRef = rootDatabase.child("users");
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -66,7 +68,6 @@ public class HomeFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 courseData.clear();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    Log.e("courseId", postSnapshot.child("courseId").getValue().toString());
                     String courseId = postSnapshot.child("courseId").getValue().toString().trim();
 
                     courseData.add(

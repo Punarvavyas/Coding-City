@@ -5,31 +5,32 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.bignerdranch.android.codingcity.R;
 import com.google.firebase.database.annotations.NotNull;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import io.github.kbiakov.codeview.CodeView;
-import io.github.kbiakov.codeview.OnCodeLineClickListener;
-import io.github.kbiakov.codeview.adapters.Format;
-import io.github.kbiakov.codeview.adapters.Options;
-import io.github.kbiakov.codeview.classifier.CodeProcessor;
-import io.github.kbiakov.codeview.highlight.ColorTheme;
-import io.github.kbiakov.codeview.highlight.Font;
-import io.github.kbiakov.codeview.highlight.FontCache;
+//import io.github.kbiakov.codeview.CodeView;
+//import io.github.kbiakov.codeview.OnCodeLineClickListener;
+//import io.github.kbiakov.codeview.adapters.Format;
+//import io.github.kbiakov.codeview.adapters.Options;
+//import io.github.kbiakov.codeview.classifier.CodeProcessor;
+//import io.github.kbiakov.codeview.highlight.ColorTheme;
+//import io.github.kbiakov.codeview.highlight.Font;
+//import io.github.kbiakov.codeview.highlight.FontCache;
 
 public class LessonContent extends AppCompatActivity {
-    //TextView lessonText;
-    CodeView lessonText;
+    TextView lessonText;
+    //CodeView lessonText;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CodeProcessor.init(this);
+        //CodeProcessor.init(this);
         setContentView(R.layout.lesson_content);
-        lessonText = (CodeView)findViewById(R.id.ml_lesson_content);
-        //lessonText = (TextView)findViewById(R.id.ml_lesson_content);
+        //lessonText = (CodeView)findViewById(R.id.ml_lesson_content);
+        lessonText = findViewById(R.id.ml_lesson_content);
         //lessonText.setMovementMethod(new ScrollingMovementMethod());
     }
 
@@ -45,25 +46,25 @@ public class LessonContent extends AppCompatActivity {
         // expanded form of initialization
 
 
-        lessonText.setOptions(new Options(
-                this,                                   // context
-                lessonContent,                                  // code
-                "java",                                // language
-                ColorTheme.SOLARIZED_LIGHT.theme(),             // theme (data)
-                FontCache.get(this).getTypeface(this, Font.DroidSansMonoSlashed),   // font
-                Format.Default.getMedium(),                     // format
-                true,                          // animate on highlight
-                true,                                   // shadows visible
-                true,                                   // shortcut
-                getString(R.string.show_all),                    // shortcut note
-                1000,                                   // max lines
-                new OnCodeLineClickListener() {                  // line click listener
-                    @Override
-                    public void onCodeLineClicked(int n, @NotNull String line) {
-                        Log.i("ListingsActivity", "On " + (n + 1) + " line clicked");
-                    }
-                }));
+//        lessonText.setOptions(new Options(
+//                this,                                   // context
+//                lessonContent,                                  // code
+//                "java",                                // language
+//                ColorTheme.SOLARIZED_LIGHT.theme(),             // theme (data)
+//                FontCache.get(this).getTypeface(this, Font.DroidSansMonoSlashed),   // font
+//                Format.Default.getMedium(),                     // format
+//                true,                          // animate on highlight
+//                true,                                   // shadows visible
+//                true,                                   // shortcut
+//                getString(R.string.show_all),                    // shortcut note
+//                1000,                                   // max lines
+//                new OnCodeLineClickListener() {                  // line click listener
+//                    @Override
+//                    public void onCodeLineClicked(int n, @NotNull String line) {
+//                        Log.i("ListingsActivity", "On " + (n + 1) + " line clicked");
+//                    }
+//                }));
 
-        //lessonText.setText(htmlString);
+        lessonText.setText(htmlString);
     }
 }

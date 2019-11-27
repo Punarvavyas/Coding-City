@@ -24,7 +24,7 @@
                 android:scrollbars = "vertical"/>
             -->
 
-            <io.github.kbiakov.codeview.CodeView
+            <TextView
                 android:id="@+id/ml_lesson_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
