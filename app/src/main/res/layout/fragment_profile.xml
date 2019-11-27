@@ -57,7 +57,6 @@
         android:layout_marginTop="200dp"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:hint="Change your name here"
         android:textSize="22sp"
         android:textStyle="bold"
         android:visibility="invisible" />
@@ -78,7 +77,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:hint="Change your email here"
         android:layout_marginTop="245dp"
         android:layout_centerHorizontal="true"
         android:textSize="22sp"

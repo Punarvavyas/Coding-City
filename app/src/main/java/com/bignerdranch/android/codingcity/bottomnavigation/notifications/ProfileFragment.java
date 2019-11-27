@@ -37,7 +37,10 @@ import com.bignerdranch.android.codingcity.MainActivity;
 import com.bignerdranch.android.codingcity.R;
 import com.bignerdranch.android.codingcity.authentication.UserLogin;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -56,7 +59,6 @@ import java.util.List;
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 import static com.firebase.ui.auth.AuthUI.TAG;
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 import static com.firebase.ui.auth.AuthUI.getInstance;
 
 public class ProfileFragment extends Fragment {
@@ -79,8 +81,16 @@ public class ProfileFragment extends Fragment {
 //  private static final String TAG = MainActivity.class.getSimpleName();
 //  public static final int REQUEST_IMAGE = 100;
   //set image directory path as firebase path..
-  private static final String IMAGE_DIRECTORY = "/demonuts";
+  private static final String IMAGE_DIRECTORY = "/sample_images";
   private int GALLERY = 1, CAMERA = 2;
+  UserLogin mInstance = UserLogin.getInstance(getContext());
+  //get the current user from firebase
+  final FirebaseUser CurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+
+  //    Intent intent = Intent.getIntent();
+  DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
+  final DatabaseReference myRef = rootDatabase.child("users");
 
 
 
@@ -110,9 +120,7 @@ public class ProfileFragment extends Fragment {
         saveProfile=root.findViewById(R.id.btn_saveProfile);
         Delete_acc=root.findViewById(R.id.btn_deleteAccount);
     // created firebase instance
-    UserLogin mInstance = UserLogin.getInstance(getContext());
-       //get the current user from firebase
-        final FirebaseUser CurrentUser = mInstance.getUser();
+    //            .child(intent.getStringExtra("name"));
       //to print user name from firebase
     if(CurrentUser==null)
     {
@@ -151,13 +159,18 @@ public class ProfileFragment extends Fragment {
       editProfile.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+//          String Name = user_Name.getText().toString();
+//          String emailId = Email.getText().toString();
+          editProfile.setVisibility(View.GONE);
+          saveProfile.setVisibility(View.VISIBLE);
+          editedName.setText(user_Name.getText());
           user_Name.setVisibility(View.GONE);
+          editedEmail.setText(Email.getText());
           Email.setVisibility(View.GONE);
           editedName.setVisibility(View.VISIBLE);
           editedEmail.setVisibility(View.VISIBLE);
-          String Name=editedName.getText().toString();
-          String emailId=editedEmail.getText().toString();
-
+//          user_Name.setText(Name);
+//          Email.setText(emailId);
 //          .setVisibility(View.VISIBLE);
 //          editText.setText(edititemname);
         }
@@ -173,13 +186,20 @@ public class ProfileFragment extends Fragment {
       saveProfile.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+          saveProfile.setVisibility(View.GONE);
+          editProfile.setVisibility(View.VISIBLE);
+          user_Name.setVisibility(View.VISIBLE);
+          user_Name.setText(editedName.getText());
+          Email.setVisibility(View.VISIBLE);
+          Email.setText(editedEmail.getText());
           editedName.setVisibility(View.GONE);
           editedEmail.setVisibility(View.GONE);
-          user_Name.setVisibility(View.VISIBLE);
-          Email.setVisibility(View.VISIBLE);
-          user_Name.setText(Name);
-          Email.setText(emailId);
 
+
+        //push the updated data into firebase
+
+          myRef.child(CurrentUser.getUid()).child("name").setValue(Name);
+          myRef.child(CurrentUser.getUid()).child("email").setValue(emailId);
 
         }
       });
@@ -189,8 +209,6 @@ public class ProfileFragment extends Fragment {
 
             Intent i = new Intent(getActivity(), RemoveCourses.class);
             startActivity(i);
-            ((Activity) getActivity()).overridePendingTransition(0, 0);
-
 
           }
       });
@@ -208,7 +226,7 @@ public class ProfileFragment extends Fragment {
        // return inflater.inflate(R.layout.fragment_profile, container, false);
     }
   private void showPictureDialog(){
-    AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getTargetFragment().getActivity());
+    AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getActivity());
     pictureDialog.setTitle("Select Action");
     String[] pictureDialogItems = {
             "Select photo from gallery",
@@ -252,14 +270,15 @@ public class ProfileFragment extends Fragment {
       if (data != null) {
         Uri contentURI = data.getData();
         try {
-          Bitmap bitmap = MediaStore.Images.Media.getBitmap(getTargetFragment().getActivity().getContentResolver(), contentURI);
+          Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), contentURI);
           String path = saveImage(bitmap);
-          Toast.makeText(getTargetFragment().getActivity(), "Image Saved!", Toast.LENGTH_SHORT).show();
-          edit_image.setImageBitmap(bitmap);
+          Toast.makeText(getActivity(), "Image Saved!", Toast.LENGTH_SHORT).show();
+          user_image.setImageBitmap(bitmap);
+          myRef.child("profileImageUri").setValue(path);
 
         } catch (IOException e) {
           e.printStackTrace();
-          Toast.makeText(getTargetFragment().getActivity(), "Failed!", Toast.LENGTH_SHORT).show();
+          Toast.makeText(getActivity(), "Failed!", Toast.LENGTH_SHORT).show();
         }
       }
 
@@ -267,7 +286,8 @@ public class ProfileFragment extends Fragment {
       Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
       edit_image.setImageBitmap(thumbnail);
       saveImage(thumbnail);
-      Toast.makeText(getTargetFragment().getActivity(), "Image Saved!", Toast.LENGTH_SHORT).show();
+      myRef.child(CurrentUser.getUid()).child("profileImageUri").setValue(thumbnail);
+      Toast.makeText(getActivity(), "Image Saved!", Toast.LENGTH_SHORT).show();
     }
   }
 
@@ -287,7 +307,7 @@ public class ProfileFragment extends Fragment {
       f.createNewFile();
       FileOutputStream fo = new FileOutputStream(f);
       fo.write(bytes.toByteArray());
-      MediaScannerConnection.scanFile(getTargetFragment().getActivity(),
+      MediaScannerConnection.scanFile(getActivity(),
               new String[]{f.getPath()},
               new String[]{"image/jpeg"}, null);
       fo.close();
@@ -310,7 +330,7 @@ public class ProfileFragment extends Fragment {
               @Override
               public void onPermissionsChecked(MultiplePermissionsReport report) {
                 if (report.areAllPermissionsGranted()) {
-                  Toast.makeText(getTargetFragment().getActivity(), "All permissions are granted by user!", Toast.LENGTH_SHORT).show();
+                  Toast.makeText(getActivity(), "All permissions are granted by user!", Toast.LENGTH_SHORT).show();
                 }
 
                 // check for permanent denial of any permission
@@ -328,7 +348,7 @@ public class ProfileFragment extends Fragment {
             withErrorListener(new PermissionRequestErrorListener() {
               @Override
               public void onError(DexterError error) {
-                Toast.makeText(getTargetFragment().getActivity(), "Some Error! ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Some Error! ", Toast.LENGTH_SHORT).show();
               }
             })
             .onSameThread()
