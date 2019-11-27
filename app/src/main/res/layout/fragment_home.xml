@@ -1,70 +1,62 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FAFAFA">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/dash_tv_1"
-        android:layout_width="372dp"
-        android:layout_height="32dp"
-        android:text="RECOMMENDED"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dash_tv_1" />
+        android:layout_height="match_parent"
+        android:background="#FAFAFA">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/indicator"
-        android:layout_width="411dp"
-        android:layout_height="26dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_pager"
-        app:tabBackground="@drawable/intro_indicator_selector"
-        app:tabGravity="center"
-        app:tabIndicatorHeight="0dp" />
+        <TextView
+            android:id="@+id/dash_tv_1"
+            android:layout_width="372dp"
+            android:layout_height="32dp"
+            android:text="  RECOMMENDED"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/dash_tv_2"
-        android:layout_width="372dp"
-        android:layout_height="32dp"
-        android:text="REGISTERED"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/indicator" />
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="250dp" />
 
-   <ScrollView
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       tools:ignore="MissingConstraints"
-       app:layout_constraintBottom_toBottomOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toBottomOf="@+id/dash_tv_2">
-    <ListView
-        android:id="@+id/list_course"
-        android:layout_width="415dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="15dp" />
-   </ScrollView>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/indicator"
+            android:layout_width="411dp"
+            android:layout_height="26dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_pager"
+            app:tabBackground="@drawable/intro_indicator_selector"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/dash_tv_2"
+            android:layout_width="372dp"
+            android:layout_height="32dp"
+            android:text="  REGISTERED"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/indicator" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_course"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="15dp" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -29,6 +29,7 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
     private List<String> mList = new ArrayList<>();
     DataSnapshot courseData;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +44,7 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (courseData.child("isPremium").getValue().toString().equals("0")) {
                     Toast.makeText(CourseEnrollmentActivity.this, "You have been enrolled in this course", Toast.LENGTH_LONG);
                 } else {
@@ -75,12 +77,9 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
                 TextView title = findViewById(R.id.enroll_title);
                 title.setText(dataSnapshot.child("courseName").getValue().toString());
                 TextView des = findViewById(R.id.enroll_description);
-                des.setText("not available in database");
                 getSupportActionBar().setDisplayShowHomeEnabled(true);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-
+                des.setText(dataSnapshot.child("courseDescription").getValue().toString());
                 Button enroll = findViewById(R.id.enroll_button);
                 Log.e("x", "" + Integer.parseInt(dataSnapshot.child("isPremium").getValue().toString()));
                 if (dataSnapshot.child("isPremium").getValue().toString().equals("0")) {
@@ -88,8 +87,6 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
                 } else {
                     enroll.setText("Buy $3");
                 }
-                //TODO: course comparison logic, can be helpful on home screen
-                //                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
 }
 
             @Override

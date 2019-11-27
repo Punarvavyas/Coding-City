@@ -3,6 +3,8 @@ package com.bignerdranch.android.codingcity.enrollment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -10,13 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bignerdranch.android.codingcity.R;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +34,7 @@ public class SearchActivity extends AppCompatActivity {
     ArrayList<Course> courseData = new ArrayList<>();
     ArrayList<Course> courseFilteredData = new ArrayList<>();
     ListView listView;
-    EditText searchbar;
+    TextInputEditText searchbar;
     DataSnapshot CourseDataSnapshot;
     CourseAdapter courseAdpaterData;
 
@@ -55,6 +57,31 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
         searchbar = findViewById(R.id.search_edit_text);
+        searchbar.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                courseFilteredData = new ArrayList<>();
+                for (Course x : courseData) {
+                    if (x.getName().toLowerCase().contains(s.toString().toLowerCase())) {
+                        courseFilteredData.add(x);
+                    }
+                }
+                courseAdpaterData = new CourseAdapter(SearchActivity.this, courseFilteredData, courseFilteredData.size());
+                listView.setAdapter(courseAdpaterData);
+                courseAdpaterData.notifyDataSetChanged();
+            }
+        });
 
     }
 
@@ -72,9 +99,9 @@ public class SearchActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 CourseDataSnapshot = dataSnapshot;
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    //TODO: img and description
+                    //TODO: img
                     courseData.add(new Course(postSnapshot.child("courseName").getValue().toString(),
-                            "description example", postSnapshot.child("courseName").getValue().toString(),
+                            postSnapshot.child("courseDescription").getValue().toString(), postSnapshot.child("courseName").getValue().toString(),
                             "javascript", postSnapshot.child("courseId").getValue().toString()));
                 }
                 listView.setAdapter(new CourseAdapter(SearchActivity.this, courseData, courseData.size()));
@@ -130,8 +157,10 @@ public class SearchActivity extends AppCompatActivity {
             } else {
                 v = convertView;
             }
-            TextView tv = (TextView) v.findViewById(R.id.tv_title_course);
+            TextView tv = v.findViewById(R.id.tv_title_course);
             tv.setText(courseList.get(position).getName());
+            TextView tv2  = v.findViewById(R.id.tv_description_course);
+            tv2.setText(courseList.get(position).getDescription());
             return v;
         }
     }
