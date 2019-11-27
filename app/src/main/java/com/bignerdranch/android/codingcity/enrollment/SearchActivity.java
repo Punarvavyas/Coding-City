@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -43,6 +44,8 @@ public class SearchActivity extends AppCompatActivity {
         courseFilteredData = courseData;
         courseAdpaterData = new CourseAdapter(SearchActivity.this, courseFilteredData, courseFilteredData.size());
         listView.setAdapter(courseAdpaterData);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -53,6 +56,12 @@ public class SearchActivity extends AppCompatActivity {
         });
         searchbar = findViewById(R.id.search_edit_text);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

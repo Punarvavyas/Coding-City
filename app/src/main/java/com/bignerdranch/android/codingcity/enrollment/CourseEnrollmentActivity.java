@@ -3,6 +3,7 @@ package com.bignerdranch.android.codingcity.enrollment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -33,6 +34,9 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_enrollment);
         ListView listView = findViewById(R.id.enrollment_page_content_listview);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         final MyAdapter adapter = new MyAdapter(this, mList);
         listView.setAdapter(adapter);
         Button btn = findViewById(R.id.enroll_button);
@@ -47,6 +51,13 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return super.onOptionsItemSelected(item);
+
     }
 
     @Override
@@ -65,6 +76,11 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
                 title.setText(dataSnapshot.child("courseName").getValue().toString());
                 TextView des = findViewById(R.id.enroll_description);
                 des.setText("not available in database");
+                getSupportActionBar().setDisplayShowHomeEnabled(true);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
                 Button enroll = findViewById(R.id.enroll_button);
                 Log.e("x", "" + Integer.parseInt(dataSnapshot.child("isPremium").getValue().toString()));
                 if (dataSnapshot.child("isPremium").getValue().toString().equals("0")) {

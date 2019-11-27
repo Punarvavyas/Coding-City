@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bignerdranch.android.codingcity.R;
+import com.bignerdranch.android.codingcity.authentication.UserLogin;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -80,7 +81,13 @@ public class QuizActivity extends AppCompatActivity {
                     builder.setMessage("Your Score is: " + score).setTitle("Quiz result").setPositiveButton("OK", new DialogInterface.OnClickListener(){
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference myRef = database.getReference().child("users");
+                            myRef.child(UserLogin.getInstance(getApplicationContext()).getUser().getUid()).child("quizzes").child("Quiz 1").setValue(Integer.toString(score));
                             finish();
+
+
+
                         }
                     });
                     AlertDialog alertDialog=builder.create();
@@ -107,9 +114,12 @@ public class QuizActivity extends AppCompatActivity {
                     builder.setMessage("Your Score is:" + score).setTitle("Quiz result").setPositiveButton("OK", new DialogInterface.OnClickListener(){
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            finish();
+
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference myRef = database.getReference("message");
+                            DatabaseReference myRef = database.getReference().child("users");
+                            myRef.child(UserLogin.getInstance(getApplicationContext()).getUser().getUid()).child("quizzes").child("Quiz 1").setValue(Integer.toString(score));
+                            finish();
+
 
 
                         }

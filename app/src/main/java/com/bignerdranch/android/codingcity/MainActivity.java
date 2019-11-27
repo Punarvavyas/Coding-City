@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
             IdpResponse response = IdpResponse.fromResultIntent(data);
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
-                loginOption.setTitle("Log out");
+               // loginOption.setTitle("Log out");
                 user = FirebaseAuth.getInstance().getCurrentUser();
                 if(idpResponse.isNewUser()) {
                     rootDatabase.child("users").child(user.getUid()).child("courses").child("starter").setValue("");
