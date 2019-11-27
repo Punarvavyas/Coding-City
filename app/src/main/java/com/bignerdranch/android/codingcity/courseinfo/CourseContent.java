@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bignerdranch.android.codingcity.R;
+import com.bignerdranch.android.codingcity.quizinfo.QuizActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -125,8 +127,18 @@ public class CourseContent extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             inflater = LayoutInflater.from(getApplicationContext());
-            View thisView = View.inflate(parent.getContext(), R.layout.course_content_item, null);
-            TextView tvLessonTitle = (TextView) thisView.findViewById(R.id.tv_lesson_title);
+            View thisView = View.inflate(parent.getContext(), R.layout.list_lesson_item, null);
+            TextView tvLessonTitle = (TextView) thisView.findViewById(R.id.tv_title);
+            Button quiz =  thisView.findViewById(R.id.item_btn);
+
+            quiz.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO parse the question into activiy
+                    Intent quizActivity = new Intent(getApplicationContext(), QuizActivity.class);
+                    startActivity(quizActivity);
+                }
+            });
             //TextView tvLessonText = (TextView) thisView.findViewById(R.id.tv_lesson_text);
 
             List<Lessons> lessonsList = lessons;
