@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * This is Sign up page for create new account and upload the user information
@@ -30,6 +32,7 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private RadioButton radio;
     private ProgressBar progressBar;
+    DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +84,7 @@ public class SignUpActivity extends AppCompatActivity {
                             progressBar.setVisibility(View.INVISIBLE);
                             Intent toSignUp = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(toSignUp);
+                            rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("courses").child("starter").setValue("");
                         }else{
                             // account creation failed
                             showMessage("account creation failed" + task.getException().getMessage());
