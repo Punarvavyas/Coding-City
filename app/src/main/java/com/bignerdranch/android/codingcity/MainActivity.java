@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        loginOption = findViewById(R.id.login);
         //help = findViewById(R.id.button_help);
 //        help.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -93,32 +92,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, SettingActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.login:
-                if(user == null) {
-                    List<AuthUI.IdpConfig> providers = Arrays.asList(
-                            new AuthUI.IdpConfig.EmailBuilder().build(),
-                            new AuthUI.IdpConfig.PhoneBuilder().build());
-// Create and launch sign-in intent
-                    startActivityForResult(
-                            AuthUI.getInstance()
-                                    .createSignInIntentBuilder()
-                                    .setIsSmartLockEnabled(false)
-                                    .setAvailableProviders(providers)
-                                    .build(),
-                            RC_SIGN_IN);
-                }
-                else {
-//                    signInButton.setText("Sign In");
-                    AuthUI.getInstance()
-                            .signOut(MainActivity.this)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    Toast.makeText(MainActivity.this, "Signed Out", Toast.LENGTH_LONG).show();
-                                }
-                            });
-                    loginOption.setTitle("Log in");
-                    user = null;
-                }
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -141,29 +114,5 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("main activity", "Failed to read value.", error.toException());
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        IdpResponse idpResponse = IdpResponse.fromResultIntent(data);
-        if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
-            if (resultCode == RESULT_OK) {
-                // Successfully signed in
-               // loginOption.setTitle("Log out");
-                user = FirebaseAuth.getInstance().getCurrentUser();
-                if(idpResponse.isNewUser()) {
-                    rootDatabase.child("users").child(user.getUid()).child("courses").child("starter").setValue("");
-                }
-                UserLogin.getInstance(getApplicationContext()).setUser(user);
-//                signInButton.setText("Sign Out");
-            } else {
-                Toast.makeText(this, "Sign in failed, plaease try again", Toast.LENGTH_LONG).show();
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-            }
-        }
     }
 }
