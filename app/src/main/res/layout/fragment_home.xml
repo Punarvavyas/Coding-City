@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAFAFA">
+    android:background="#FAFAFA"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/dash_tv_1"
@@ -23,17 +24,11 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dash_tv_1" />
-
+        android:layout_marginHorizontal="40px"/>
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/indicator"
-        android:layout_width="411dp"
+        android:layout_width="match_parent"
         android:layout_height="26dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_pager"
         app:tabBackground="@drawable/intro_indicator_selector"
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp" />
@@ -46,25 +41,19 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/indicator" />
-
+/>
    <ScrollView
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       tools:ignore="MissingConstraints"
-       app:layout_constraintBottom_toBottomOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toBottomOf="@+id/dash_tv_2">
+       tools:ignore="MissingConstraints">
     <ListView
         android:id="@+id/list_course"
-        android:layout_width="415dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="1dp"
         android:divider="@android:color/transparent"
-        android:dividerHeight="15dp" />
+        android:dividerHeight="15dp"
+        android:layout_marginHorizontal="40px"/>
    </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

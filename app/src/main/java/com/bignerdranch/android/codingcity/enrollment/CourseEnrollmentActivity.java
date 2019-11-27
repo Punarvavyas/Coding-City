@@ -64,7 +64,7 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
                 TextView title = findViewById(R.id.enroll_title);
                 title.setText(dataSnapshot.child("courseName").getValue().toString());
                 TextView des = findViewById(R.id.enroll_description);
-                des.setText("not available in database");
+                des.setText(dataSnapshot.child("courseDescription").getValue().toString());
                 Button enroll = findViewById(R.id.enroll_button);
                 Log.e("x", "" + Integer.parseInt(dataSnapshot.child("isPremium").getValue().toString()));
                 if (dataSnapshot.child("isPremium").getValue().toString().equals("0")) {
@@ -72,8 +72,6 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
                 } else {
                     enroll.setText("Buy $3");
                 }
-                //TODO: course comparison logic, can be helpful on home screen
-                //                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
 }
 
             @Override

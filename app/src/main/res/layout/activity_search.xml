@@ -3,18 +3,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".enrollment.SearchActivity"
-    android:orientation="vertical">
-    <EditText
-        android:id="@+id/search_edit_text"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="enter course to search">
-    </EditText>
+        android:orientation="horizontal">
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Search courses"
+            android:layout_weight="5"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/search_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_search_"
+            android:layout_weight="1"
+            app:iconTint="@color/colorAccent"
+            style="@style/Widget.MaterialComponents.Button.TextButton">
+
+        </com.google.android.material.button.MaterialButton>
+    </LinearLayout>
     <ListView
         android:id="@+id/search_courses"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@android:color/transparent"
-        android:dividerHeight="15dp"/>
+        android:dividerHeight="15dp"
+        android:paddingHorizontal="20px"/>
 </LinearLayout>
