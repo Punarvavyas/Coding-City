@@ -1,6 +1,7 @@
 package com.bignerdranch.android.codingcity.bottomnavigation.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bignerdranch.android.codingcity.R;
+import com.bignerdranch.android.codingcity.courseinfo.CourseContent;
 
 import java.util.List;
 
@@ -26,8 +28,15 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
 
     @NonNull
     @Override
-    public RecycleAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecycleAdapter.MyViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.list_course_item,parent,false);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent course = new Intent(context, CourseContent.class);
+                context.startActivity(course);
+            }
+        });
         return new MyViewHolder(view);
     }
 

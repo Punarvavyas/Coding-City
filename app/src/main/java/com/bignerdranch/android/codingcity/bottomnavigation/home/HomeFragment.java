@@ -1,13 +1,9 @@
 package com.bignerdranch.android.codingcity.bottomnavigation.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bignerdranch.android.codingcity.R;
-import com.bignerdranch.android.codingcity.courseinfo.CourseContent;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -58,8 +53,8 @@ public class HomeFragment extends Fragment {
         homeRecycleView = rootView.findViewById(R.id.list_course);
         RecycleAdapter reAdapter = new RecycleAdapter(getContext(), lstCourses);
         homeRecycleView.setAdapter(reAdapter);
-        homeRecycleView.setScrollContainer(false);
         homeRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
+        reAdapter.notifyDataSetChanged();
 
         return rootView;
     }
