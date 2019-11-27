@@ -11,6 +11,8 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bignerdranch.android.codingcity.R;
@@ -29,6 +31,7 @@ public class HomeFragment extends Fragment {
     private ViewPager mViewPager;
     private List<SlideItem> lstSlides;
     private TabLayout indicator;
+    private RecyclerView homeRecycleView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,57 +49,19 @@ public class HomeFragment extends Fragment {
         indicator = rootView.findViewById(R.id.indicator);
         indicator.setupWithViewPager(mViewPager,true);
 
-        ListView lv = rootView.findViewById(R.id.list_course);
-        MyListAdpter adpter = new MyListAdpter();
-        adpter.notifyDataSetChanged();
-        lv.setAdapter(adpter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getContext(), CourseContent.class);
-                startActivity(intent);
-            }
-        });
+        List<CourseHomeItem> lstCourses = new ArrayList<>();
+
+        lstCourses.add(new CourseHomeItem("Python", "Descript for python", R.drawable.course_python));
+        lstCourses.add(new CourseHomeItem("JavaScript", "Descript for javascript", R.drawable.course_javascript));
+        lstCourses.add(new CourseHomeItem("Android", "Descript for Android", R.drawable.course_android));
+
+        homeRecycleView = rootView.findViewById(R.id.list_course);
+        RecycleAdapter reAdapter = new RecycleAdapter(getContext(), lstCourses);
+        homeRecycleView.setAdapter(reAdapter);
+        homeRecycleView.setScrollContainer(false);
+        homeRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return rootView;
-    }
-
-    //TODO: duplicated in search activity
-    private class MyListAdpter extends BaseAdapter {
-
-        @Override
-        //How many items are in the data set represented by this Adapter.
-        public int getCount() {
-            return 3;
-        }
-
-        @Override
-        //Get the data item associated with the specified position in the data set.
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        //Get the row id associated with the specified position in the list.
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        //Get a View that displays the data at the specified position in the data set.
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View v;
-
-            if(convertView == null){
-
-                v = View.inflate(getContext(), R.layout.list_course_item, null);
-
-            }else{
-                v = convertView;
-            }
-
-            return v;
-        }
     }
 
     public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
