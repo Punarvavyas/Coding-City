@@ -54,7 +54,6 @@ public class HomeFragment extends Fragment {
         RecycleAdapter reAdapter = new RecycleAdapter(getContext(), lstCourses);
         homeRecycleView.setAdapter(reAdapter);
         homeRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
-        reAdapter.notifyDataSetChanged();
 
         return rootView;
     }
