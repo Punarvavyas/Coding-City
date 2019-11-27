@@ -53,8 +53,8 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
                 rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("courses").child(courseId).setValue("");
                 if (courseData.child("isPremium").getValue().toString().equals("0")) {
                     Toast.makeText(CourseEnrollmentActivity.this, "You have been enrolled in this course", Toast.LENGTH_LONG);
-
-                } else {
+                }
+                else {
                     Intent intent = new Intent(getApplicationContext(), Payments.class);
                     startActivity(intent);
                 }

@@ -85,6 +85,12 @@ public class SignUpActivity extends AppCompatActivity {
                             Intent toSignUp = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(toSignUp);
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("courses").child("starter").setValue("");
+                            
+                            rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("name").setValue(
+                                    mAuth.getCurrentUser().getDisplayName() == null || mAuth.getCurrentUser().getDisplayName() == ""?
+                                            "Dummy": mAuth.getCurrentUser().getDisplayName());
+                            rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("email").setValue(mAuth.getCurrentUser().getEmail());
+
                         }else{
                             // account creation failed
                             showMessage("account creation failed" + task.getException().getMessage());
