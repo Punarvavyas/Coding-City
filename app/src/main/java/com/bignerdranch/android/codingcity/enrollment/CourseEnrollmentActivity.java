@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bignerdranch.android.codingcity.R;
 import com.bignerdranch.android.codingcity.bean.MyAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +30,9 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
 
     private List<String> mList = new ArrayList<>();
     DataSnapshot courseData;
+    DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
+    FirebaseAuth mAuth;
+    String courseId;
 
 
     @Override
@@ -41,12 +46,14 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
         final MyAdapter adapter = new MyAdapter(this, mList);
         listView.setAdapter(adapter);
         Button btn = findViewById(R.id.enroll_button);
+        mAuth = FirebaseAuth.getInstance();
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("courses").child(courseId).setValue("");
                 if (courseData.child("isPremium").getValue().toString().equals("0")) {
                     Toast.makeText(CourseEnrollmentActivity.this, "You have been enrolled in this course", Toast.LENGTH_LONG);
+
                 } else {
                     Intent intent = new Intent(getApplicationContext(), Payments.class);
                     startActivity(intent);
@@ -81,12 +88,12 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 des.setText(dataSnapshot.child("courseDescription").getValue().toString());
                 Button enroll = findViewById(R.id.enroll_button);
-                Log.e("x", "" + Integer.parseInt(dataSnapshot.child("isPremium").getValue().toString()));
                 if (dataSnapshot.child("isPremium").getValue().toString().equals("0")) {
                     enroll.setText("Enroll Free");
                 } else {
                     enroll.setText("Buy $3");
                 }
+                courseId = dataSnapshot.child("courseId").getValue().toString();
 }
 
             @Override
