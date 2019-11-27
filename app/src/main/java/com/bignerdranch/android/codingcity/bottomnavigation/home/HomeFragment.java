@@ -26,7 +26,7 @@ import androidx.viewpager.widget.ViewPager;
 
 /**
  * This is the home page which show what course we have right now
- * @author Akshay Singh
+ * @author Ruize Nie, Akshay Singh
  */
 public class HomeFragment extends Fragment {
 
@@ -38,7 +38,6 @@ public class HomeFragment extends Fragment {
     DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
     DatabaseReference coursesRef = rootDatabase.child("courses");
     DatabaseReference userRef = rootDatabase.child("users");
-    //ArrayList<Course> courseData = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -55,13 +54,6 @@ public class HomeFragment extends Fragment {
         mViewPager.setAdapter(myadapter);
         indicator = rootView.findViewById(R.id.indicator);
         indicator.setupWithViewPager(mViewPager,true);
-
-        /*
-        List<CourseHomeItem> lstCourses = new ArrayList<>();
-
-        lstCourses.add(new CourseHomeItem("Python", "Descript for python", R.drawable.course_python));
-        lstCourses.add(new CourseHomeItem("JavaScript", "Descript for javascript", R.drawable.course_javascript));
-      */
 
         getAllCourses();
         homeRecycleView = rootView.findViewById(R.id.list_course);

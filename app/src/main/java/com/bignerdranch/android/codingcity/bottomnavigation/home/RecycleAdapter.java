@@ -16,7 +16,10 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
+/**
+ * This is a adapter for recycleview
+ * @author Ruize Nie, Akshay Singh
+ */
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHolder>{
 
     Context context ;
@@ -32,25 +35,25 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
     public RecycleAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.list_course_item,parent,false);
 
-        view.setOnClickListener(new View.OnClickListener() {
-
-            //TODO LINK TO COURSE CONTENT
-            @Override
-            public void onClick(View v) {
-                Intent course = new Intent(context, CourseContent.class);
-                context.startActivity(course);
-            }
-        });
         return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecycleAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecycleAdapter.MyViewHolder holder, final int position) {
         holder.TvTitle.setText(mData.get(position).getCourseName());
         holder.Descrip.setText(mData.get(position).getCourseDescription());
         String uri = mData.get(position).getCourseImageUrl();
         int icon = context.getResources().getIdentifier(uri, "drawable", context.getPackageName());
         holder.ImgMovie.setImageResource(icon);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent course = new Intent(context, CourseContent.class);
+                course.putExtra("courseId", mData.get(position).getCourseId());
+                context.startActivity(course);
+            }
+        });
     }
 
     @Override
