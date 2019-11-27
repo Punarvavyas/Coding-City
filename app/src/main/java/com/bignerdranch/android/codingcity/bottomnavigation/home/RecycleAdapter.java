@@ -31,6 +31,8 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
     public RecycleAdapter.MyViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.list_course_item,parent,false);
         view.setOnClickListener(new View.OnClickListener() {
+
+            //TODO LINK TO COURSE CONTENT
             @Override
             public void onClick(View v) {
                 Intent course = new Intent(context, CourseContent.class);
