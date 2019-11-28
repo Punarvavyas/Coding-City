@@ -159,16 +159,6 @@ public class CourseContent extends AppCompatActivity {
             inflater = LayoutInflater.from(getApplicationContext());
             View thisView = View.inflate(parent.getContext(), R.layout.list_lesson_item, null);
             TextView tvLessonTitle = (TextView) thisView.findViewById(R.id.tv_title);
-            Button quiz =  thisView.findViewById(R.id.item_btn);
-
-            quiz.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //TODO parse the question into activiy
-                    Intent quizActivity = new Intent(getApplicationContext(), QuizActivity.class);
-                    startActivity(quizActivity);
-                }
-            });
             //TextView tvLessonText = (TextView) thisView.findViewById(R.id.tv_lesson_text);
 
             List<Lessons> lessonsList = lessons;

@@ -49,7 +49,6 @@ public class MyAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             view = LayoutInflater.from(mContext).inflate(R.layout.list_lesson_item, null);
             viewHolder.mTextView = (TextView) view.findViewById(R.id.tv_title);
-            viewHolder.mButton = (Button) view.findViewById(R.id.item_btn);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
