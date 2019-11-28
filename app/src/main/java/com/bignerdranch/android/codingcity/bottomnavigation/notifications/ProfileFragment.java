@@ -1,21 +1,15 @@
 package com.bignerdranch.android.codingcity.bottomnavigation.notifications;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,17 +20,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
-import com.bignerdranch.android.codingcity.MainActivity;
 import com.bignerdranch.android.codingcity.R;
-import com.bignerdranch.android.codingcity.authentication.UserLogin;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -57,8 +46,6 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 import static android.app.Activity.RESULT_CANCELED;
-import static android.app.Activity.RESULT_OK;
-import static com.firebase.ui.auth.AuthUI.TAG;
 import static com.firebase.ui.auth.AuthUI.getInstance;
 
 public class ProfileFragment extends Fragment {
@@ -83,7 +70,8 @@ public class ProfileFragment extends Fragment {
   //set image directory path as firebase path..
   private static final String IMAGE_DIRECTORY = "/sample_images";
   private int GALLERY = 1, CAMERA = 2;
-  final FirebaseUser CurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+  final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
   //    Intent intent = Intent.getIntent();
   DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
@@ -94,7 +82,8 @@ public class ProfileFragment extends Fragment {
 
   public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-    //    profileViewModel =
+
+      //    profileViewModel =
     //            ViewModelProviders.of(this).get(ProfileViewModel.class);
       View root = inflater.inflate(R.layout.fragment_profile, container, false);
      //   final TextView textView = root.findViewById(R.id.text_profile);
@@ -119,7 +108,7 @@ public class ProfileFragment extends Fragment {
     // created firebase instance
     //            .child(intent.getStringExtra("name"));
       //to print user name from firebase
-    if(CurrentUser==null)
+    if(currentUser ==null)
     {
 //put default values n give sign in button
 //      user_image.setImageURI(Uri.parse("https://picsum.photos/id/975/200/200"));
@@ -131,8 +120,8 @@ public class ProfileFragment extends Fragment {
     else {
 //      editedName.setVisibility(View.GONE);
 //      editedEmail.setVisibility(View.GONE);
-      user_image.setImageURI(CurrentUser.getPhotoUrl());
-      if(CurrentUser.getPhotoUrl()== null)
+      user_image.setImageURI(currentUser.getPhotoUrl());
+      if(currentUser.getPhotoUrl()== null)
       {
         user_image.setImageURI(Uri.parse("@drawable/baseline_account_circle_black_48"));
       }
@@ -140,9 +129,9 @@ public class ProfileFragment extends Fragment {
 //      String imageUrl = "https://via.placeholder.com/500";
 
       //Loading image using Picasso
-      Picasso.get().load(CurrentUser.getPhotoUrl()).into(user_image);
-      user_Name.setText(CurrentUser.getDisplayName());
-      Email.setText(CurrentUser.getEmail());
+      Picasso.get().load(currentUser.getPhotoUrl()).into(user_image);
+      user_Name.setText(currentUser.getDisplayName());
+      Email.setText(currentUser.getEmail());
 
 
 //      scoreboard.setOnClickListener(new View.OnClickListener() {
@@ -194,9 +183,18 @@ public class ProfileFragment extends Fragment {
 
 
         //push the updated data into firebase
+            Log.e("some", Email.getText().toString());
+          currentUser.updateEmail(Email.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+              @Override
+              public void onComplete(@NonNull Task<Void> task) {
+                  Log.e("a", task.getException().toString());
+              }
 
-          myRef.child(CurrentUser.getUid()).child("name").setValue(Name);
-          myRef.child(CurrentUser.getUid()).child("email").setValue(emailId);
+
+          });
+
+          myRef.child(currentUser.getUid()).child("name").setValue(user_Name.getText().toString());
+          myRef.child(currentUser.getUid()).child("email").setValue(Email.getText().toString());
 
         }
       });
@@ -213,7 +211,7 @@ public class ProfileFragment extends Fragment {
       Delete_acc.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-          CurrentUser.delete();
+          currentUser.delete();
         }
       });
     }
@@ -283,7 +281,7 @@ public class ProfileFragment extends Fragment {
       Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
       edit_image.setImageBitmap(thumbnail);
       saveImage(thumbnail);
-      myRef.child(CurrentUser.getUid()).child("profileImageUri").setValue(thumbnail);
+      myRef.child(currentUser.getUid()).child("profileImageUri").setValue(thumbnail);
       Toast.makeText(getActivity(), "Image Saved!", Toast.LENGTH_SHORT).show();
     }
   }
@@ -352,4 +350,15 @@ public class ProfileFragment extends Fragment {
             .check();
   }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+//        myRef.child(currentUser.getUid()).child("name").setValue(user_Name.getText().toString());
+//        myRef.child(currentUser.getUid()).child("email").setValue(Email.getText().toString());
+//        user_Name.setText((myRef.child(currentUser.getUid()).child("name").getKey()));
+        user_Name.setText(currentUser.getDisplayName());
+        Email.setText(currentUser.getEmail());
+//        Email.setText(myRef.child(currentUser.getUid()).child("email").toString());
+        Log.e("reached on resume","onresume");
+    }
 }
