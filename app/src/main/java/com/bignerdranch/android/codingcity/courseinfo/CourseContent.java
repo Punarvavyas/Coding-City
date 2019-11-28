@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bignerdranch.android.codingcity.R;
 
 import com.bignerdranch.android.codingcity.enrollment.Course;
+import com.bignerdranch.android.codingcity.quizinfo.QuizActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -243,13 +244,15 @@ public class CourseContent extends AppCompatActivity {
             } else {
                 v = convertView;
             }
-            TextView tv = v.findViewById(R.id.qz_tv);
-            tv.setText(quizList.get(position));
+            //TextView tv = v.findViewById(R.id.qz_tv);
+            //tv.setText(quizList.get(position));
             Button bt = v.findViewById(R.id.qz_button);
             bt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.e("blah", "blah!!!!!!!!!!!!!");
+                    //TODO PASS The INTENT HERE
+                    Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
+                    startActivity(intent);
                 }
             });
             return v;
