@@ -100,13 +100,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser user = mAuth.getCurrentUser();
-        if(user != null) {
-            Intent toHome = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(toHome);
-            finish();
-        }
+    public void onBackPressed() {
+        super.onBackPressed();
+
     }
 }

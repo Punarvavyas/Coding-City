@@ -217,7 +217,12 @@
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
     <Button
+
         android:id="@+id/btn_switch_account"
         android:layout_marginTop="20dp"
         android:layout_height="60dp"
@@ -226,11 +231,5 @@
         android:layout_width="380dp"
         android:text="Switch Account"/>
 
-    <Button
-        android:layout_height="60dp"
-        android:textSize="18dp"
-        android:layout_gravity="center"
-        android:layout_width="380dp"
-        android:text="Log Out"/>
 
 </LinearLayout>
