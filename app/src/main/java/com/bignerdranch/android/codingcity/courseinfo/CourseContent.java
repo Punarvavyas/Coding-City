@@ -15,14 +15,15 @@ import android.widget.TextView;
 
 import com.bignerdranch.android.codingcity.R;
 
+import com.bignerdranch.android.codingcity.enrollment.Course;
 import com.google.android.material.tabs.TabLayout;
-import com.bignerdranch.android.codingcity.quizinfo.QuizActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,15 +38,24 @@ public class CourseContent extends AppCompatActivity {
 
     List<Lessons> courseLessons = new ArrayList<>();
     ListView listView;
+    ListView quizListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_content);
         listView = (ListView) findViewById(R.id.list_lesson);
-        final ListView quizListView = (ListView) findViewById(R.id.quiz_list);
+        quizListView = (ListView) findViewById(R.id.quiz_list);
         listView.setDivider(null);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), LessonContent.class);
+                intent.putExtra("lessonContent", courseLessons.get(position).getLessonText());
+                startActivity(intent);
+            }
+        });
+        quizListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), LessonContent.class);
@@ -66,7 +76,6 @@ public class CourseContent extends AppCompatActivity {
                             listView.setVisibility(View.GONE);
                             quizListView.setVisibility(View.VISIBLE);
                             break;
-
                 }
             }
 
@@ -94,6 +103,27 @@ public class CourseContent extends AppCompatActivity {
                 populateLessonContent(dataSnapshot);
                 CourseContentAdapter adapter = getCourseContentAdapter();
                 listView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        DatabaseReference myRefQuiz = rootDatabase.child("courses").child(intent.getStringExtra("courseId")).child("quiz");
+        myRefQuiz.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<String> str = new ArrayList<>();
+                for(DataSnapshot x : dataSnapshot.getChildren()){
+                    str.add(x.getValue().toString());
+                }
+                QuizListAdapter qz = new QuizListAdapter(getApplicationContext(), str, str.size());
+                quizListView.setAdapter(qz);
+
+//                populateQuizContent(dataSnapshot);
+//                CourseContentAdapter adapter = getCourseContentAdapter();
+//                listView.setAdapter(adapter);
             }
 
             @Override
@@ -168,6 +198,61 @@ public class CourseContent extends AppCompatActivity {
             tvLessonTitle.setText(lesson_topic);
             //tvLessonText.setText(lesson_text);
             return thisView;
+        }
+    }
+
+    private class QuizListAdapter extends BaseAdapter {
+
+        Context context;
+        ArrayList<String> quizList;
+        LayoutInflater inflater;
+        int listSize;
+
+        QuizListAdapter(Context context, ArrayList<String> courseList, int size) {
+            this.context = context;
+            this.quizList = courseList;
+            this.listSize = size;
+            inflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        //How many items are in the data set represented by this Adapter.
+        public int getCount() {
+            return listSize;
+        }
+
+        @Override
+        //Get the data item associated with the specified position in the data set.
+        public Object getItem(int position) {
+            return quizList.get(position);
+        }
+
+        @Override
+        //Get the row id associated with the specified position in the list.
+        public long getItemId(int position) {
+            return 0; //courseList.get(position).getId();
+        }
+
+        @Override
+        //Get a View that displays the data at the specified position in the data set.
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View v;
+            if (convertView == null) {
+                v = View.inflate(parent.getContext(), R.layout.quiz_list_item, null);
+            } else {
+                v = convertView;
+            }
+            TextView tv = v.findViewById(R.id.qz_tv);
+            tv.setText(quizList.get(position));
+            Button bt = v.findViewById(R.id.qz_button);
+            bt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.e("blah", "blah!!!!!!!!!!!!!");
+                }
+            });
+            return v;
         }
     }
 }

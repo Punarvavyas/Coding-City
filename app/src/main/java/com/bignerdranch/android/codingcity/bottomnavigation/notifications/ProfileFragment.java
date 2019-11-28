@@ -83,10 +83,7 @@ public class ProfileFragment extends Fragment {
   //set image directory path as firebase path..
   private static final String IMAGE_DIRECTORY = "/sample_images";
   private int GALLERY = 1, CAMERA = 2;
-  UserLogin mInstance = UserLogin.getInstance(getContext());
-  //get the current user from firebase
   final FirebaseUser CurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-
 
   //    Intent intent = Intent.getIntent();
   DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
