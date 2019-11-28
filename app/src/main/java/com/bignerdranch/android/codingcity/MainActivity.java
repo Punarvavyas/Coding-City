@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //help = findViewById(R.id.button_help);
+
 //        help.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -115,4 +116,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }

@@ -36,5 +36,6 @@
         <activity android:name=".courseinfo.LessonContent"/>
         <activity android:name=".quizinfo.QuizActivity" />
         <activity android:name=".Help"/>
+        <activity android:name=".bottomnavigation.notifications.RemoveCourses"/>
     </application>
 </manifest>
