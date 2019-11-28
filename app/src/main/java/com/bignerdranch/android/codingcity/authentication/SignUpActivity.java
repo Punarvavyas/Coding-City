@@ -32,7 +32,7 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private RadioButton radio;
     private ProgressBar progressBar;
-    DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference rootDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.signup_progressBar);
         progressBar.setVisibility(View.INVISIBLE);
         mAuth = FirebaseAuth.getInstance();
+        rootDatabase = FirebaseDatabase.getInstance().getReference();
 
         regBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -80,10 +81,12 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
+                            rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("courses").child("starter").setValue("");
                             showMessage("Account created");
                             progressBar.setVisibility(View.INVISIBLE);
                             Intent toSignUp = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(toSignUp);
+
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("courses").child("starter").setValue("");
                             
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("name").setValue(
