@@ -26,13 +26,5 @@
 <!--        android:singleLine="true"-->
 <!--        android:textColor="#999999"/>-->
 
-    <Button
-        android:focusable="false"
-        android:id="@+id/item_btn"
-        android:layout_marginRight="10dp"
-        android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quiz"/>
 
 </RelativeLayout>

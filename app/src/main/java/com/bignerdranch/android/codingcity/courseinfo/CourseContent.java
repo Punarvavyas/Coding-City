@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bignerdranch.android.codingcity.R;
+
+import com.google.android.material.tabs.TabLayout;
 import com.bignerdranch.android.codingcity.quizinfo.QuizActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,6 +43,7 @@ public class CourseContent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_content);
         listView = (ListView) findViewById(R.id.list_lesson);
+        final ListView quizListView = (ListView) findViewById(R.id.quiz_list);
         listView.setDivider(null);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
@@ -48,6 +51,33 @@ public class CourseContent extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), LessonContent.class);
                 intent.putExtra("lessonContent", courseLessons.get(position).getLessonText());
                 startActivity(intent);
+            }
+        });
+        TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Log.e("Course Content", String.valueOf(tab.getPosition()));
+                switch(tab.getPosition()) {
+                    case 0: quizListView.setVisibility(View.GONE);
+                        listView.setVisibility(View.VISIBLE);
+                        break;
+                    case 1: Log.e("holla", "amigo");
+                            listView.setVisibility(View.GONE);
+                            quizListView.setVisibility(View.VISIBLE);
+                            break;
+
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
     }
@@ -129,16 +159,6 @@ public class CourseContent extends AppCompatActivity {
             inflater = LayoutInflater.from(getApplicationContext());
             View thisView = View.inflate(parent.getContext(), R.layout.list_lesson_item, null);
             TextView tvLessonTitle = (TextView) thisView.findViewById(R.id.tv_title);
-            Button quiz =  thisView.findViewById(R.id.item_btn);
-
-            quiz.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //TODO parse the question into activiy
-                    Intent quizActivity = new Intent(getApplicationContext(), QuizActivity.class);
-                    startActivity(quizActivity);
-                }
-            });
             //TextView tvLessonText = (TextView) thisView.findViewById(R.id.tv_lesson_text);
 
             List<Lessons> lessonsList = lessons;
@@ -150,6 +170,4 @@ public class CourseContent extends AppCompatActivity {
             return thisView;
         }
     }
-
-
 }
