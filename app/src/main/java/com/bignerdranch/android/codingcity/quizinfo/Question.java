@@ -6,19 +6,19 @@ package com.bignerdranch.android.codingcity.quizinfo;
  */
 public class Question {
 
-    private int mTextResId;
+    private String mTextResId;
     private boolean mAnswerTrue;
 
-    public Question(int textResId, boolean answerTrue){
+    public Question(String textResId, boolean answerTrue){
         mTextResId = textResId;
         mAnswerTrue = answerTrue;
     }
 
-    public int getTextResId() {
+    public String getTextResId() {
         return mTextResId;
     }
 
-    public void setTextResId(int textResId) {
+    public void setTextResId(String textResId) {
         mTextResId = textResId;
     }
 

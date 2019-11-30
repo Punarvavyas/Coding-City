@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,9 +13,14 @@ import android.widget.Toast;
 
 import com.bignerdranch.android.codingcity.R;
 import com.bignerdranch.android.codingcity.authentication.UserLogin;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,23 +31,64 @@ public class QuizActivity extends AppCompatActivity {
     private Button mTrueButton;
     private Button mFalseButton;
     public int  score=0;
+    public int i=0;
+    public Question[] mQuestionBank=new Question[5];
+
+
+
+
+  /*  DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference myRef = rootDatabase.child("courses").child("c1001").child("quiz").child("quiz1");
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        System.out.println("hello");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Log.e(postSnapshot.getKey(),"hi");
+                    Log.e(postSnapshot.getValue().toString(),"value");
+                    boolean m=true;
+               //    Question mQuestionBank[i]= new Question(postSnapshot.getKey(),m);
+                  //  mQuestionBank[i] = new Question(postSnapshot.getKey(),m);
+                    i++;
+
+                    Log.e(Integer.toString(i),"ds");
+
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }*/
+
+ /*   private Question[] mQuestionBank = new Question[]{
+            new Question("", true),
+            new Question("", false),
+            new Question("", false),
+            new Question("", true),
+            new Question("", true),
+    };*/
+
+
 
 
     private TextView mQuestionTextView;
 
-    private Question[] mQuestionBank = new Question[]{
-            new Question(R.string.question_1, true),
-            new Question(R.string.question_2, false),
-            new Question(R.string.question_3, false),
-            new Question(R.string.question_4, true),
-            new Question(R.string.question_5, true),
-    };
 
     private int mCurrentIndex = 0;
 
     private void updateQuestion(){
-        int question = mQuestionBank[mCurrentIndex].getTextResId();
+        String question = mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
+        Log.e(Integer.toString(i),"ds");
     }
 
     private void checkAnswer(boolean userPressedTrue){
@@ -68,10 +115,47 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-
         mQuestionTextView = findViewById(R.id.question_text_view);
 
         mTrueButton = findViewById(R.id.true_button);
+
+        DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference myRef = rootDatabase.child("courses").child("c1001").child("quiz").child("quiz2");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                        Log.e(postSnapshot.getKey(), "hi");
+                        Log.e(postSnapshot.getValue().toString(), "value");
+                        boolean m;
+                        String s="True";
+                        if(postSnapshot.getValue().toString().equals(s)){
+                             m= true;
+                        }
+
+                        else{
+                             m = false;
+                        }
+
+                        //    Question mQuestionBank[i]= new Question(postSnapshot.getKey(),m);
+                        mQuestionBank[i] = new Question(postSnapshot.getKey(), m);
+                        i++;
+
+                        Log.e(Integer.toString(i), "ds");
+                        updateQuestion();
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,9 +165,16 @@ public class QuizActivity extends AppCompatActivity {
                     builder.setMessage("Your Score is: " + score).setTitle("Quiz result").setPositiveButton("OK", new DialogInterface.OnClickListener(){
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                         //  FirebaseDatabase database = FirebaseDatabase.getInstance();
+                           // DatabaseReference mRef = database.getReference().child("users");
+                          //  mRef.child(UserLogin.getInstance(getApplicationContext()).getUser().getUid()).child("score").setValue(Integer.toString(score));
+                          // mRef.child(UserLogin.getInstance(getApplicationContext()).getUser().getUid()).child("score").setValue(Integer.toString(score));
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference myRef = database.getReference().child("users");
-                            myRef.child(UserLogin.getInstance(getApplicationContext()).getUser().getUid()).child("quizzes").child("Quiz 1").setValue(Integer.toString(score));
+                            DatabaseReference mRef = database.getReference().child("users");
+                            //mRef.child(UserLogin.getInstance(getApplicationContext()).getUser().getUid()).child("score").setValue(Integer.toString(score));
+                            mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("score").setValue(Integer.toString(score));
+
+
                             finish();
 
 
@@ -114,10 +205,16 @@ public class QuizActivity extends AppCompatActivity {
                     builder.setMessage("Your Score is:" + score).setTitle("Quiz result").setPositiveButton("OK", new DialogInterface.OnClickListener(){
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                           FirebaseDatabase database = FirebaseDatabase.getInstance();
+                           DatabaseReference mRef = database.getReference().child("users");
+                            //mRef.child(UserLogin.getInstance(getApplicationContext()).getUser().getUid()).child("score").setValue(Integer.toString(score));
+                            mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("score").setValue(Integer.toString(score));
 
-                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+
+                          /*  FirebaseDatabase database = FirebaseDatabase.getInstance();
                             DatabaseReference myRef = database.getReference().child("users");
-                            myRef.child(UserLogin.getInstance(getApplicationContext()).getUser().getUid()).child("quizzes").child("Quiz 1").setValue(Integer.toString(score));
+                            myRef.child(UserLogin.getInstance(getApplicationContext()).getUser().getUid()).child("quizzes").child("Quiz 1").setValue(Integer.toString(score));*/
                             finish();
 
 
@@ -145,7 +242,7 @@ public class QuizActivity extends AppCompatActivity {
 
 
 
-        updateQuestion();
+        //updateQuestion();
     }
 
 }
