@@ -1,7 +1,6 @@
 package com.bignerdranch.android.codingcity.bottomnavigation.home;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,12 +58,12 @@ public class HomeFragment extends Fragment {
         indicator = rootView.findViewById(R.id.indicator);
         indicator.setupWithViewPager(mViewPager, true);
 
-        getAllCourses();
+        getEnrolledCourses();
         homeRecycleView = rootView.findViewById(R.id.list_course);
         return rootView;
     }
 
-    private void getAllCourses() {
+    private void getEnrolledCourses() {
         coursesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
