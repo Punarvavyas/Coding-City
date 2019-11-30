@@ -8,10 +8,12 @@ public class SlideItem {
 
     private int Image;
     private String title;
+    private String courseid;
 
-    public SlideItem(int image, String title) {
+    public SlideItem(int image, String title, String courseid) {
         Image = image;
         this.title = title;
+        this.courseid = courseid;
     }
 
     public int getImage() {
@@ -28,5 +30,9 @@ public class SlideItem {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getCourseid() {
+        return courseid;
     }
 }

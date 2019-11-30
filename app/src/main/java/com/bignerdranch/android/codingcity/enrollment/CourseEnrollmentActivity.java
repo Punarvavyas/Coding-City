@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bignerdranch.android.codingcity.R;
 import com.bignerdranch.android.codingcity.bean.MyAdapter;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,10 +50,8 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("courses").child(courseId).setValue("");
-                if (courseData.child("isPremium").getValue().toString().equals("0")) {
-                    Toast.makeText(CourseEnrollmentActivity.this, "You have been enrolled in this course", Toast.LENGTH_LONG);
-                }
-                else {
+                Toast.makeText(CourseEnrollmentActivity.this, "You have been enrolled in this course", Toast.LENGTH_LONG);
+                if (courseData.child("isPremium").getValue().toString().equals("1")) {
                     Intent intent = new Intent(getApplicationContext(), Payments.class);
                     startActivity(intent);
                 }
@@ -81,6 +78,8 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
                 courseData = dataSnapshot;
                 ImageView img = findViewById(R.id.enroll_img);
                 img.setImageResource(R.drawable.javascript);
+                img.setImageResource(getResources().getIdentifier(dataSnapshot.child("courseImageUri").getValue().toString(), "drawable", getPackageName()));
+
                 TextView title = findViewById(R.id.enroll_title);
                 title.setText(dataSnapshot.child("courseName").getValue().toString());
                 TextView des = findViewById(R.id.enroll_description);

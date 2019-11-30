@@ -45,9 +45,9 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         lstSlides = new ArrayList<>();
-        lstSlides.add(new SlideItem(R.drawable.course_javascript,""));
-        lstSlides.add(new SlideItem(R.drawable.course_python,""));
-        lstSlides.add(new SlideItem(R.drawable.course_android,""));
+        lstSlides.add(new SlideItem(R.drawable.course_python,"", "c1001"));
+        lstSlides.add(new SlideItem(R.drawable.course_android, "", "c1005"));
+        lstSlides.add(new SlideItem(R.drawable.course_javascript,"", "c1002"));
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         mViewPager = rootView.findViewById(R.id.view_pager);

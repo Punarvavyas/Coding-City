@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -102,7 +103,7 @@ public class SearchActivity extends AppCompatActivity {
                     //TODO: img
                     courseData.add(new Course(postSnapshot.child("courseName").getValue().toString(),
                             postSnapshot.child("courseDescription").getValue().toString(), postSnapshot.child("courseName").getValue().toString(),
-                            "javascript", postSnapshot.child("courseId").getValue().toString()));
+                            postSnapshot.child("courseImageUri").getValue().toString(), postSnapshot.child("courseId").getValue().toString()));
                 }
                 listView.setAdapter(new CourseAdapter(SearchActivity.this, courseData, courseData.size()));
             }
@@ -161,6 +162,8 @@ public class SearchActivity extends AppCompatActivity {
             tv.setText(courseList.get(position).getName());
             TextView tv2  = v.findViewById(R.id.tv_description_course);
             tv2.setText(courseList.get(position).getDescription());
+            ImageView iv = v.findViewById(R.id.iv_course);
+            iv.setImageResource(getResources().getIdentifier(courseList.get(position).getImgSrc(), "drawable", getPackageName()));
             return v;
         }
     }
