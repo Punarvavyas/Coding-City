@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bignerdranch.android.codingcity.R;
 import com.bignerdranch.android.codingcity.quizinfo.QuizActivity;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -66,14 +67,12 @@ public class CourseContent extends AppCompatActivity {
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Log.e("Course Content", String.valueOf(tab.getPosition()));
                 switch (tab.getPosition()) {
                     case 0:
                         quizListView.setVisibility(View.GONE);
                         listView.setVisibility(View.VISIBLE);
                         break;
                     case 1:
-                        Log.e("holla", "amigo");
                         listView.setVisibility(View.GONE);
                         quizListView.setVisibility(View.VISIBLE);
                         break;
@@ -82,7 +81,6 @@ public class CourseContent extends AppCompatActivity {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
 
             @Override
@@ -111,15 +109,26 @@ public class CourseContent extends AppCompatActivity {
 
             }
         });
-        DatabaseReference myRefQuiz = rootDatabase.child("courses").child(intent.getStringExtra("courseId")).child("quiz");
+        DatabaseReference myRefQuiz = rootDatabase;
+        final String courseId = intent.getStringExtra("courseId");
         myRefQuiz.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<String> str = new ArrayList<>();
-                for (DataSnapshot x : dataSnapshot.getChildren()) {
-                    str.add(x.getValue().toString());
+                ArrayList<String> quizzesAttempted= new ArrayList<>();
+                DataSnapshot taken = dataSnapshot.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child("quizzes").child(courseId);
+                for (DataSnapshot x : taken.getChildren()) {
+                    quizzesAttempted.add(x.getKey().toString());
                 }
-                QuizListAdapter qz = new QuizListAdapter(getApplicationContext(), str, str.size());
+                Log.e("dash", quizzesAttempted.toString());
+
+                DataSnapshot ds = dataSnapshot.child("courses").child(getIntent().getStringExtra("courseId"))
+                        .child("quiz");
+                ArrayList<String> quizIds= new ArrayList<>();
+                for (DataSnapshot x : ds.getChildren()) {
+                    quizIds.add(x.getKey());
+                }
+                QuizListAdapter qz = new QuizListAdapter(getApplicationContext(), quizIds, quizIds.size(), courseId, quizzesAttempted);
                 quizListView.setAdapter(qz);
 
 //                populateQuizContent(dataSnapshot);
@@ -138,7 +147,6 @@ public class CourseContent extends AppCompatActivity {
         courseLessons.clear();
         for (DataSnapshot data : dataSnapshot.child("courseContents").getChildren()) {
             String key = data.getKey();
-            Log.e("lessons", key);
             for (DataSnapshot topics : data.getChildren()) {
                 String topic = topics.getKey();
                 String topic_content = topics.getValue().toString();
@@ -159,14 +167,12 @@ public class CourseContent extends AppCompatActivity {
         LayoutInflater inflater;
         int limit;
 
-        public CourseContentAdapter(Context context, List<Lessons> localLessons, int size) {
+        public CourseContentAdapter(Context context, List<Lessons> localLessons, int size ) {
             context = context;
             lessons = localLessons;
             limit = size;
             if (lessons != null) {
-                Log.e("CourseContentAdapter", "lessons is null");
             } else {
-                Log.e("CourseContentAdapter", "lessons is not null, size = " + limit);
             }
         }
 
@@ -208,11 +214,15 @@ public class CourseContent extends AppCompatActivity {
         ArrayList<String> quizList;
         LayoutInflater inflater;
         int listSize;
+        String courseId;
+        ArrayList<String> quizzesAttempted;
 
-        QuizListAdapter(Context context, ArrayList<String> courseList, int size) {
+        QuizListAdapter(Context context, ArrayList<String> courseList, int size, String courseIdTemp, ArrayList quizAttemptedTemp) {
             this.context = context;
             this.quizList = courseList;
             this.listSize = size;
+            courseId = courseIdTemp;
+            quizzesAttempted = quizAttemptedTemp;
             inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
@@ -237,21 +247,26 @@ public class CourseContent extends AppCompatActivity {
 
         @Override
         //Get a View that displays the data at the specified position in the data set.
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             View v;
             if (convertView == null) {
                 v = View.inflate(parent.getContext(), R.layout.quiz_list_item, null);
             } else {
                 v = convertView;
             }
-            //TextView tv = v.findViewById(R.id.qz_tv);
-            //tv.setText(quizList.get(position));
+            TextView tv = v.findViewById(R.id.quiz_tv);
+            tv.setText(quizList.get(position));
             Button bt = v.findViewById(R.id.qz_button);
+            if(quizzesAttempted.contains(quizList.get(position))) {
+                bt.setEnabled(false);
+            }
             bt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //TODO PASS The INTENT HERE
                     Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
+                    intent.putExtra("quizId", quizList.get(position));
+                    intent.putExtra("courseId", courseId);
                     startActivity(intent);
                 }
             });
