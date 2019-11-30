@@ -2,6 +2,7 @@ package com.bignerdranch.android.codingcity.quizinfo;
 
 /**
  * This is the Quiz item which can used for create quiz question
+ *
  * @author Ruize Nie
  */
 public class Question {
@@ -9,7 +10,7 @@ public class Question {
     private int mTextResId;
     private boolean mAnswerTrue;
 
-    public Question(int textResId, boolean answerTrue){
+    public Question(int textResId, boolean answerTrue) {
         mTextResId = textResId;
         mAnswerTrue = answerTrue;
     }

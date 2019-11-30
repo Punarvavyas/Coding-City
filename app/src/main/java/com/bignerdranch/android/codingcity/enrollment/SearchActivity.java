@@ -53,7 +53,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), CourseEnrollmentActivity.class);
-                intent.putExtra("courseId", courseData.get(position).getId());
+                intent.putExtra("courseId", courseFilteredData.get(position).getId());
                 startActivity(intent);
             }
         });
@@ -78,6 +78,7 @@ public class SearchActivity extends AppCompatActivity {
                         courseFilteredData.add(x);
                     }
                 }
+
                 courseAdpaterData = new CourseAdapter(SearchActivity.this, courseFilteredData, courseFilteredData.size());
                 listView.setAdapter(courseAdpaterData);
                 courseAdpaterData.notifyDataSetChanged();
@@ -95,6 +96,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        courseData = new ArrayList<>();
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -105,7 +107,8 @@ public class SearchActivity extends AppCompatActivity {
                             postSnapshot.child("courseDescription").getValue().toString(), postSnapshot.child("courseName").getValue().toString(),
                             postSnapshot.child("courseImageUri").getValue().toString(), postSnapshot.child("courseId").getValue().toString()));
                 }
-                listView.setAdapter(new CourseAdapter(SearchActivity.this, courseData, courseData.size()));
+                courseFilteredData = courseData;
+                listView.setAdapter(new CourseAdapter(SearchActivity.this, courseFilteredData, courseData.size()));
             }
 
             @Override
@@ -160,7 +163,7 @@ public class SearchActivity extends AppCompatActivity {
             }
             TextView tv = v.findViewById(R.id.tv_title_course);
             tv.setText(courseList.get(position).getName());
-            TextView tv2  = v.findViewById(R.id.tv_description_course);
+            TextView tv2 = v.findViewById(R.id.tv_description_course);
             tv2.setText(courseList.get(position).getDescription());
             ImageView iv = v.findViewById(R.id.iv_course);
             iv.setImageResource(getResources().getIdentifier(courseList.get(position).getImgSrc(), "drawable", getPackageName()));

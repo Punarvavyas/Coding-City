@@ -1,10 +1,15 @@
 package com.bignerdranch.android.codingcity.bottomnavigation.home;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bignerdranch.android.codingcity.R;
 import com.bignerdranch.android.codingcity.courseinfo.Course;
@@ -18,36 +23,31 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-
 /**
  * This is the home page which show what course we have right now
+ *
  * @author Ruize Nie, Akshay Singh
  */
 public class HomeFragment extends Fragment {
 
-    private ViewPager mViewPager;
-    private List<SlideItem> lstSlides;
-    private TabLayout indicator;
-    private RecyclerView homeRecycleView;
     ArrayList<Course> courseData = new ArrayList<>();
     DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
     //show specific course that user registered
     DatabaseReference coursesRef = rootDatabase.child("courses");
     //check the enrollment status
     DatabaseReference userRef = rootDatabase.child("users");
+    private ViewPager mViewPager;
+    private List<SlideItem> lstSlides;
+    private TabLayout indicator;
+    private RecyclerView homeRecycleView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         lstSlides = new ArrayList<>();
-        lstSlides.add(new SlideItem(R.drawable.course_python,"", "c1001"));
+        lstSlides.add(new SlideItem(R.drawable.course_python, "", "c1001"));
         lstSlides.add(new SlideItem(R.drawable.course_android, "", "c1005"));
-        lstSlides.add(new SlideItem(R.drawable.course_javascript,"", "c1002"));
+        lstSlides.add(new SlideItem(R.drawable.course_javascript, "", "c1002"));
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         mViewPager = rootView.findViewById(R.id.view_pager);
@@ -55,19 +55,19 @@ public class HomeFragment extends Fragment {
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         mViewPager.setAdapter(myadapter);
         indicator = rootView.findViewById(R.id.indicator);
-        indicator.setupWithViewPager(mViewPager,true);
+        indicator.setupWithViewPager(mViewPager, true);
 
         getAllCourses();
         homeRecycleView = rootView.findViewById(R.id.list_course);
         return rootView;
     }
 
-    private void getAllCourses(){
+    private void getAllCourses() {
         coursesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 courseData.clear();
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     String courseId = postSnapshot.child("courseId").getValue().toString().trim();
 
                     courseData.add(

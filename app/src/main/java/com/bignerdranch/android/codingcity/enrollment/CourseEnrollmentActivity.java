@@ -1,10 +1,14 @@
 package com.bignerdranch.android.codingcity.enrollment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -23,26 +27,25 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CourseEnrollmentActivity extends AppCompatActivity {
 
-    private List<String> mList = new ArrayList<>();
     DataSnapshot courseData;
     DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
     FirebaseAuth mAuth;
     String courseId;
-
+    ListView listView;
+    private ArrayList<String> mList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_enrollment);
-        ListView listView = findViewById(R.id.enrollment_page_content_listview);
+        listView = findViewById(R.id.enrollment_page_content_listview);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        final MyAdapter adapter = new MyAdapter(this, mList);
+        LessonAdapter adapter = new LessonAdapter(this, mList, mList.size());
         listView.setAdapter(adapter);
         Button btn = findViewById(R.id.enroll_button);
         mAuth = FirebaseAuth.getInstance();
@@ -93,7 +96,17 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
                     enroll.setText("Buy $3");
                 }
                 courseId = dataSnapshot.child("courseId").getValue().toString();
-}
+                ArrayList<String> courseLessons = new ArrayList<>();
+                for (DataSnapshot data : dataSnapshot.child("courseContents").getChildren()) {
+                    String key = data.getKey();
+                    for (DataSnapshot topics : data.getChildren()) {
+                        String topic = topics.getKey();
+                        courseLessons.add(topic);
+                    }
+                }
+                listView.setAdapter(new LessonAdapter(getApplicationContext(), courseLessons, courseLessons.size()));
+
+            }
 
             @Override
             public void onCancelled(DatabaseError error) {
@@ -101,5 +114,53 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
                 Log.e("main activity", "Failed to read value.", error.toException());
             }
         });
+    }
+
+    private class LessonAdapter extends BaseAdapter {
+
+        Context context;
+        ArrayList<String> courseList;
+        LayoutInflater inflater;
+        int listSize;
+
+        LessonAdapter(Context context, ArrayList<String> courseList, int size) {
+            this.context = context;
+            this.courseList = courseList;
+            this.listSize = size;
+            inflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        //How many items are in the data set represented by this Adapter.
+        public int getCount() {
+            return listSize;
+        }
+
+        @Override
+        //Get the data item associated with the specified position in the data set.
+        public Object getItem(int position) {
+            return courseList.get(position);
+        }
+
+        @Override
+        //Get the row id associated with the specified position in the list.
+        public long getItemId(int position) {
+            return 0; //courseList.get(position).getId();
+        }
+
+        @Override
+        //Get a View that displays the data at the specified position in the data set.
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View v;
+            if (convertView == null) {
+                v = View.inflate(parent.getContext(), R.layout.lesson_enrollment_item, null);
+            } else {
+                v = convertView;
+            }
+            TextView tv = v.findViewById(R.id.lesson_item_tv);
+            tv.setText(courseList.get(position));
+            return v;
+        }
     }
 }

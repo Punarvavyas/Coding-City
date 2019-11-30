@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,6 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 public class RemoveCourses extends AppCompatActivity {
+    ArrayList<String> listKeys = new ArrayList<String>();
+    ArrayAdapter<String> adapter;
     private ListView dataListView;
     //   check the use later on for edittext
     private EditText itemText;
@@ -33,25 +34,21 @@ public class RemoveCourses extends AppCompatActivity {
     private Boolean searchMode = false;
     private Boolean itemSelected = false;
     private int selectedPosition = 0;
-
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference dbRef = database.getReference().child("courses");
     private ArrayList<String> listItems = new ArrayList<String>();
-    ArrayList<String> listKeys = new ArrayList<String>();
-    ArrayAdapter<String> adapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.remove_courses);
         listItems.add("CSCI 5408");
-        dataListView = (ListView) findViewById(R.id.list);
+        dataListView = findViewById(R.id.list);
 //        itemText = (EditText) findViewById(R.id.itemText);
 //        findButton = (Button) findViewById(R.id.findButton);
-        deleteButton = (Button) findViewById(R.id.remove);
+        deleteButton = findViewById(R.id.remove);
         deleteButton.setEnabled(false);
-        addButton = (Button) findViewById(R.id.add);
+        addButton = findViewById(R.id.add);
 
         adapter = new ArrayAdapter<String>(this,
                 R.layout.remove_course_list_item,

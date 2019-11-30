@@ -8,25 +8,24 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.viewpager.widget.PagerAdapter;
+
 import com.bignerdranch.android.codingcity.R;
 import com.bignerdranch.android.codingcity.enrollment.CourseEnrollmentActivity;
 
 import java.util.List;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.viewpager.widget.PagerAdapter;
-
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
-
 
 /**
  * This is pager adapter for slide show in home dashboard
+ *
  * @author Ruize Nie
  */
 public class ViewPagerAdapter extends PagerAdapter {
     Context context;
-    private List<SlideItem> mList ;
     LayoutInflater inflater;
+    private List<SlideItem> mList;
 
     public ViewPagerAdapter(Context context, List<SlideItem> mList) {
         this.context = context;
@@ -45,7 +44,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.layout_slide, container, false);
 
         ImageView imgslide = view.findViewById(R.id.slide_img);

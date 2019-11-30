@@ -11,6 +11,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bignerdranch.android.codingcity.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,10 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 public class LeaderboardActivity extends AppCompatActivity {
 
@@ -40,7 +40,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.leaderboard_content);
-        listView = (ListView) findViewById(R.id.lv_user_scores);
+        listView = findViewById(R.id.lv_user_scores);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class LeaderboardActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userDataList.clear();
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Log.e("userId", postSnapshot.getKey());
                     String userId = postSnapshot.getKey().trim();
                     String userName = postSnapshot.child("name").getValue().toString().trim();
@@ -91,18 +91,19 @@ public class LeaderboardActivity extends AppCompatActivity {
         ArrayList<UserData> userDataList;
         LayoutInflater inflater;
         int limit;
-        LeaderBoardAdapter(Context mContext, ArrayList<UserData> usersList, int size){
+
+        LeaderBoardAdapter(Context mContext, ArrayList<UserData> usersList, int size) {
             this.context = mContext;
             this.userDataList = usersList;
             this.limit = size;
             Collections.sort(userDataList);
         }
 
-        private int getUserRank(String userId){
+        private int getUserRank(String userId) {
             int rank = -1;
             int index = 1;
-            for(UserData data : userDataList){
-                if(data.getUserId().equals(userId)){
+            for (UserData data : userDataList) {
+                if (data.getUserId().equals(userId)) {
                     rank = index;
                     break;
                 }
@@ -134,10 +135,10 @@ public class LeaderboardActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             inflater = LayoutInflater.from(getApplicationContext());
             View thisView = View.inflate(parent.getContext(), R.layout.list_leaderboard_item, null);
-            TextView tvRank = (TextView) thisView.findViewById(R.id.tv_rank);
-            TextView tvUserName = (TextView) thisView.findViewById(R.id.tv_username);
-            TextView tvScore = (TextView) thisView.findViewById(R.id.tv_score);
-            ImageView imageView = (ImageView) thisView.findViewById(R.id.iv_profile_picture);
+            TextView tvRank = thisView.findViewById(R.id.tv_rank);
+            TextView tvUserName = thisView.findViewById(R.id.tv_username);
+            TextView tvScore = thisView.findViewById(R.id.tv_score);
+            ImageView imageView = thisView.findViewById(R.id.iv_profile_picture);
 
             // User profile image
             String uri = userDataList.get(position).getUserProfileImage();

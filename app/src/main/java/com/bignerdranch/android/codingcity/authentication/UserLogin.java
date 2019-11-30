@@ -15,17 +15,17 @@ public class UserLogin {
     }
 
     public static synchronized UserLogin getInstance(Context context) {
-        if(mInstance == null ){
+        if (mInstance == null) {
             mInstance = new UserLogin(context.getApplicationContext());
         }
         return mInstance;
     }
 
-    public FirebaseUser getUser(){
+    public FirebaseUser getUser() {
         return user;
     }
 
-    public void setUser(FirebaseUser temp){
+    public void setUser(FirebaseUser temp) {
         user = temp;
     }
 

@@ -1,28 +1,17 @@
 package com.bignerdranch.android.codingcity.bottomnavigation.notifications;
 
-import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-
-import com.bignerdranch.android.codingcity.R;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.ResourceBundle;
+import com.bignerdranch.android.codingcity.R;
 
 public class ScoreTableActivity extends AppCompatActivity {
 
-        @Override
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
         TableLayout t1;

@@ -1,16 +1,11 @@
 package com.bignerdranch.android.codingcity.leaderboard;
 
-public class UserData implements Comparable<UserData>{
+public class UserData implements Comparable<UserData> {
 
     private String userId;
-
-    @Override
-    public int compareTo(UserData data) {
-        int compareScore = data.getUserScore();
-        return (compareScore - this.userScore);
-    }
-
     private String userName;
+    private int userScore;
+    private String userProfileImage;
 
     public UserData(String userId, String userName, int userScore, String userProfileImage) {
         this.userId = userId;
@@ -22,7 +17,11 @@ public class UserData implements Comparable<UserData>{
     public UserData() {
     }
 
-    private int userScore;
+    @Override
+    public int compareTo(UserData data) {
+        int compareScore = data.getUserScore();
+        return (compareScore - this.userScore);
+    }
 
     public String getUserId() {
         return userId;
@@ -55,6 +54,4 @@ public class UserData implements Comparable<UserData>{
     public void setUserProfileImage(String userProfileImage) {
         this.userProfileImage = userProfileImage;
     }
-
-    private String userProfileImage;
 }

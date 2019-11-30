@@ -1,8 +1,5 @@
 package com.bignerdranch.android.codingcity.authentication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +8,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bignerdranch.android.codingcity.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,16 +23,17 @@ import com.google.firebase.database.FirebaseDatabase;
 /**
  * This is Sign up page for create new account and upload the user information
  * to the google firebase
+ *
  * @author Ruize Nie
  */
 public class SignUpActivity extends AppCompatActivity {
 
+    DatabaseReference rootDatabase;
     private EditText userName, userEmail, userPassword;
     private Button regBtn;
     private FirebaseAuth mAuth;
     private RadioButton radio;
     private ProgressBar progressBar;
-    DatabaseReference rootDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         rootDatabase = FirebaseDatabase.getInstance().getReference();
 
-        regBtn.setOnClickListener(new View.OnClickListener(){
+        regBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 regBtn.setVisibility(View.INVISIBLE);
@@ -60,27 +61,27 @@ public class SignUpActivity extends AppCompatActivity {
                 final String password = userPassword.getText().toString();
                 final String name = userName.getText().toString();
 
-                if( email.isEmpty() || name.isEmpty() || password.isEmpty() || !radio.isChecked()) {
+                if (email.isEmpty() || name.isEmpty() || password.isEmpty() || !radio.isChecked()) {
                     showMessage("Please Verify all fields");
                     regBtn.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.INVISIBLE);
                 } else {
-                    CreateUserAccount(email,name,password);
+                    CreateUserAccount(email, name, password);
                 }
             }
         });
     }
 
     private void showMessage(String message) {
-        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
     private void CreateUserAccount(String email, final String name, String password) {
-        mAuth.createUserWithEmailAndPassword(email,password)
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
+                        if (task.isSuccessful()) {
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("courses").child("starter").setValue("");
                             showMessage("Account created");
                             progressBar.setVisibility(View.INVISIBLE);
@@ -88,13 +89,13 @@ public class SignUpActivity extends AppCompatActivity {
                             startActivity(toSignUp);
 
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("courses").child("starter").setValue("");
-                            
+
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("name").setValue(
-                                    mAuth.getCurrentUser().getDisplayName() == null || mAuth.getCurrentUser().getDisplayName() == ""?
-                                            "Dummy": mAuth.getCurrentUser().getDisplayName());
+                                    mAuth.getCurrentUser().getDisplayName() == null || mAuth.getCurrentUser().getDisplayName() == "" ?
+                                            "Dummy" : mAuth.getCurrentUser().getDisplayName());
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("email").setValue(mAuth.getCurrentUser().getEmail());
 
-                        }else{
+                        } else {
                             // account creation failed
                             showMessage("account creation failed" + task.getException().getMessage());
                             regBtn.setVisibility(View.VISIBLE);

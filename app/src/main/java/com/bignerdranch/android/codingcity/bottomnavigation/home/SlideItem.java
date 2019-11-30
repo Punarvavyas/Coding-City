@@ -2,6 +2,7 @@ package com.bignerdranch.android.codingcity.bottomnavigation.home;
 
 /**
  * This is Simple slide page which show in dashboard
+ *
  * @author Ruize Nie
  */
 public class SlideItem {

@@ -8,20 +8,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.PagerAdapter;
+
 import com.bignerdranch.android.codingcity.R;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.viewpager.widget.PagerAdapter;
-
 /**
  * This is the class to inflate the layout on view page
+ *
  * @author Ruize Nie
  */
 public class TutorialViewPagerAdapter extends PagerAdapter {
 
-    Context mContext ;
+    Context mContext;
     List<TutorialItem> mListItem;
 
     public TutorialViewPagerAdapter(Context mContext, List<TutorialItem> mList) {
@@ -33,7 +34,7 @@ public class TutorialViewPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View tutorial = inflater.inflate(R.layout.layout_tutorial,null);
+        View tutorial = inflater.inflate(R.layout.layout_tutorial, null);
 
         ImageView imgSlide = tutorial.findViewById(R.id.img_intro);
         TextView title = tutorial.findViewById(R.id.title_intro);
@@ -59,6 +60,6 @@ public class TutorialViewPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((View)object);
+        container.removeView((View) object);
     }
 }
