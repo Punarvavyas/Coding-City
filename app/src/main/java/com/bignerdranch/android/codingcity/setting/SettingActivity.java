@@ -1,8 +1,5 @@
 package com.bignerdranch.android.codingcity.setting;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,12 +8,16 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+
 import com.bignerdranch.android.codingcity.R;
 import com.bignerdranch.android.codingcity.authentication.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * This is the Setting page which show basic setting component
+ *
  * @author Ruize Nie
  */
 public class SettingActivity extends AppCompatActivity {
@@ -38,10 +39,10 @@ public class SettingActivity extends AppCompatActivity {
         mSwitchV = findViewById(R.id.vibration);
         mSwitchN = findViewById(R.id.notification);
 
-        privacy= findViewById(R.id.privacy);
-        documentation= findViewById(R.id.documentation);
-        aboutUs= findViewById(R.id.about_us);
-        feedback= findViewById(R.id.feedback);
+        privacy = findViewById(R.id.privacy);
+        documentation = findViewById(R.id.documentation);
+        aboutUs = findViewById(R.id.about_us);
+        feedback = findViewById(R.id.feedback);
         switchAccount = findViewById(R.id.btn_switch_account);
 
         switchAccount.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +97,7 @@ public class SettingActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = spv.edit();
                 editor.putBoolean("Status", switchStatusV);
                 editor.apply();
-                Toast.makeText(getApplicationContext(), "Vibration is "+switchStatusV, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Vibration is " + switchStatusV, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -108,7 +109,7 @@ public class SettingActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = spn.edit();
                 editor.putBoolean("Status", switchStatusN);
                 editor.apply();
-                Toast.makeText(getApplicationContext(), "Notification is "+switchStatusN, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Notification is " + switchStatusN, Toast.LENGTH_SHORT).show();
             }
         });
     }

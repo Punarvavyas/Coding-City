@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bignerdranch.android.codingcity.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,19 +26,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 public class CourseActivity extends AppCompatActivity {
 
     DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
     DatabaseReference myRef = rootDatabase.child("courses");
     ArrayList<Course> courseData = new ArrayList<>();
     ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
-        listView = (ListView) findViewById(R.id.lv_course_list);
+        listView = findViewById(R.id.lv_course_list);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -56,12 +57,12 @@ public class CourseActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 courseData.clear();
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Log.e("courseId", postSnapshot.child("courseId").getValue().toString());// values fetched
                     String courseId = postSnapshot.child("courseId").getValue().toString().trim();
 
-                    if(enrolledCourses != null){
-                        if(enrolledCourses.contains(courseId)){
+                    if (enrolledCourses != null) {
+                        if (enrolledCourses.contains(courseId)) {
                             courseData.add(
                                     new Course(
                                             courseId,
@@ -91,7 +92,8 @@ public class CourseActivity extends AppCompatActivity {
         ArrayList<Course> courseList;
         LayoutInflater inflater;
         int limit;
-        CourseAdapter(Context context, ArrayList<Course> courseList, int size){
+
+        CourseAdapter(Context context, ArrayList<Course> courseList, int size) {
             this.context = context;
             this.courseList = courseList;
             this.limit = size;
@@ -120,9 +122,9 @@ public class CourseActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             inflater = LayoutInflater.from(getApplicationContext());
             View thisView = View.inflate(parent.getContext(), R.layout.list_course_item, null);
-            TextView tvCourseName = (TextView) thisView.findViewById(R.id.tv_title_course);
-            TextView tvCourceDescription = (TextView) thisView.findViewById(R.id.tv_description_course);
-            ImageView imageView = (ImageView) thisView.findViewById(R.id.iv_course);
+            TextView tvCourseName = thisView.findViewById(R.id.tv_title_course);
+            TextView tvCourceDescription = thisView.findViewById(R.id.tv_description_course);
+            ImageView imageView = thisView.findViewById(R.id.iv_course);
             tvCourseName.setText(courseList.get(position).getCourseName());
             tvCourceDescription.setText(courseList.get(position).getCourseDescription());
             String uri = courseList.get(position).getCourseImageUrl();

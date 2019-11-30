@@ -2,14 +2,12 @@ package com.bignerdranch.android.codingcity;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class Help extends AppCompatActivity {
@@ -31,7 +29,7 @@ public class Help extends AppCompatActivity {
         setContentView(R.layout.activity_help);
 
         edittxt_help_queries = findViewById(R.id.edittxt_help_queries);
-        btnQuerySent= findViewById(R.id.btnQuerySent);
+        btnQuerySent = findViewById(R.id.btnQuerySent);
 
         btnQuerySent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,7 +37,7 @@ public class Help extends AppCompatActivity {
 
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"codingcity001@gmail.com"});
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"codingcity001@gmail.com"});
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Mail from app!");
                 intent.putExtra(Intent.EXTRA_TEXT, edittxt_help_queries.getText());
 

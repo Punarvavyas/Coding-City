@@ -1,8 +1,8 @@
 package com.bignerdranch.android.codingcity.enrollment;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bignerdranch.android.codingcity.R;
 import com.braintreepayments.cardform.view.CardForm;
@@ -14,7 +14,7 @@ public class Payments extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payments);
-        CardForm cardForm = (CardForm) findViewById(R.id.card_form);
+        CardForm cardForm = findViewById(R.id.card_form);
         cardForm.cardRequired(true)
                 .expirationRequired(true)
                 .cvvRequired(true)

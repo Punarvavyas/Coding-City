@@ -1,7 +1,6 @@
 package com.bignerdranch.android.codingcity.bottomnavigation.dashboard;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,15 +11,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.bignerdranch.android.codingcity.R;
-import com.bignerdranch.android.codingcity.courseinfo.CourseContent;
-import com.bignerdranch.android.codingcity.leaderboard.LeaderboardActivity;
 import com.bignerdranch.android.codingcity.leaderboard.UserData;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,21 +30,18 @@ import java.util.Collections;
 
 public class LeaderboardFragment extends Fragment {
 
-    private LeaderboardViewModel leaderboardViewModel;
     DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
     DatabaseReference userRef = rootDatabase.child("users");
-
-
     ArrayList<UserData> userDataList = new ArrayList<>();
     ListView listView;
-
+    private LeaderboardViewModel leaderboardViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         leaderboardViewModel =
                 ViewModelProviders.of(this).get(LeaderboardViewModel.class);
         View root = inflater.inflate(R.layout.leaderboard_content, container, false);
-        listView = (ListView) root.findViewById(R.id.lv_user_scores);
+        listView = root.findViewById(R.id.lv_user_scores);
 
         leaderboardViewModel.getText().observe(this, new Observer<String>() {
             @Override
@@ -66,7 +60,7 @@ public class LeaderboardFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userDataList.clear();
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Log.e("userId", postSnapshot.getKey());
                     String userId = postSnapshot.getKey().trim();
                     String userName = postSnapshot.child("name").getValue().toString().trim();
@@ -92,18 +86,19 @@ public class LeaderboardFragment extends Fragment {
         ArrayList<UserData> userDataList;
         LayoutInflater inflater;
         int limit;
-        LeaderBoardAdapter(Context mContext, ArrayList<UserData> usersList, int size){
+
+        LeaderBoardAdapter(Context mContext, ArrayList<UserData> usersList, int size) {
             this.context = mContext;
             this.userDataList = usersList;
             this.limit = size;
             Collections.sort(userDataList);
         }
 
-        private int getUserRank(String userId){
+        private int getUserRank(String userId) {
             int rank = -1;
             int index = 1;
-            for(UserData data : userDataList){
-                if(data.getUserId().equals(userId)){
+            for (UserData data : userDataList) {
+                if (data.getUserId().equals(userId)) {
                     rank = index;
                     break;
                 }
@@ -135,10 +130,10 @@ public class LeaderboardFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             inflater = LayoutInflater.from(getContext());
             View thisView = View.inflate(parent.getContext(), R.layout.list_leaderboard_item, null);
-            TextView tvRank = (TextView) thisView.findViewById(R.id.tv_rank);
-            TextView tvUserName = (TextView) thisView.findViewById(R.id.tv_username);
-            TextView tvScore = (TextView) thisView.findViewById(R.id.tv_score);
-            ImageView imageView = (ImageView) thisView.findViewById(R.id.iv_profile_picture);
+            TextView tvRank = thisView.findViewById(R.id.tv_rank);
+            TextView tvUserName = thisView.findViewById(R.id.tv_username);
+            TextView tvScore = thisView.findViewById(R.id.tv_score);
+            ImageView imageView = thisView.findViewById(R.id.iv_profile_picture);
 
             // User profile image
             String uri = userDataList.get(position).getUserProfileImage();

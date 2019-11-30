@@ -8,21 +8,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bignerdranch.android.codingcity.R;
 import com.bignerdranch.android.codingcity.courseinfo.Course;
 import com.bignerdranch.android.codingcity.courseinfo.CourseContent;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 /**
  * This is a adapter for recycleview
+ *
  * @author Ruize Nie, Akshay Singh
  */
-public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHolder>{
+public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHolder> {
 
-    Context context ;
+    Context context;
     List<Course> mData;
 
     public RecycleAdapter(Context context, List<Course> data) {
@@ -33,7 +35,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
     @NonNull
     @Override
     public RecycleAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.list_course_item,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.list_course_item, parent, false);
 
         return new MyViewHolder(view);
     }

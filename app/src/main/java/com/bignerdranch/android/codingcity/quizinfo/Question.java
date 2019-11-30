@@ -2,6 +2,7 @@ package com.bignerdranch.android.codingcity.quizinfo;
 
 /**
  * This is the Quiz item which can used for create quiz question
+ *
  * @author Ruize Nie
  */
 public class Question {
@@ -10,6 +11,8 @@ public class Question {
     private boolean mAnswerTrue;
 
     public Question(String textResId, boolean answerTrue){
+
+
         mTextResId = textResId;
         mAnswerTrue = answerTrue;
     }

@@ -4,6 +4,14 @@ public class Lessons {
     String lessonName;
     String lessonText;
 
+    public Lessons(String lessonName, String lessonText) {
+        this.lessonName = lessonName;
+        this.lessonText = lessonText;
+    }
+
+    public Lessons() {
+    }
+
     public String getLessonName() {
         return lessonName;
     }
@@ -18,13 +26,5 @@ public class Lessons {
 
     public void setLessonText(String lessonText) {
         this.lessonText = lessonText;
-    }
-
-    public Lessons(String lessonName, String lessonText) {
-        this.lessonName = lessonName;
-        this.lessonText = lessonText;
-    }
-
-    public Lessons() {
     }
 }

@@ -2,6 +2,7 @@ package com.bignerdranch.android.codingcity.tutorial;
 
 /**
  * This is the Tutorial Item using on the screen
+ *
  * @author Ruize Nie
  */
 public class TutorialItem {

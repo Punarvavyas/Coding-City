@@ -15,12 +15,14 @@ import java.util.List;
 
 /**
  * This is Adapter using for list view
+ *
  * @author Ruize Nie
  */
 public class MyAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<String> mList = new ArrayList<>();
+    private onItemClickListener mOnItemClickListener;
 
     public MyAdapter(Context context, List<String> list) {
         mContext = context;
@@ -48,7 +50,7 @@ public class MyAdapter extends BaseAdapter {
         if (view == null) {
             viewHolder = new ViewHolder();
             view = LayoutInflater.from(mContext).inflate(R.layout.list_lesson_item, null);
-            viewHolder.mTextView = (TextView) view.findViewById(R.id.tv_title);
+            viewHolder.mTextView = view.findViewById(R.id.tv_title);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
@@ -63,14 +65,12 @@ public class MyAdapter extends BaseAdapter {
         return view;
     }
 
-    public interface onItemClickListener {
-        void onLessonClick(int i);
-    }
-
-    private onItemClickListener mOnItemClickListener;
-
     public void setOnItemClickListener(onItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
+    }
+
+    public interface onItemClickListener {
+        void onLessonClick(int i);
     }
 
     class ViewHolder {

@@ -1,8 +1,5 @@
 package com.bignerdranch.android.codingcity.authentication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +8,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bignerdranch.android.codingcity.MainActivity;
 import com.bignerdranch.android.codingcity.R;
@@ -21,11 +21,12 @@ import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * This is the Login Page which check the authentication in firbase
+ *
  * @author Ruize Nie
  */
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText userMail,userPassword;
+    private EditText userMail, userPassword;
     private ProgressBar loginProgress;
     private FirebaseAuth mAuth;
     private TextView createAccount;
@@ -69,14 +70,14 @@ public class LoginActivity extends AppCompatActivity {
                     signIn.setVisibility(View.VISIBLE);
                     loginProgress.setVisibility(View.INVISIBLE);
                 } else {
-                    signIn(mail,password);
+                    signIn(mail, password);
                 }
             }
         });
     }
 
     private void showMessage(String text) {
-        Toast.makeText(getApplicationContext(),text,Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
     }
 
     private void signIn(String mail, String password) {
@@ -101,6 +102,5 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
     }
 }
