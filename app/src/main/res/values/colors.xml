@@ -20,4 +20,6 @@
     <color name="colorLightYellow">#FFE994</color>
     <color name="coloYellow">#FFCB01</color>
     <color name="colorDarkYellow">#F0B701</color>
+    <color name="white">#FFFFFF</color>
+    <color name="grey">#999999</color>
 </resources>

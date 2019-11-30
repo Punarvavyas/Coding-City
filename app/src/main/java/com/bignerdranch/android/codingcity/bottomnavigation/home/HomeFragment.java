@@ -1,6 +1,7 @@
 package com.bignerdranch.android.codingcity.bottomnavigation.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.bignerdranch.android.codingcity.R;
 import com.bignerdranch.android.codingcity.courseinfo.Course;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,7 +35,7 @@ public class HomeFragment extends Fragment {
     ArrayList<Course> courseData = new ArrayList<>();
     DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
     //show specific course that user registered
-    DatabaseReference coursesRef = rootDatabase.child("courses");
+    DatabaseReference coursesRef = rootDatabase;
     //check the enrollment status
     DatabaseReference userRef = rootDatabase.child("users");
     private ViewPager mViewPager;
@@ -67,17 +69,25 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 courseData.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                DataSnapshot dataSnapshot2 = dataSnapshot.child("courses");
+                ArrayList<String> arr = new ArrayList<>();
+                DataSnapshot dx = dataSnapshot.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("courses");
+                for(DataSnapshot x : dx.getChildren()){
+                    arr.add(x.getKey().toString());
+                }
+                for (DataSnapshot postSnapshot : dataSnapshot2.getChildren()) {
                     String courseId = postSnapshot.child("courseId").getValue().toString().trim();
+                    if(arr.contains(courseId)) {
 
-                    courseData.add(
-                            new Course(
-                                    courseId,
-                                    postSnapshot.child("courseName").getValue().toString(),
-                                    postSnapshot.child("courseDescription").getValue().toString(),
-                                    postSnapshot.child("courseImageUri").getValue().toString(),
-                                    postSnapshot.child("isPremium").getValue().toString())
-                    );
+                        courseData.add(
+                                new Course(
+                                        courseId,
+                                        postSnapshot.child("courseName").getValue().toString(),
+                                        postSnapshot.child("courseDescription").getValue().toString(),
+                                        postSnapshot.child("courseImageUri").getValue().toString(),
+                                        postSnapshot.child("isPremium").getValue().toString())
+                        );
+                    }
                 }
 
                 RecycleAdapter reAdapter = new RecycleAdapter(getContext(), courseData);
