@@ -107,7 +107,6 @@ public class QuizActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
                             DatabaseReference mRef = database.getReference().child("users");
-                            //mRef.child(UserLogin.getInstance(getApplicationContext()).getUser().getUid()).child("score").setValue(Integer.toString(score));
                             mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("score").setValue(Integer.toString(score));
 
                             mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("quizzes").child(getIntent().getStringExtra("courseId"))

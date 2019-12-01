@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,11 +22,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.bignerdranch.android.codingcity.R;
+import com.bignerdranch.android.codingcity.setting.SettingActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -49,37 +53,35 @@ import java.util.List;
 import static android.app.Activity.RESULT_CANCELED;
 
 public class ProfileFragment extends Fragment {
-
-    //  private static final String TAG = MainActivity.class.getSimpleName();
-//  public static final int REQUEST_IMAGE = 100;
     //set image directory path as firebase path..
     private static final String IMAGE_DIRECTORY = "/sample_images";
     final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-    //    Intent intent = Intent.getIntent();
     DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
     final DatabaseReference myRef = rootDatabase.child("users");
-    //  private ProfileViewModel profileViewModel;
     private ImageView user_image;
     private ImageView edit_image;
     private TextView user_Name;
     private TextView Email;
-    private Button editProfile;
-    //    private Button scoreboard;
-    private Button removeCourse;
     private EditText editedName;
     private EditText editedEmail;
+    private Button editProfile;
     private Button saveProfile;
+//    private Button scoreboard;
+//    private Button removeCourse;
+
     private String Name;
     private String emailId;
     private Button Delete_acc;
     private int contentView;
     private int GALLERY = 1, CAMERA = 2;
 
+    MaterialButton settings;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         //    profileViewModel =
         //            ViewModelProviders.of(this).get(ProfileViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         //   final TextView textView = root.findViewById(R.id.text_profile);
         //   profileViewModel.getText().observe(this, new Observer<String>() {
@@ -93,13 +95,14 @@ public class ProfileFragment extends Fragment {
         edit_image = root.findViewById(R.id.img_plus);
         user_Name = root.findViewById(R.id.tvName);
         Email = root.findViewById(R.id.tvEmail);
+        settings = root.findViewById(R.id.settingsButton);
 //        scoreboard = root.findViewById(R.id.btn_scoreboard);
-        removeCourse = root.findViewById(R.id.btn_removeCourse);
-        editProfile = root.findViewById(R.id.btn_editProfile);
+//        removeCourse = root.findViewById(R.id.btn_removeCourse);
+//        editProfile = root.findViewById(R.id.btn_editProfile);
         editedName = root.findViewById(R.id.etName);
         editedEmail = root.findViewById(R.id.etEmail);
-        saveProfile = root.findViewById(R.id.btn_saveProfile);
-        Delete_acc = root.findViewById(R.id.btn_deleteAccount);
+//        saveProfile = root.findViewById(R.id.btn_saveProfile);
+//        Delete_acc = root.findViewById(R.id.btn_deleteAccount);
         // created firebase instance
         //            .child(intent.getStringExtra("name"));
         //to print user name from firebase
@@ -134,25 +137,25 @@ public class ProfileFragment extends Fragment {
 //          //setContentView(R.layout.fragment_score);
 //        }
 //      });
-            editProfile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-//          String Name = user_Name.getText().toString();
-//          String emailId = Email.getText().toString();
-                    editProfile.setVisibility(View.GONE);
-                    saveProfile.setVisibility(View.VISIBLE);
-                    editedName.setText(user_Name.getText());
-                    user_Name.setVisibility(View.GONE);
-                    editedEmail.setText(Email.getText());
-                    Email.setVisibility(View.GONE);
-                    editedName.setVisibility(View.VISIBLE);
-                    editedEmail.setVisibility(View.VISIBLE);
-//          user_Name.setText(Name);
-//          Email.setText(emailId);
-//          .setVisibility(View.VISIBLE);
-//          editText.setText(edititemname);
-                }
-            });
+//            editProfile.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+////          String Name = user_Name.getText().toString();
+////          String emailId = Email.getText().toString();
+//                    editProfile.setVisibility(View.GONE);
+//                    saveProfile.setVisibility(View.VISIBLE);
+//                    editedName.setText(user_Name.getText());
+//                    user_Name.setVisibility(View.GONE);
+//                    editedEmail.setText(Email.getText());
+//                    Email.setVisibility(View.GONE);
+//                    editedName.setVisibility(View.VISIBLE);
+//                    editedEmail.setVisibility(View.VISIBLE);
+////          user_Name.setText(Name);
+////          Email.setText(emailId);
+////          .setVisibility(View.VISIBLE);
+////          editText.setText(edititemname);
+//                }
+//            });
             edit_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -161,53 +164,53 @@ public class ProfileFragment extends Fragment {
                 }
             });
 
-            saveProfile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    saveProfile.setVisibility(View.GONE);
-                    editProfile.setVisibility(View.VISIBLE);
-                    user_Name.setVisibility(View.VISIBLE);
-                    user_Name.setText(editedName.getText());
-                    Email.setVisibility(View.VISIBLE);
-                    Email.setText(editedEmail.getText());
-                    editedName.setVisibility(View.GONE);
-                    editedEmail.setVisibility(View.GONE);
-
-
-                    //push the updated data into firebase
-                    Log.e("some", Email.getText().toString());
-                    currentUser.updateEmail(Email.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Log.e("a", task.getException().toString());
-                        }
-
-
-                    });
-
-                    myRef.child(currentUser.getUid()).child("name").setValue(user_Name.getText().toString());
-                    myRef.child(currentUser.getUid()).child("email").setValue(Email.getText().toString());
-
-                }
-            });
-            removeCourse.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    Intent i = new Intent(getActivity(), RemoveCourses.class);
-                    startActivity(i);
-
-                }
-            });
+//            saveProfile.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    saveProfile.setVisibility(View.GONE);
+//                    editProfile.setVisibility(View.VISIBLE);
+//                    user_Name.setVisibility(View.VISIBLE);
+//                    user_Name.setText(editedName.getText());
+//                    Email.setVisibility(View.VISIBLE);
+//                    Email.setText(editedEmail.getText());
+//                    editedName.setVisibility(View.GONE);
+//                    editedEmail.setVisibility(View.GONE);
+//
+//
+//                    //push the updated data into firebase
+//                    Log.e("some", Email.getText().toString());
+//                    currentUser.updateEmail(Email.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            Log.e("a", task.getException().toString());
+//                        }
+//
+//
+//                    });
+//
+//                    myRef.child(currentUser.getUid()).child("name").setValue(user_Name.getText().toString());
+//                    myRef.child(currentUser.getUid()).child("email").setValue(Email.getText().toString());
+//
+//                }
+//            });
+//            removeCourse.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                    Intent i = new Intent(getActivity(), RemoveCourses.class);
+//                    startActivity(i);
+//
+//                }
+//            });
             //check the code again
-            Delete_acc.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    currentUser.delete();
-                }
-            });
+//            Delete_acc.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    currentUser.delete();
+//                }
+//            });
         }
-
+        activateListeners();
         return root;
 
         // return inflater.inflate(R.layout.fragment_profile, container, false);
@@ -344,15 +347,29 @@ public class ProfileFragment extends Fragment {
                 .check();
     }
 
+    private void activateListeners() {
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), SettingActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-//        myRef.child(currentUser.getUid()).child("name").setValue(user_Name.getText().toString());
-//        myRef.child(currentUser.getUid()).child("email").setValue(Email.getText().toString());
-//        user_Name.setText((myRef.child(currentUser.getUid()).child("name").getKey()));
         user_Name.setText(currentUser.getDisplayName());
         Email.setText(currentUser.getEmail());
-//        Email.setText(myRef.child(currentUser.getUid()).child("email").toString());
-        Log.e("reached on resume", "onresume");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+
     }
 }

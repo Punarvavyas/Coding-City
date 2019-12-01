@@ -77,10 +77,6 @@ public class MainActivity extends AppCompatActivity {
 //              myIntent.putExtra("key", value); //Optional parameters
                 startActivity(myIntent);
                 return true;
-            case R.id.setting:
-                Intent intent = new Intent(this, SettingActivity.class);
-                startActivity(intent);
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

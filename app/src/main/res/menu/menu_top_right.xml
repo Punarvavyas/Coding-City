@@ -8,13 +8,5 @@
             android:icon="@drawable/ic_search_"
             android:title="search"
             app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/setting"
-        android:icon="@drawable/ic_more_vert_black"
-        android:title="Setting"/>
-
-    <item
-        android:id="@+id/other"
-        android:title="Other" />
 
 </menu>
