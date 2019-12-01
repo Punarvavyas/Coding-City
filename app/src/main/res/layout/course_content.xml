@@ -28,7 +28,9 @@
     <ListView
         android:id="@+id/list_lesson"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="5dp"
         android:layout_below="@+id/tabs">
     </ListView>
     <ListView

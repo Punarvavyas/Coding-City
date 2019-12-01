@@ -7,6 +7,24 @@ public class UserData implements Comparable<UserData> {
     private int userScore;
     private String userProfileImage;
 
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public UserData(String userId, String userName, int userScore, String userProfileImage, boolean loggedIn) {
+        this.userId = userId;
+        this.userName = userName;
+        this.userScore = userScore;
+        this.userProfileImage = userProfileImage;
+        this.loggedIn = loggedIn;
+    }
+
+    private boolean loggedIn;
+
     public UserData(String userId, String userName, int userScore, String userProfileImage) {
         this.userId = userId;
         this.userName = userName;

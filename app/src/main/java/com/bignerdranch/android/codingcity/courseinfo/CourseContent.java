@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * This is the Lesson page which show what lesson we have each course right now
  *
- * @author Ruize Nie
+ * @author Akshay Singh
  */
 public class CourseContent extends AppCompatActivity {
 
@@ -45,7 +45,6 @@ public class CourseContent extends AppCompatActivity {
         setContentView(R.layout.course_content);
         listView = findViewById(R.id.list_lesson);
         quizListView = findViewById(R.id.quiz_list);
-        listView.setDivider(null);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

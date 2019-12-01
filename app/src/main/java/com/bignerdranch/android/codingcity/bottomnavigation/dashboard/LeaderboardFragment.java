@@ -1,6 +1,7 @@
 package com.bignerdranch.android.codingcity.bottomnavigation.dashboard;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.bignerdranch.android.codingcity.R;
 import com.bignerdranch.android.codingcity.leaderboard.UserData;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,14 +62,28 @@ public class LeaderboardFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userDataList.clear();
+                boolean isLoggedIn = false;
+                String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Log.e("userId", postSnapshot.getKey());
                     String userId = postSnapshot.getKey().trim();
                     String userName = postSnapshot.child("name").getValue().toString().trim();
-                    int userScore = Integer.parseInt(postSnapshot.child("score").getValue().toString().trim());
-                    String userProfileImage = postSnapshot.child("profileImageUri").getValue().toString().trim();
+                    String userProfileImage = postSnapshot.hasChild("profileImageUri") ?
+                            postSnapshot.child("profileImageUri").getValue().toString().trim() :
+                            "drawable/icons_user";
+                    isLoggedIn = currentUser.equals(userId);
+                    int userScore = 0;
+                    //quizzes
+                    if(postSnapshot.hasChild("quizzes")){
+                        DataSnapshot quizSnapshot = postSnapshot.child("quizzes");
+                        for(DataSnapshot enrolledCourse : quizSnapshot.getChildren()){
+                            for(DataSnapshot quiz : enrolledCourse.getChildren()){
+                                userScore =+ Integer.parseInt(String.valueOf(quiz.getValue()).trim());
+                            }
+                        }
+                    }
 
-                    UserData data = new UserData(userId, userName, userScore, userProfileImage);
+                    UserData data = new UserData(userId, userName, userScore, userProfileImage, isLoggedIn);
                     userDataList.add(data);
                 }
                 listView.setAdapter(new LeaderboardFragment.LeaderBoardAdapter(getContext(), userDataList, userDataList.size()));
@@ -152,6 +168,14 @@ public class LeaderboardFragment extends Fragment {
             // User Score
             String score = String.valueOf(userDataList.get(position).getUserScore());
             tvScore.setText(score);
+
+            // highlight logged in user in leader board
+            boolean isLoggedIn = userDataList.get(position).isLoggedIn();
+            if(isLoggedIn){
+                tvRank.setBackgroundColor(getResources().getColor(R.color.coloreGreen));
+                tvUserName.setBackgroundColor(getResources().getColor(R.color.coloreGreen));
+                tvScore.setBackgroundColor(getResources().getColor(R.color.coloreGreen));
+            }
 
             return thisView;
         }
