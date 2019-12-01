@@ -1,7 +1,9 @@
 package com.bignerdranch.android.codingcity.authentication;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,6 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private RadioButton radio;
     private ProgressBar progressBar;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +63,8 @@ public class SignUpActivity extends AppCompatActivity {
 
                 final String email = userEmail.getText().toString();
                 final String password = userPassword.getText().toString();
-                final String name = userName.getText().toString();
-
+                name = userName.getText().toString();
+                Log.e("Sign up", name);
                 if (email.isEmpty() || name.isEmpty() || password.isEmpty() || !radio.isChecked()) {
                     showMessage("Please Verify all fields");
                     regBtn.setVisibility(View.VISIBLE);
@@ -82,14 +86,17 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("courses").child("starter").setValue("");
                             showMessage("Account created");
                             progressBar.setVisibility(View.INVISIBLE);
                             Intent toSignUp = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(toSignUp);
-
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(name)
+                                    .build();
+                            mAuth.getCurrentUser().updateProfile(profileUpdates);
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("courses").child("starter").setValue("");
-
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("name").setValue(
                                     mAuth.getCurrentUser().getDisplayName() == null || mAuth.getCurrentUser().getDisplayName() == "" ?
                                             "Dummy" : mAuth.getCurrentUser().getDisplayName());

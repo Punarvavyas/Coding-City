@@ -92,7 +92,7 @@ public class ProfileFragment extends Fragment {
       editProfile = root.findViewById(R.id.btn_editProfile);
         editedName = root.findViewById(R.id.etName);
         editedEmail = root.findViewById(R.id.etEmail);
-//        saveProfile = root.findViewById(R.id.btn_saveProfile);
+        saveProfile = root.findViewById(R.id.btn_saveProfile);
 //        Delete_acc = root.findViewById(R.id.btn_deleteAccount);
         // created firebase instance
         //            .child(intent.getStringExtra("name"));
@@ -195,12 +195,12 @@ public class ProfileFragment extends Fragment {
 //
 //                }
 //            });
-            Delete_acc.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    currentUser.delete();
-                }
-            });
+//            Delete_acc.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    currentUser.delete();
+//                }
+//            });
         }
         activateListeners();
         return root;
