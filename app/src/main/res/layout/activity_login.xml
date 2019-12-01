@@ -124,8 +124,8 @@
     <Button
         android:id="@+id/login_btn_sign_in"
         android:layout_width="100dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/btn_auth_selector"
         android:drawableLeft="@drawable/ic_arrow_forward"
         android:paddingRight="15dp"
