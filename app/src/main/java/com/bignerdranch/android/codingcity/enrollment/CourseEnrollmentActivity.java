@@ -18,6 +18,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bignerdranch.android.codingcity.R;
+import com.bignerdranch.android.codingcity.courseinfo.CourseActivity;
+import com.bignerdranch.android.codingcity.courseinfo.CourseContent;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,7 +38,9 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
     String courseId;
     ListView listView;
     private ArrayList<String> mList = new ArrayList<>();
-
+    boolean enrolled = false;
+    MaterialButton btn;
+    MaterialButton enrolledButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,16 +51,34 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
 
         LessonAdapter adapter = new LessonAdapter(this, mList, mList.size());
         listView.setAdapter(adapter);
-        Button btn = findViewById(R.id.enroll_button);
+        btn = findViewById(R.id.enroll_button);
+        enrolledButton = findViewById(R.id.enroll_button_done);
+        enrolledButton.setVisibility(View.GONE);
         mAuth = FirebaseAuth.getInstance();
+        enrolledButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    Context context = getApplicationContext();
+                    Intent intent = new Intent(context, CourseContent.class);
+                    intent.putExtra("courseId", getIntent().getStringExtra("courseId"));
+                    context.startActivity(intent);
+            }
+        });
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("courses").child(courseId).setValue("");
-                Toast.makeText(CourseEnrollmentActivity.this, "You have been enrolled in this course", Toast.LENGTH_LONG);
+                enrolled = true;
+                btn.setVisibility(View.GONE);
+                enrolledButton.setVisibility(View.VISIBLE);
+                rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("courses")
+                        .child(courseId).setValue("");
                 if (courseData.child("isPremium").getValue().toString().equals("1")) {
                     Intent intent = new Intent(getApplicationContext(), Payments.class);
                     startActivity(intent);
+                }
+                else {
+                    Toast.makeText(CourseEnrollmentActivity.this,
+                            "You have been enrolled in this course", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -73,15 +96,24 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
         super.onStart();
         Intent intent = getIntent();
         DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference myRef = rootDatabase.child("courses").child(intent.getStringExtra("courseId"));
+        DatabaseReference myRef = rootDatabase;
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<String> x = new ArrayList<>();
+                for (DataSnapshot y : dataSnapshot.child("users").child(FirebaseAuth.getInstance().
+                        getCurrentUser().getUid()).child("courses").getChildren()) {
+                    x.add(y.getKey());
+                }
+                if(x.contains(getIntent().getStringExtra("courseId"))) {
+                    btn.setVisibility(View.GONE);
+                    enrolledButton.setVisibility(View.VISIBLE);
+                }
+                dataSnapshot = dataSnapshot.child("courses").child(getIntent().getStringExtra("courseId"));
                 courseData = dataSnapshot;
                 ImageView img = findViewById(R.id.enroll_img);
                 img.setImageResource(R.drawable.javascript);
                 img.setImageResource(getResources().getIdentifier(dataSnapshot.child("courseImageUri").getValue().toString(), "drawable", getPackageName()));
-
                 TextView title = findViewById(R.id.enroll_title);
                 title.setText(dataSnapshot.child("courseName").getValue().toString());
                 TextView des = findViewById(R.id.enroll_description);

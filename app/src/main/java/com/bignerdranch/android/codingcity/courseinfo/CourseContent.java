@@ -132,8 +132,6 @@ public class CourseContent extends AppCompatActivity {
                 for (DataSnapshot x : taken.getChildren()) {
                     quizzesAttempted.add(x.getKey().toString());
                 }
-                Log.e("dash", quizzesAttempted.toString());
-
                 DataSnapshot ds = dataSnapshot.child("courses").child(getIntent().getStringExtra("courseId"))
                         .child("quiz");
                 ArrayList<String> quizIds = new ArrayList<>();

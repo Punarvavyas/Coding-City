@@ -58,7 +58,6 @@ public class CourseActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 courseData.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Log.e("courseId", postSnapshot.child("courseId").getValue().toString());// values fetched
                     String courseId = postSnapshot.child("courseId").getValue().toString().trim();
 
                     if (enrolledCourses != null) {
