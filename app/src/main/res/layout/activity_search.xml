@@ -1,47 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".enrollment.SearchActivity"
-    android:orientation="vertical"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context=".enrollment.SearchActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <com.google.android.material.textfield.TextInputLayout
 
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Search courses"
-            android:layout_weight="5"
-            >
+            android:layout_marginLeft="15dp"
+            android:layout_weight="6"
+            android:hint="Search courses">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/search_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"/>
+                android:textSize="20dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/searchButton"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:icon="@drawable/ic_search_"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
-            app:iconTint="@color/colorAccent"
-            style="@style/Widget.MaterialComponents.Button.TextButton">
+            android:gravity="center"
+            app:icon="@drawable/ic_search_"
+            app:iconTint="@color/colorAccent">
 
         </com.google.android.material.button.MaterialButton>
     </LinearLayout>
+
     <ListView
         android:id="@+id/search_courses"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@android:color/transparent"
         android:dividerHeight="15dp"
-        android:paddingHorizontal="20px"/>
+        android:paddingHorizontal="20px" />
 </LinearLayout>

@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".courseinfo.CourseActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".courseinfo.CourseActivity">
+
     <ListView
         android:id="@+id/lv_course_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="20dp"
         android:divider="@android:color/transparent"
-        android:dividerHeight="15dp"
-        android:layout_margin="20dp"/>
+        android:dividerHeight="15dp" />
 </LinearLayout>

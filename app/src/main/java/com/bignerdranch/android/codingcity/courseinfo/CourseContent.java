@@ -113,7 +113,7 @@ public class CourseContent extends AppCompatActivity {
         myRefQuiz.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<String> quizzesAttempted= new ArrayList<>();
+                ArrayList<String> quizzesAttempted = new ArrayList<>();
                 DataSnapshot taken = dataSnapshot.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                         .child("quizzes").child(courseId);
                 for (DataSnapshot x : taken.getChildren()) {
@@ -123,7 +123,7 @@ public class CourseContent extends AppCompatActivity {
 
                 DataSnapshot ds = dataSnapshot.child("courses").child(getIntent().getStringExtra("courseId"))
                         .child("quiz");
-                ArrayList<String> quizIds= new ArrayList<>();
+                ArrayList<String> quizIds = new ArrayList<>();
                 for (DataSnapshot x : ds.getChildren()) {
                     quizIds.add(x.getKey());
                 }
@@ -166,7 +166,7 @@ public class CourseContent extends AppCompatActivity {
         LayoutInflater inflater;
         int limit;
 
-        public CourseContentAdapter(Context context, List<Lessons> localLessons, int size ) {
+        public CourseContentAdapter(Context context, List<Lessons> localLessons, int size) {
             context = context;
             lessons = localLessons;
             limit = size;
@@ -256,7 +256,7 @@ public class CourseContent extends AppCompatActivity {
             TextView tv = v.findViewById(R.id.quiz_tv);
             tv.setText(quizList.get(position));
             Button bt = v.findViewById(R.id.qz_button);
-            if(quizzesAttempted.contains(quizList.get(position))) {
+            if (quizzesAttempted.contains(quizList.get(position))) {
                 bt.setEnabled(false);
             }
             bt.setOnClickListener(new View.OnClickListener() {

@@ -5,39 +5,41 @@
     android:orientation="horizontal">
 
     <ImageView
-        android:scaleType="centerCrop"
         android:id="@+id/lesson_picture"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:scaleType="centerCrop"
         android:src="@mipmap/ic_python_lesson_page" />
+
     <com.google.android.material.tabs.TabLayout
-        android:layout_below="@id/lesson_picture"
         android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lesson_picture">
 
         <com.google.android.material.tabs.TabItem
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="Lessons"/>
+            android:layout_height="wrap_content"
+            android:text="Lessons" />
+
         <com.google.android.material.tabs.TabItem
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="Quizzes"/>
+            android:layout_height="wrap_content"
+            android:text="Quizzes" />
     </com.google.android.material.tabs.TabLayout>
+
     <ListView
         android:id="@+id/list_lesson"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tabs"
         android:divider="@android:color/transparent"
-        android:dividerHeight="5dp"
-        android:layout_below="@+id/tabs">
-    </ListView>
+        android:dividerHeight="5dp"></ListView>
+
     <ListView
         android:id="@+id/quiz_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/tabs"
-        android:visibility="invisible">
-    </ListView>
+        android:visibility="invisible"></ListView>
 </RelativeLayout>

@@ -6,14 +6,7 @@ public class UserData implements Comparable<UserData> {
     private String userName;
     private int userScore;
     private String userProfileImage;
-
-    public void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
-    }
-
-    public boolean isLoggedIn() {
-        return loggedIn;
-    }
+    private boolean loggedIn;
 
     public UserData(String userId, String userName, int userScore, String userProfileImage, boolean loggedIn) {
         this.userId = userId;
@@ -23,8 +16,6 @@ public class UserData implements Comparable<UserData> {
         this.loggedIn = loggedIn;
     }
 
-    private boolean loggedIn;
-
     public UserData(String userId, String userName, int userScore, String userProfileImage) {
         this.userId = userId;
         this.userName = userName;
@@ -33,6 +24,14 @@ public class UserData implements Comparable<UserData> {
     }
 
     public UserData() {
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
     }
 
     @Override

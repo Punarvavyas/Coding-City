@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
         lstSlides = new ArrayList<>();
         lstSlides.add(new SlideItem(R.drawable.course_python, "", "c1001"));
         lstSlides.add(new SlideItem(R.drawable.course_android, "", "c1005"));
-        lstSlides.add(new SlideItem(R.drawable.course_javascript, "", "c1002"));
+        lstSlides.add(new SlideItem(R.drawable.course_c, "", "c1002"));
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         mViewPager = rootView.findViewById(R.id.view_pager);
@@ -71,12 +71,12 @@ public class HomeFragment extends Fragment {
                 DataSnapshot dataSnapshot2 = dataSnapshot.child("courses");
                 ArrayList<String> arr = new ArrayList<>();
                 DataSnapshot dx = dataSnapshot.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("courses");
-                for(DataSnapshot x : dx.getChildren()){
+                for (DataSnapshot x : dx.getChildren()) {
                     arr.add(x.getKey().toString());
                 }
                 for (DataSnapshot postSnapshot : dataSnapshot2.getChildren()) {
                     String courseId = postSnapshot.child("courseId").getValue().toString().trim();
-                    if(arr.contains(courseId)) {
+                    if (arr.contains(courseId)) {
 
                         courseData.add(
                                 new Course(

@@ -34,7 +34,6 @@ public class QuizActivity extends AppCompatActivity {
     private int mCurrentIndex = 0;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +132,7 @@ public class QuizActivity extends AppCompatActivity {
         //updateQuestion();
 
     }
+
     private void updateQuestion() {
         String question = mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);

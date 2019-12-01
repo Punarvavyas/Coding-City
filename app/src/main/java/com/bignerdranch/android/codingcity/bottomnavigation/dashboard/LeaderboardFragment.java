@@ -1,7 +1,6 @@
 package com.bignerdranch.android.codingcity.bottomnavigation.dashboard;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -74,11 +73,11 @@ public class LeaderboardFragment extends Fragment {
                     isLoggedIn = currentUser.equals(userId);
                     int userScore = 0;
                     //quizzes
-                    if(postSnapshot.hasChild("quizzes")){
+                    if (postSnapshot.hasChild("quizzes")) {
                         DataSnapshot quizSnapshot = postSnapshot.child("quizzes");
-                        for(DataSnapshot enrolledCourse : quizSnapshot.getChildren()){
-                            for(DataSnapshot quiz : enrolledCourse.getChildren()){
-                                userScore =+ Integer.parseInt(String.valueOf(quiz.getValue()).trim());
+                        for (DataSnapshot enrolledCourse : quizSnapshot.getChildren()) {
+                            for (DataSnapshot quiz : enrolledCourse.getChildren()) {
+                                userScore = +Integer.parseInt(String.valueOf(quiz.getValue()).trim());
                             }
                         }
                     }
@@ -171,7 +170,7 @@ public class LeaderboardFragment extends Fragment {
 
             // highlight logged in user in leader board
             boolean isLoggedIn = userDataList.get(position).isLoggedIn();
-            if(isLoggedIn){
+            if (isLoggedIn) {
                 tvRank.setBackgroundColor(getResources().getColor(R.color.coloreGreen));
                 tvUserName.setBackgroundColor(getResources().getColor(R.color.coloreGreen));
                 tvScore.setBackgroundColor(getResources().getColor(R.color.coloreGreen));

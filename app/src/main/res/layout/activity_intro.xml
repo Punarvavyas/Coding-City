@@ -20,30 +20,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
         android:layout_marginBottom="32dp"
         android:background="@color/colorAccent"
-        android:textColor="@color/colorWhite"
         android:text="SKIP"
+        android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginLeft="32dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:layout_marginBottom="32dp"
         android:background="@color/colorAccent"
-        android:textColor="@color/colorWhite"
         android:drawableRight="@drawable/ic_arrow_forward"
         android:text="NEXT"
+        android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginRight="32dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.tabs.TabLayout
-        app:tabIndicatorHeight="0dp"
         android:id="@+id/tab_indicator"
         android:layout_width="159dp"
         android:layout_height="55dp"
@@ -52,16 +51,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewPager"
         app:layout_constraintVertical_bias="0.0"
-        app:tabBackground="@drawable/intro_indicator_selector"/>
+        app:tabBackground="@drawable/intro_indicator_selector"
+        app:tabIndicatorHeight="0dp" />
 
     <Button
-        android:visibility="invisible"
         android:id="@+id/btn_start"
         android:layout_width="155dp"
         android:layout_height="58dp"
         android:background="@color/colorAccent"
-        android:textColor="@color/colorWhite"
         android:text="GET STARTED"
+        android:textColor="@color/colorWhite"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"

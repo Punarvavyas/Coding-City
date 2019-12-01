@@ -32,4 +32,12 @@
     <string name="dialog_permission_title">Grant Permissions</string>
     <string name="dialog_permission_message">This app needs permission to use this feature. You can grant them in app settings.</string>
     <string name="go_to_settings">GOTO SETTINGS</string>
+    <string name="level_begineer">Level: Begineer</string>
+    <string name="level_beginner">Level: Beginner</string>
+    <string name="_20k_students">20K students</string>
+    <string name="course_image">Course Image</string>
+    <string name="javascript_beginner_to_advance">Javascript: beginner to advance</string>
+    <string name="recommended">Recommended</string>
+    <string name="description">Description</string>
+    <string name="course_content">Course content</string>
 </resources>

@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,8 +26,6 @@ import androidx.fragment.app.Fragment;
 
 import com.bignerdranch.android.codingcity.R;
 import com.bignerdranch.android.codingcity.setting.SettingActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -58,6 +55,7 @@ public class ProfileFragment extends Fragment {
     final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
     final DatabaseReference myRef = rootDatabase.child("users");
+    MaterialButton settings;
     private ImageView user_image;
     private ImageView edit_image;
     private TextView user_Name;
@@ -65,17 +63,15 @@ public class ProfileFragment extends Fragment {
     private EditText editedName;
     private EditText editedEmail;
     private Button editProfile;
-    private Button saveProfile;
 //    private Button scoreboard;
 //    private Button removeCourse;
-
+    private Button saveProfile;
     private String Name;
     private String emailId;
     private Button Delete_acc;
     private int contentView;
     private int GALLERY = 1, CAMERA = 2;
 
-    MaterialButton settings;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 

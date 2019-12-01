@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".authentication.SignUpActivity"
-    android:background="@color/colorWhite">
+    android:background="@color/colorWhite"
+    tools:context=".authentication.SignUpActivity">
 
     <EditText
         android:id="@+id/signup_user_name"
@@ -18,6 +18,7 @@
         android:hint="USERNAME"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
+        android:paddingBottom="10dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.531"
@@ -35,6 +36,7 @@
         android:hint="EMAIL"
         android:inputType="textEmailAddress"
         android:paddingLeft="20dp"
+        android:paddingBottom="10dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.531"
@@ -52,6 +54,7 @@
         android:hint="PASSWORD"
         android:inputType="textPassword"
         android:paddingLeft="20dp"
+        android:paddingBottom="10dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.531"

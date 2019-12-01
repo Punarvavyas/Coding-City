@@ -9,227 +9,227 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
 
     <RelativeLayout
-        android:background="#fff"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="60dp" >
+        android:layout_height="60dp"
+        android:background="#fff"
+        android:orientation="horizontal">
 
         <ImageView
-            android:paddingLeft="10dp"
             android:id="@+id/ic_v"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_vibration_black"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:src="@drawable/ic_vibration_black" />
 
         <TextView
-            android:layout_toRightOf="@+id/ic_v"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textSize="25dp"
+            android:layout_toRightOf="@+id/ic_v"
             android:paddingLeft="20dp"
-            android:text="Vibration"/>
+            android:text="Vibration"
+            android:textSize="25dp" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/vibration"
-            android:padding="10dp"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
-            android:layout_width="200dp"
-            android:layout_height="60dp" />
+            android:padding="10dp" />
 
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
 
     <RelativeLayout
-        android:background="#fff"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="60dp" >
+        android:layout_height="60dp"
+        android:background="#fff"
+        android:orientation="horizontal">
 
         <ImageView
-            android:paddingLeft="10dp"
             android:id="@+id/ic_n"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_notifications_black"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:src="@drawable/ic_notifications_black" />
 
         <TextView
-            android:layout_toRightOf="@+id/ic_n"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textSize="25dp"
+            android:layout_toRightOf="@+id/ic_n"
             android:paddingLeft="20dp"
-            android:text="Notification"/>
+            android:text="Notification"
+            android:textSize="25dp" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/notification"
-            android:padding="10dp"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
-            android:layout_width="200dp"
-            android:layout_height="60dp" />
+            android:padding="10dp" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
 
 
     <View
-        android:layout_marginTop="25dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        android:layout_marginTop="25dp"
+        android:background="@android:color/darker_gray" />
 
     <RelativeLayout
         android:id="@+id/privacy"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:background="@drawable/layout_click"
         android:clickable="true"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="60dp" >
+        android:orientation="horizontal">
 
         <ImageView
-            android:paddingLeft="10dp"
             android:id="@+id/ic_lock"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_lock_outline_black"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:src="@drawable/ic_lock_outline_black" />
 
         <TextView
-            android:layout_toRightOf="@+id/ic_lock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textSize="25dp"
+            android:layout_toRightOf="@+id/ic_lock"
             android:paddingLeft="20dp"
-            android:text="Privacy"/>
+            android:text="Privacy"
+            android:textSize="25dp" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
 
     <RelativeLayout
         android:id="@+id/documentation"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:background="@drawable/layout_click"
         android:clickable="true"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="60dp" >
+        android:orientation="horizontal">
 
         <ImageView
-            android:paddingLeft="10dp"
             android:id="@+id/ic_document"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_library_books_black"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:src="@drawable/ic_library_books_black" />
 
         <TextView
-            android:layout_toRightOf="@+id/ic_document"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textSize="25dp"
+            android:layout_toRightOf="@+id/ic_document"
             android:paddingLeft="20dp"
-            android:text="Documentation"/>
+            android:text="Documentation"
+            android:textSize="25dp" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
 
     <RelativeLayout
         android:id="@+id/about_us"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:background="@drawable/layout_click"
         android:clickable="true"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="60dp" >
+        android:orientation="horizontal">
 
         <ImageView
-            android:paddingLeft="10dp"
             android:id="@+id/ic_about"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_person_black"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:src="@drawable/ic_person_black" />
 
         <TextView
-            android:layout_toRightOf="@+id/ic_about"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textSize="25dp"
+            android:layout_toRightOf="@+id/ic_about"
             android:paddingLeft="20dp"
-            android:text="About Us"/>
+            android:text="About Us"
+            android:textSize="25dp" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
 
     <RelativeLayout
         android:id="@+id/feedback"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:background="@drawable/layout_click"
         android:clickable="true"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="60dp" >
+        android:orientation="horizontal">
 
         <ImageView
-            android:paddingLeft="10dp"
             android:id="@+id/ic_feedback"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_mode_comment_black"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:src="@drawable/ic_mode_comment_black" />
 
         <TextView
-            android:layout_toRightOf="@+id/ic_feedback"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textSize="25dp"
+            android:layout_toRightOf="@+id/ic_feedback"
             android:paddingLeft="20dp"
-            android:text="Feedback"/>
+            android:text="Feedback"
+            android:textSize="25dp" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+        android:layout_height="50dp" />
 
     <Button
 
         android:id="@+id/btn_switch_account"
-        android:layout_marginTop="20dp"
-        android:layout_height="60dp"
-        android:textSize="18dp"
-        android:layout_gravity="center"
         android:layout_width="380dp"
-        android:text="Switch Account"/>
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Switch Account"
+        android:textSize="18dp" />
 
 
 </LinearLayout>

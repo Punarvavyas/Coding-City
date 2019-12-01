@@ -10,7 +10,7 @@ public class Question {
     private String mTextResId;
     private boolean mAnswerTrue;
 
-    public Question(String textResId, boolean answerTrue){
+    public Question(String textResId, boolean answerTrue) {
 
 
         mTextResId = textResId;

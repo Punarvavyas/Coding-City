@@ -20,7 +20,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
- * This is the Login Page which check the authentication in firbase
+ * This is the Login Page which check the authentication in firebase
  *
  * @author Ruize Nie
  */
