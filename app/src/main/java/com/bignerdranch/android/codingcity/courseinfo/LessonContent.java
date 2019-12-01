@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -28,9 +29,18 @@ public class LessonContent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //CodeProcessor.init(this);
         setContentView(R.layout.lesson_content);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //lessonText = (CodeView)findViewById(R.id.ml_lesson_content);
         lessonText = findViewById(R.id.ml_lesson_content);
         //lessonText.setMovementMethod(new ScrollingMovementMethod());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return super.onOptionsItemSelected(item);
+
     }
 
     @Override

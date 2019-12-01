@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -38,6 +39,10 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mQuestionTextView = findViewById(R.id.question_text_view);
         mTrueButton = findViewById(R.id.true_button);
         DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
@@ -130,6 +135,13 @@ public class QuizActivity extends AppCompatActivity {
 
 
         //updateQuestion();
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return super.onOptionsItemSelected(item);
 
     }
 
