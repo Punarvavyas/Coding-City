@@ -2,7 +2,6 @@ package com.bignerdranch.android.codingcity.courseinfo;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -84,7 +83,6 @@ public class CourseContent extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
     }
@@ -293,7 +291,9 @@ public class CourseContent extends AppCompatActivity {
             String lesson_text = lessonsList.get(position).getLessonText();
             boolean isVisited = lessonsList.get(position).isVisited();
             tvLessonTitle.setText(lesson_topic);
-            if(isVisited){
+            Log.e("que", lesson_topic);
+            Log.e("lesson", String.valueOf(isVisited));
+            if(isVisited) {
                 visitedIcon.setVisibility(View.VISIBLE);
                 //visitedIcon.setImageResource(R.drawable.fui_ic_check_circle_black_128dp);
             }
