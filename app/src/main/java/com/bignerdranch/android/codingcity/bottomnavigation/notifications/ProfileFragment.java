@@ -182,6 +182,7 @@ public class ProfileFragment extends Fragment {
             Delete_acc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    myRef.child(currentUser.getUid()).removeValue();
                     currentUser.delete();
                     Intent toSignUp = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
                     startActivity(toSignUp);
