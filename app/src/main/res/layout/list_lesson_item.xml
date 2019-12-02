@@ -22,6 +22,6 @@
             android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_alignRight="@+id/tv_title"
-            android:src="@drawable/fui_ic_check_circle_black_128dp"/>
+            app:srcCompat="@drawable/fui_ic_check_circle_black_128dp" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

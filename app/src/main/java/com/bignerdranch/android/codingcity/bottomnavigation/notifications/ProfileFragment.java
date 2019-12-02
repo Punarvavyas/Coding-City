@@ -92,7 +92,6 @@ public class ProfileFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         card = root.findViewById(R.id.profile_expand);
         user_image = root.findViewById(R.id.img_profile);
@@ -140,7 +139,6 @@ public class ProfileFragment extends Fragment {
             edit_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     requestMultiplePermissions();
                     showPictureDialog();
                 }
@@ -158,18 +156,6 @@ public class ProfileFragment extends Fragment {
                     editedName.setVisibility(View.GONE);
                     editedEmail.setVisibility(View.GONE);
                     card.setVisibility(View.VISIBLE);
-
-                    //push the updated data into firebase
-                    Log.e("some", Email.getText().toString());
-//                    currentUser.updateEmail(Email.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            Log.e("a", task.getException().toString());
-//                        }
-//
-//
-//                    });
-
                     myRef.child(currentUser.getUid()).child("name").setValue(user_Name.getText().toString());
                     myRef.child(currentUser.getUid()).child("email").setValue(Email.getText().toString());
 
@@ -247,7 +233,7 @@ public class ProfileFragment extends Fragment {
                 Uri contentURI = data.getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), contentURI);
-                    String path = saveImage(bitmap);
+                  String path = saveImage(bitmap);
                     Toast.makeText(getActivity(), "Image Saved!", Toast.LENGTH_SHORT).show();
                     user_image.setImageBitmap(bitmap);
                     myRef.child(currentUser.getUid()).child("profileImageUri").setValue(path);
@@ -343,20 +329,6 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
-
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
         myRef.addValueEventListener(new ValueEventListener() {
@@ -364,11 +336,9 @@ public class ProfileFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Email.setText(dataSnapshot.child(currentUser.getUid()).child("email").getValue().toString());
                 user_Name.setText(dataSnapshot.child(currentUser.getUid()).child("name").getValue().toString());
-//                String image_path = dataSnapshot.child(currentUser.getUid()).child("profileImageUri").getValue().toString();
-//                edit_image.setImageBitmap(image_path);
-
-//                edit_image.setImageResource(getResources().getIdentifier(dataSnapshot
-//                        .child(currentUser.getUid()).child("profileImageUri").getValue().toString(), "drawable", getPackageName()));
+                String image_path = dataSnapshot.child(currentUser.getUid()).child("profileImageUri").getValue().toString();
+                Uri imageFilePath = Uri.parse(image_path);
+                user_image.setImageURI(imageFilePath);
                 ArrayList<String> x = new ArrayList<>();
                 for (DataSnapshot y : dataSnapshot.child(FirebaseAuth.getInstance().
                         getCurrentUser().getUid()).child("courses").getChildren()) {

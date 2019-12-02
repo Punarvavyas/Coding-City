@@ -2,7 +2,6 @@ package com.bignerdranch.android.codingcity.courseinfo;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,10 +14,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.bignerdranch.android.codingcity.R;
 import com.bignerdranch.android.codingcity.quizinfo.QuizActivity;
 import com.google.android.material.tabs.TabLayout;
@@ -28,7 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,7 +83,6 @@ public class CourseContent extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
     }
@@ -113,8 +108,9 @@ public class CourseContent extends AppCompatActivity {
                         "drawable", context.getPackageName()));
                 populateLessonContent(dataSnapshot);
                 getVisitedLessons();
-                CourseContentAdapter adapter = getCourseContentAdapter();
-                listView.setAdapter(adapter);
+                //CourseContentAdapter adapter = getCourseContentAdapter();
+                //listView.setAdapter(adapter);
+                //adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -199,7 +195,7 @@ public class CourseContent extends AppCompatActivity {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference coursesRef = rootDatabase.child("users").child(userId).child("courses");
-        coursesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        coursesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
@@ -222,6 +218,9 @@ public class CourseContent extends AppCompatActivity {
                 catch(Exception ex){
                     Log.e("ERROR",ex.getMessage());
                 }
+
+                CourseContentAdapter adapter = getCourseContentAdapter();
+                listView.setAdapter(adapter);
             }
 
             @Override
@@ -292,11 +291,15 @@ public class CourseContent extends AppCompatActivity {
             String lesson_text = lessonsList.get(position).getLessonText();
             boolean isVisited = lessonsList.get(position).isVisited();
             tvLessonTitle.setText(lesson_topic);
-            if(isVisited){
+            Log.e("que", lesson_topic);
+            Log.e("lesson", String.valueOf(isVisited));
+            if(isVisited) {
                 visitedIcon.setVisibility(View.VISIBLE);
+                //visitedIcon.setImageResource(R.drawable.fui_ic_check_circle_black_128dp);
             }
             else{
                 visitedIcon.setVisibility(View.INVISIBLE);
+                //visitedIcon.setImageResource(R.drawable.ic_plus);
             }
             //tvLessonText.setText(lesson_text);
             return thisView;

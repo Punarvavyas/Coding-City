@@ -24,28 +24,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int RC_SIGN_IN = 123;
-    MenuItem loginOption;
-    Menu mainMenu;
-    DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference myRef = rootDatabase.child("Courses");
-    Button signInButton;
-    FirebaseUser user;
-    Button help;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //help = findViewById(R.id.button_help);
-
-//        help.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(MainActivity.this,Help.class));
-//            }
-//        });
-//        signInButton = findViewById(R.id.signin);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -61,43 +44,19 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_top_right, menu);
-//        mainMenu = menu;
-//        loginOption = mainMenu.findItem(R.id.login);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        Log.e("menu item", "" + item.getTitle());
         switch (item.getItemId()) {
             case R.id.search_item:
                 Intent myIntent = new Intent(getBaseContext(), SearchActivity.class);
-//              myIntent.putExtra("key", value); //Optional parameters
                 startActivity(myIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Log.e("ds", postSnapshot.toString());// values fetched
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.e("main activity", "Failed to read value.", error.toException());
-            }
-        });
-    }
-
 }

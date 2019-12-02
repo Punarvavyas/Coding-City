@@ -3,9 +3,7 @@ package com.bignerdranch.android.codingcity.enrollment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -18,10 +16,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bignerdranch.android.codingcity.R;
-import com.bignerdranch.android.codingcity.courseinfo.CourseActivity;
 import com.bignerdranch.android.codingcity.courseinfo.CourseContent;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,51 +30,47 @@ import java.util.ArrayList;
 
 public class CourseEnrollmentActivity extends AppCompatActivity {
 
-    DataSnapshot courseData;
     DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
-    FirebaseAuth mAuth;
+    DataSnapshot courseData;
+    FirebaseUser currentUser;
     String courseId;
     ListView listView;
-    private ArrayList<String> mList = new ArrayList<>();
     boolean enrolled = false;
-    MaterialButton btn;
+    MaterialButton freeEnroll;
     MaterialButton enrolledButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_enrollment);
         listView = findViewById(R.id.enrollment_page_content_listview);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        LessonAdapter adapter = new LessonAdapter(this, mList, mList.size());
-        listView.setAdapter(adapter);
-        btn = findViewById(R.id.enroll_button);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        freeEnroll = findViewById(R.id.enroll_button);
         enrolledButton = findViewById(R.id.enroll_button_done);
         enrolledButton.setVisibility(View.GONE);
-        mAuth = FirebaseAuth.getInstance();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
         enrolledButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Context context = getApplicationContext();
-                    Intent intent = new Intent(context, CourseContent.class);
-                    intent.putExtra("courseId", getIntent().getStringExtra("courseId"));
-                    context.startActivity(intent);
+                Context context = getApplicationContext();
+                Intent intent = new Intent(context, CourseContent.class);
+                intent.putExtra("courseId", getIntent().getStringExtra("courseId"));
+                context.startActivity(intent);
             }
         });
-        btn.setOnClickListener(new View.OnClickListener() {
+        freeEnroll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 enrolled = true;
-                btn.setVisibility(View.GONE);
+                freeEnroll.setVisibility(View.GONE);
                 enrolledButton.setVisibility(View.VISIBLE);
-                rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("courses")
+                rootDatabase.child("users").child(currentUser.getUid()).child("courses")
                         .child(courseId).setValue("");
                 if (courseData.child("isPremium").getValue().toString().equals("1")) {
                     Intent intent = new Intent(getApplicationContext(), Payments.class);
                     startActivity(intent);
-                }
-                else {
+                } else {
                     Toast.makeText(CourseEnrollmentActivity.this,
                             "You have been enrolled in this course", Toast.LENGTH_LONG).show();
                 }
@@ -85,32 +79,28 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        finish();
-        return super.onOptionsItemSelected(item);
-
-    }
-
-    @Override
     protected void onStart() {
         super.onStart();
-        Intent intent = getIntent();
-        DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference myRef = rootDatabase;
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<String> x = new ArrayList<>();
-                for (DataSnapshot y : dataSnapshot.child("users").child(FirebaseAuth.getInstance().
-                        getCurrentUser().getUid()).child("courses").getChildren()) {
-                    x.add(y.getKey());
+                //temp array
+                ArrayList<String> coursesTemp = new ArrayList<>();
+                // get list of courses
+                for (DataSnapshot coursesList : dataSnapshot.child("users").child(currentUser.
+                        getUid()).child("courses").getChildren()) {
+                    coursesTemp.add(coursesList.getKey());
                 }
-                if(x.contains(getIntent().getStringExtra("courseId"))) {
-                    btn.setVisibility(View.GONE);
+                //if course is enrolled
+                if (coursesTemp.contains(getIntent().getStringExtra("courseId"))) {
+                    freeEnroll.setVisibility(View.GONE);
                     enrolledButton.setVisibility(View.VISIBLE);
                 }
+                //iterate to specific course
                 dataSnapshot = dataSnapshot.child("courses").child(getIntent().getStringExtra("courseId"));
                 courseData = dataSnapshot;
+                // populate UI
                 ImageView img = findViewById(R.id.enroll_img);
                 img.setImageResource(R.drawable.javascript);
                 img.setImageResource(getResources().getIdentifier(dataSnapshot.child("courseImageUri").getValue().toString(), "drawable", getPackageName()));
@@ -121,6 +111,7 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 des.setText(dataSnapshot.child("courseDescription").getValue().toString());
                 Button enroll = findViewById(R.id.enroll_button);
+                // Is selected course paid
                 if (dataSnapshot.child("isPremium").getValue().toString().equals("0")) {
                     enroll.setText("Enroll Free");
                 } else {
@@ -128,27 +119,25 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
                 }
                 courseId = dataSnapshot.child("courseId").getValue().toString();
                 ArrayList<String> courseLessons = new ArrayList<>();
+                // fetch lessons
                 for (DataSnapshot data : dataSnapshot.child("courseContents").getChildren()) {
-                    String key = data.getKey();
                     for (DataSnapshot topics : data.getChildren()) {
                         String topic = topics.getKey();
                         courseLessons.add(topic);
                     }
                 }
                 listView.setAdapter(new LessonAdapter(getApplicationContext(), courseLessons, courseLessons.size()));
-
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Log.e("main activity", "Failed to read value.", error.toException());
-            }
+                Toast.makeText(getApplicationContext(), "Error retrieving data: check help section", Toast.LENGTH_LONG).show();
+                 }
         });
     }
 
     private class LessonAdapter extends BaseAdapter {
-
         Context context;
         ArrayList<String> courseList;
         LayoutInflater inflater;
