@@ -292,6 +292,9 @@ public class CourseContent extends AppCompatActivity {
             if(isVisited){
                 visitedIcon.setVisibility(View.VISIBLE);
             }
+            else{
+                visitedIcon.setVisibility(View.INVISIBLE);
+            }
             //tvLessonText.setText(lesson_text);
             return thisView;
         }
