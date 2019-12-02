@@ -247,7 +247,7 @@ public class ProfileFragment extends Fragment {
                 Uri contentURI = data.getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), contentURI);
-                    String path = saveImage(bitmap);
+                  String path = saveImage(bitmap);
                     Toast.makeText(getActivity(), "Image Saved!", Toast.LENGTH_SHORT).show();
                     user_image.setImageBitmap(bitmap);
                     myRef.child(currentUser.getUid()).child("profileImageUri").setValue(path);
@@ -364,7 +364,7 @@ public class ProfileFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Email.setText(dataSnapshot.child(currentUser.getUid()).child("email").getValue().toString());
                 user_Name.setText(dataSnapshot.child(currentUser.getUid()).child("name").getValue().toString());
-//                String image_path = dataSnapshot.child(currentUser.getUid()).child("profileImageUri").getValue().toString();
+              //                String image_path = dataSnapshot.child(currentUser.getUid()).child("profileImageUri").getValue().toString();
 //                edit_image.setImageBitmap(image_path);
 
 //                edit_image.setImageResource(getResources().getIdentifier(dataSnapshot
