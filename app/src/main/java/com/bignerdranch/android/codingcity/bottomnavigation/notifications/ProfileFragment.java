@@ -255,11 +255,11 @@ public class ProfileFragment extends Fragment {
 
         } else if (requestCode == CAMERA) {
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-            edit_image.setImageBitmap(thumbnail);
-            saveImage(thumbnail);
+            user_image.setImageBitmap(thumbnail);
+            String path= saveImage(thumbnail);
             Toast.makeText(getActivity(), "Image Saved!", Toast.LENGTH_SHORT).show();
-            myRef.child(currentUser.getUid()).child("profileImageUri").setValue(thumbnail);
-            Log.e("imgpath", myRef.child("profileImageUri").toString());
+            myRef.child(currentUser.getUid()).child("profileImageUri").setValue(path);
+
         }
     }
 
@@ -359,6 +359,9 @@ public class ProfileFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Email.setText(dataSnapshot.child(currentUser.getUid()).child("email").getValue().toString());
                 user_Name.setText(dataSnapshot.child(currentUser.getUid()).child("name").getValue().toString());
+//                String image_path = dataSnapshot.child(currentUser.getUid()).child("profileImageUri").getValue().toString();
+//                edit_image.setImageBitmap(image_path);
+
 //                edit_image.setImageResource(getResources().getIdentifier(dataSnapshot
 //                        .child(currentUser.getUid()).child("profileImageUri").getValue().toString(), "drawable", getPackageName()));
                 ArrayList<String> x = new ArrayList<>();
