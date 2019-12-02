@@ -36,7 +36,7 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
     String courseId;
     ListView listView;
     boolean enrolled = false;
-    MaterialButton btn;
+    MaterialButton freeEnroll;
     MaterialButton enrolledButton;
 
     @Override
@@ -46,7 +46,7 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
         listView = findViewById(R.id.enrollment_page_content_listview);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        btn = findViewById(R.id.enroll_button);
+        freeEnroll = findViewById(R.id.enroll_button);
         enrolledButton = findViewById(R.id.enroll_button_done);
         enrolledButton.setVisibility(View.GONE);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -59,11 +59,11 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
                 context.startActivity(intent);
             }
         });
-        btn.setOnClickListener(new View.OnClickListener() {
+        freeEnroll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 enrolled = true;
-                btn.setVisibility(View.GONE);
+                freeEnroll.setVisibility(View.GONE);
                 enrolledButton.setVisibility(View.VISIBLE);
                 rootDatabase.child("users").child(currentUser.getUid()).child("courses")
                         .child(courseId).setValue("");
@@ -85,17 +85,22 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                //temp array
                 ArrayList<String> coursesTemp = new ArrayList<>();
+                // get list of courses
                 for (DataSnapshot coursesList : dataSnapshot.child("users").child(currentUser.
-                        getCurrentUser().getUid()).child("courses").getChildren()) {
+                        getUid()).child("courses").getChildren()) {
                     coursesTemp.add(coursesList.getKey());
                 }
+                //if course is enrolled
                 if (coursesTemp.contains(getIntent().getStringExtra("courseId"))) {
-                    btn.setVisibility(View.GONE);
+                    freeEnroll.setVisibility(View.GONE);
                     enrolledButton.setVisibility(View.VISIBLE);
                 }
+                //iterate to specific course
                 dataSnapshot = dataSnapshot.child("courses").child(getIntent().getStringExtra("courseId"));
                 courseData = dataSnapshot;
+                // populate UI
                 ImageView img = findViewById(R.id.enroll_img);
                 img.setImageResource(R.drawable.javascript);
                 img.setImageResource(getResources().getIdentifier(dataSnapshot.child("courseImageUri").getValue().toString(), "drawable", getPackageName()));
@@ -106,6 +111,7 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 des.setText(dataSnapshot.child("courseDescription").getValue().toString());
                 Button enroll = findViewById(R.id.enroll_button);
+                // Is selected course paid
                 if (dataSnapshot.child("isPremium").getValue().toString().equals("0")) {
                     enroll.setText("Enroll Free");
                 } else {
@@ -113,15 +119,14 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
                 }
                 courseId = dataSnapshot.child("courseId").getValue().toString();
                 ArrayList<String> courseLessons = new ArrayList<>();
+                // fetch lessons
                 for (DataSnapshot data : dataSnapshot.child("courseContents").getChildren()) {
-                    String key = data.getKey();
                     for (DataSnapshot topics : data.getChildren()) {
                         String topic = topics.getKey();
                         courseLessons.add(topic);
                     }
                 }
                 listView.setAdapter(new LessonAdapter(getApplicationContext(), courseLessons, courseLessons.size()));
-
             }
 
             @Override
