@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -107,6 +108,9 @@ public class ProfileFragment extends Fragment {
         card = root.findViewById(R.id.profile_expand);
         expandList = root.findViewById(R.id.expand_listview);
         context = getActivity().getApplicationContext();
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+
         if (currentUser != null) {
 //            user_image.setImageURI(currentUser.getPhotoUrl());
 //            user_image.setImageResource(R.drawable.baseline_account_circle_black_48);
@@ -130,6 +134,7 @@ public class ProfileFragment extends Fragment {
                     Email.setVisibility(View.GONE);
                     editedName.setVisibility(View.VISIBLE);
                     editedEmail.setVisibility(View.VISIBLE);
+                    card.setVisibility(View.GONE);
                 }
             });
             edit_image.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +157,7 @@ public class ProfileFragment extends Fragment {
                     Email.setText(editedEmail.getText());
                     editedName.setVisibility(View.GONE);
                     editedEmail.setVisibility(View.GONE);
-
+                    card.setVisibility(View.VISIBLE);
 
                     //push the updated data into firebase
                     Log.e("some", Email.getText().toString());
