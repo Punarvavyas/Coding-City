@@ -339,8 +339,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        user_Name.setText(currentUser.getDisplayName());
-        Email.setText(currentUser.getEmail());
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
     }
@@ -358,6 +356,10 @@ public class ProfileFragment extends Fragment {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Email.setText(dataSnapshot.child(currentUser.getUid()).child("email").getValue().toString());
+                user_Name.setText(dataSnapshot.child(currentUser.getUid()).child("name").getValue().toString());
+//                edit_image.setImageResource(getResources().getIdentifier(dataSnapshot
+//                        .child(currentUser.getUid()).child("profileImageUri").getValue().toString(), "drawable", getPackageName()));
                 ArrayList<String> x = new ArrayList<>();
                 for (DataSnapshot y : dataSnapshot.child(FirebaseAuth.getInstance().
                         getCurrentUser().getUid()).child("courses").getChildren()) {
