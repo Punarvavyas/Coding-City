@@ -361,11 +361,8 @@ public class ProfileFragment extends Fragment {
                 ArrayList<String> x = new ArrayList<>();
                 for (DataSnapshot y : dataSnapshot.child(FirebaseAuth.getInstance().
                         getCurrentUser().getUid()).child("courses").getChildren()) {
-<<<<<<< Updated upstream
-                    if(!y.getKey().equals("starter"))
-=======
-                    if (y.getKey() != "starter")
->>>>>>> Stashed changes
+                   if(!y.getKey().equals("starter"))
+
                         x.add(y.getKey());
                 }
                 LessonAdapter ls = new LessonAdapter(context, x, x.size());
@@ -436,7 +433,4 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    public void onDataChange(DataSnapshot dataSnapshot) {
-        Post post = dataSnapshot.getValue(Post.class);
-    }
 }
