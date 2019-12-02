@@ -2,13 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:layout_marginHorizontal="20dp">
 
     <TextView
+        android:layout_marginLeft="20dp"
         android:id="@+id/quiz_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:paddingVertical="10dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:text="@string/sample"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        />
 
     <Button
         android:id="@+id/qz_button"
@@ -16,6 +23,17 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="0"
-        android:text="QUIZ" />
+        android:text="Attempt"
+        android:layout_marginRight="20dp"/>
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="40%"
+        android:textColor="@color/coloreGreen"
+        android:textSize="22sp"
+        android:visibility="gone"
+        android:layout_marginRight="30dp"/>
 
 </LinearLayout>

@@ -127,18 +127,21 @@ public class CourseContent extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<String> quizzesAttempted = new ArrayList<>();
+                ArrayList<String> quizzesAttemptedMarks = new ArrayList<>();
                 DataSnapshot taken = dataSnapshot.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                         .child("quizzes").child(courseId);
                 for (DataSnapshot x : taken.getChildren()) {
-                    quizzesAttempted.add(x.getKey().toString());
+                    quizzesAttempted.add(x.getKey());
+                    quizzesAttemptedMarks.add(x.getValue().toString());
                 }
                 DataSnapshot ds = dataSnapshot.child("courses").child(getIntent().getStringExtra("courseId"))
                         .child("quiz");
                 ArrayList<String> quizIds = new ArrayList<>();
+
                 for (DataSnapshot x : ds.getChildren()) {
                     quizIds.add(x.getKey());
                 }
-                QuizListAdapter qz = new QuizListAdapter(getApplicationContext(), quizIds, quizIds.size(), courseId, quizzesAttempted);
+                QuizListAdapter qz = new QuizListAdapter(getApplicationContext(), quizIds, quizIds.size(), courseId, quizzesAttempted, quizzesAttemptedMarks);
                 quizListView.setAdapter(qz);
 
 //                populateQuizContent(dataSnapshot);
@@ -226,13 +229,16 @@ public class CourseContent extends AppCompatActivity {
         int listSize;
         String courseId;
         ArrayList<String> quizzesAttempted;
+        ArrayList<String> quizzesAttemptedMarks;
 
-        QuizListAdapter(Context context, ArrayList<String> courseList, int size, String courseIdTemp, ArrayList quizAttemptedTemp) {
+        QuizListAdapter(Context context, ArrayList<String> courseList, int size, String courseIdTemp,
+                        ArrayList quizAttemptedTemp, ArrayList quizzesAttemptedMarksTemp) {
             this.context = context;
             this.quizList = courseList;
             this.listSize = size;
             courseId = courseIdTemp;
             quizzesAttempted = quizAttemptedTemp;
+            quizzesAttemptedMarks = quizzesAttemptedMarksTemp;
             inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
@@ -267,13 +273,19 @@ public class CourseContent extends AppCompatActivity {
             TextView tv = v.findViewById(R.id.quiz_tv);
             tv.setText(quizList.get(position));
             Button bt = v.findViewById(R.id.qz_button);
+            TextView tv2 = v.findViewById(R.id.result);
+
             if (quizzesAttempted.contains(quizList.get(position))) {
-                bt.setEnabled(false);
+                bt.setVisibility(View.GONE);
+                tv2.setVisibility(View.VISIBLE);
+                Log.e("marks", quizzesAttemptedMarks.toString());
+                tv2.setText((String.valueOf((Integer.parseInt(
+                            quizzesAttemptedMarks.get(quizzesAttempted.indexOf(quizList.get(position)))
+                    )*100) /5) + "%"));
             }
             bt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //TODO PASS The INTENT HERE
                     Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
                     intent.putExtra("quizId", quizList.get(position));
                     intent.putExtra("courseId", courseId);

@@ -34,12 +34,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tabs"
         android:divider="@android:color/transparent"
-        android:dividerHeight="5dp"></ListView>
+        android:dividerHeight="5dp"/>
 
     <ListView
         android:id="@+id/quiz_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/tabs"
-        android:visibility="invisible"></ListView>
+        android:visibility="invisible"/>
+
 </RelativeLayout>
