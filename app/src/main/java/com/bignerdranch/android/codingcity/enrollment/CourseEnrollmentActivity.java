@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -42,8 +43,10 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // get aall elements from XML
         setContentView(R.layout.activity_course_enrollment);
         listView = findViewById(R.id.enrollment_page_content_listview);
+        //back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         freeEnroll = findViewById(R.id.enroll_button);
@@ -135,6 +138,13 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Error retrieving data: check help section", Toast.LENGTH_LONG).show();
                  }
         });
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return super.onOptionsItemSelected(item);
     }
 
     private class LessonAdapter extends BaseAdapter {

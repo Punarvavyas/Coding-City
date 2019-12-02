@@ -12,7 +12,7 @@ import com.braintreepayments.cardform.view.CardForm;
 
 public class Payments extends AppCompatActivity {
 
-
+// uses payments library
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
