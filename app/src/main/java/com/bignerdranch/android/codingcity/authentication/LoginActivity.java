@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private TextView createAccount;
     private Button signIn;
+    private TextView reset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,17 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     signIn(mail, password);
                 }
+            }
+        });
+
+        //reset the password
+        reset = findViewById(R.id.login_forget_password);
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toReset = new Intent(getApplicationContext(), ResetPasswordActivity.class);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                startActivity(toReset);
             }
         });
     }

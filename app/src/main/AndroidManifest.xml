@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".authentication.ResetPasswordActivity"></activity>
         <activity android:name=".authentication.SignUpActivity" />
         <activity android:name=".authentication.LoginActivity" />
         <activity android:name=".tutorial.IntroActivity">
@@ -36,12 +36,15 @@
             android:name=".enrollment.SearchActivity"
             android:label="All Courses" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".courseinfo.CourseContent"
-            android:label="Course"/>
-        <activity android:name=".courseinfo.LessonContent"
-            android:label="Lesson"/>
-        <activity android:name=".quizinfo.QuizActivity"
-            android:label="Quiz"/>
+        <activity
+            android:name=".courseinfo.CourseContent"
+            android:label="Course" />
+        <activity
+            android:name=".courseinfo.LessonContent"
+            android:label="Lesson" />
+        <activity
+            android:name=".quizinfo.QuizActivity"
+            android:label="Quiz" />
         <activity android:name=".Help" />
         <activity android:name=".bottomnavigation.notifications.RemoveCourses" />
     </application>
