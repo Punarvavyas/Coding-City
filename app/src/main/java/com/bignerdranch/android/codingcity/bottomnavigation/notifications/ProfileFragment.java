@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -107,6 +108,9 @@ public class ProfileFragment extends Fragment {
         card = root.findViewById(R.id.profile_expand);
         expandList = root.findViewById(R.id.expand_listview);
         context = getActivity().getApplicationContext();
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+
         if (currentUser != null) {
 //            user_image.setImageURI(currentUser.getPhotoUrl());
 //            user_image.setImageResource(R.drawable.baseline_account_circle_black_48);
@@ -130,6 +134,7 @@ public class ProfileFragment extends Fragment {
                     Email.setVisibility(View.GONE);
                     editedName.setVisibility(View.VISIBLE);
                     editedEmail.setVisibility(View.VISIBLE);
+                    card.setVisibility(View.GONE);
                 }
             });
             edit_image.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +157,7 @@ public class ProfileFragment extends Fragment {
                     Email.setText(editedEmail.getText());
                     editedName.setVisibility(View.GONE);
                     editedEmail.setVisibility(View.GONE);
-
+                    card.setVisibility(View.VISIBLE);
 
                     //push the updated data into firebase
                     Log.e("some", Email.getText().toString());
@@ -182,6 +187,7 @@ public class ProfileFragment extends Fragment {
             Delete_acc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    myRef.child(currentUser.getUid()).removeValue();
                     currentUser.delete();
                     Intent toSignUp = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
                     startActivity(toSignUp);
@@ -241,7 +247,7 @@ public class ProfileFragment extends Fragment {
                 Uri contentURI = data.getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), contentURI);
-                    String path = saveImage(bitmap);
+                  String path = saveImage(bitmap);
                     Toast.makeText(getActivity(), "Image Saved!", Toast.LENGTH_SHORT).show();
                     user_image.setImageBitmap(bitmap);
                     myRef.child(currentUser.getUid()).child("profileImageUri").setValue(path);
@@ -254,11 +260,11 @@ public class ProfileFragment extends Fragment {
 
         } else if (requestCode == CAMERA) {
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-            edit_image.setImageBitmap(thumbnail);
-            saveImage(thumbnail);
+            user_image.setImageBitmap(thumbnail);
+            String path= saveImage(thumbnail);
             Toast.makeText(getActivity(), "Image Saved!", Toast.LENGTH_SHORT).show();
-            myRef.child(currentUser.getUid()).child("profileImageUri").setValue(thumbnail);
-            Log.e("imgpath", myRef.child("profileImageUri").toString());
+            myRef.child(currentUser.getUid()).child("profileImageUri").setValue(path);
+
         }
     }
 
@@ -339,8 +345,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        user_Name.setText(currentUser.getDisplayName());
-        Email.setText(currentUser.getEmail());
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
     }
@@ -358,6 +362,13 @@ public class ProfileFragment extends Fragment {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Email.setText(dataSnapshot.child(currentUser.getUid()).child("email").getValue().toString());
+                user_Name.setText(dataSnapshot.child(currentUser.getUid()).child("name").getValue().toString());
+              //                String image_path = dataSnapshot.child(currentUser.getUid()).child("profileImageUri").getValue().toString();
+//                edit_image.setImageBitmap(image_path);
+
+//                edit_image.setImageResource(getResources().getIdentifier(dataSnapshot
+//                        .child(currentUser.getUid()).child("profileImageUri").getValue().toString(), "drawable", getPackageName()));
                 ArrayList<String> x = new ArrayList<>();
                 for (DataSnapshot y : dataSnapshot.child(FirebaseAuth.getInstance().
                         getCurrentUser().getUid()).child("courses").getChildren()) {
