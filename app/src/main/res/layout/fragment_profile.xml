@@ -99,27 +99,31 @@
         app:icon="@drawable/settings_white_27x27"
         android:layout_alignRight="@+id/imageView"></com.google.android.material.button.MaterialButton>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_editProfile"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="320dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="650dp"
-        android:layout_alignEnd="@+id/imageView"
-        app:icon="@drawable/edit_btn"
-        android:layout_alignRight="@+id/imageView"></com.google.android.material.button.MaterialButton>
+<!--    <Button-->
+<!--        android:id="@+id/btn_editProfile"-->
+<!--        android:layout_width="124dp"-->
+<!--        android:layout_height="68dp"-->
+<!--        android:layout_alignEnd="@+id/imageView"-->
+<!--        android:layout_alignRight="@+id/imageView"-->
+<!--        android:layout_marginLeft="320dp"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:layout_marginEnd="8dp"-->
+<!--        android:layout_marginRight="8dp"-->
+<!--        android:background="@drawable/ic_editbtn">-->
 
-    <Button
-        android:id="@+id/btn_saveProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="317dp"
-        android:layout_marginLeft="317dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="650dp"
-        android:text="Save"
-        android:visibility="invisible" />
+<!--    </Button>-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_saveProfile"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="317dp"-->
+<!--        android:layout_marginLeft="317dp"-->
+<!--        android:layout_marginTop="70dp"-->
+<!--        android:layout_marginBottom="350dp"-->
+<!--        android:text="Save"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:visibility="visible" />-->
 
     <com.alespero.expandablecardview.ExpandableCardView
         android:id="@+id/profile_expand"
@@ -129,6 +133,7 @@
         android:layout_height="wrap_content"
         app:title="Remove courses"
         app:inner_view="@layout/fragment_remove_courses"
+        android:layout_marginBottom="350dp"
         app:expandOnClick="true"/>
 
     <Button
@@ -139,6 +144,28 @@
         android:layout_marginTop="490dp"
         android:text="DELETE MY ACCOUNT"
         android:backgroundTint="#ff3333"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_editProfile"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignEnd="@+id/imageView"
+        android:layout_alignRight="@+id/imageView"
+        android:layout_marginEnd="82dp"
+        android:layout_marginRight="82dp"
+        android:layout_marginBottom="550dp"
+        app:icon="@drawable/ic_editbtn"></com.google.android.material.button.MaterialButton>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_saveProfile"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignEnd="@+id/imageView"
+        android:layout_alignRight="@+id/imageView"
+        android:layout_marginEnd="80dp"
+        android:layout_marginRight="80dp"
+        android:visibility="invisible"
+        app:icon="@drawable/ic_save"></com.google.android.material.button.MaterialButton>
 
 
 </RelativeLayout>

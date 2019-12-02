@@ -30,6 +30,8 @@ import androidx.fragment.app.Fragment;
 
 import com.alespero.expandablecardview.ExpandableCardView;
 import com.bignerdranch.android.codingcity.R;
+import com.bignerdranch.android.codingcity.authentication.LoginActivity;
+import com.bignerdranch.android.codingcity.authentication.SignUpActivity;
 import com.bignerdranch.android.codingcity.enrollment.CourseEnrollmentActivity;
 import com.bignerdranch.android.codingcity.setting.SettingActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -75,9 +77,9 @@ public class ProfileFragment extends Fragment {
     private EditText editedName;
     private EditText editedEmail;
     MaterialButton editProfile;
-//    private Button scoreboard;
+    //    private Button scoreboard;
 //    private Button removeCourse;
-    private Button saveProfile;
+    MaterialButton saveProfile;
     private String Name;
     private String emailId;
     private Button Delete_acc;
@@ -86,6 +88,7 @@ public class ProfileFragment extends Fragment {
     ExpandableCardView card;
     ListView expandList;
     Context context;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -104,19 +107,12 @@ public class ProfileFragment extends Fragment {
         card = root.findViewById(R.id.profile_expand);
         expandList = root.findViewById(R.id.expand_listview);
         context = getActivity().getApplicationContext();
-        if (currentUser == null) {
-            //put default values n give sign in button
-            //      user_image.setImageURI(Uri.parse("https://picsum.photos/id/975/200/200"));
-//            user_image.setImageResource(R.drawable.baseline_account_circle_black_48);
-
-            user_Name.setText("Not Signed");
-            Email.setText("coding city");
-        } else {
+        if (currentUser != null) {
 //            user_image.setImageURI(currentUser.getPhotoUrl());
 //            user_image.setImageResource(R.drawable.baseline_account_circle_black_48);
-            if (currentUser.getPhotoUrl() == null) {
-                user_image.setImageURI(Uri.parse("@drawable/baseline_account_circle_black_48"));
-            }
+//            if (currentUser.getPhotoUrl() == null) {
+//                user_image.setImageURI(Uri.parse("@drawable/baseline_account_circle_black_48"));
+//            }
 
             //Loading image using Picasso
 //            Picasso.get().load(currentUser.getPhotoUrl()).into(user_image);
@@ -126,8 +122,6 @@ public class ProfileFragment extends Fragment {
             editProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//          String Name = user_Name.getText().toString();
-//          String emailId = Email.getText().toString();
                     editProfile.setVisibility(View.GONE);
                     saveProfile.setVisibility(View.VISIBLE);
                     editedName.setText(user_Name.getText());
@@ -136,10 +130,6 @@ public class ProfileFragment extends Fragment {
                     Email.setVisibility(View.GONE);
                     editedName.setVisibility(View.VISIBLE);
                     editedEmail.setVisibility(View.VISIBLE);
-//          user_Name.setText(Name);
-//          Email.setText(emailId);
-//          .setVisibility(View.VISIBLE);
-//          editText.setText(edititemname)
                 }
             });
             edit_image.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +138,6 @@ public class ProfileFragment extends Fragment {
 
                     requestMultiplePermissions();
                     showPictureDialog();
-
                 }
             });
 
@@ -190,12 +179,14 @@ public class ProfileFragment extends Fragment {
 //
 //                }
 //            });
-//            Delete_acc.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    currentUser.delete();
-//                }
-//            });
+            Delete_acc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    currentUser.delete();
+                    Intent toSignUp = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
+                    startActivity(toSignUp);
+                }
+            });
         }
         activateListeners();
         return root;
@@ -203,12 +194,12 @@ public class ProfileFragment extends Fragment {
         // return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
-    private void showPictureDialog(){
+    private void showPictureDialog() {
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getActivity());
         pictureDialog.setTitle("Select Action");
         String[] pictureDialogItems = {
-                "Select photo from gallery",
-                "Capture photo from camera"};
+                "Select from gallery",
+                "Capture from camera"};
         pictureDialog.setItems(pictureDialogItems,
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -253,7 +244,7 @@ public class ProfileFragment extends Fragment {
                     String path = saveImage(bitmap);
                     Toast.makeText(getActivity(), "Image Saved!", Toast.LENGTH_SHORT).show();
                     user_image.setImageBitmap(bitmap);
-                    myRef.child("profileImageUri").setValue(path);
+                    myRef.child(currentUser.getUid()).child("profileImageUri").setValue(path);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -265,8 +256,9 @@ public class ProfileFragment extends Fragment {
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
             edit_image.setImageBitmap(thumbnail);
             saveImage(thumbnail);
-            myRef.child(currentUser.getUid()).child("profileImageUri").setValue(thumbnail);
             Toast.makeText(getActivity(), "Image Saved!", Toast.LENGTH_SHORT).show();
+            myRef.child(currentUser.getUid()).child("profileImageUri").setValue(thumbnail);
+            Log.e("imgpath", myRef.child("profileImageUri").toString());
         }
     }
 
@@ -369,7 +361,11 @@ public class ProfileFragment extends Fragment {
                 ArrayList<String> x = new ArrayList<>();
                 for (DataSnapshot y : dataSnapshot.child(FirebaseAuth.getInstance().
                         getCurrentUser().getUid()).child("courses").getChildren()) {
+<<<<<<< Updated upstream
                     if(!y.getKey().equals("starter"))
+=======
+                    if (y.getKey() != "starter")
+>>>>>>> Stashed changes
                         x.add(y.getKey());
                 }
                 LessonAdapter ls = new LessonAdapter(context, x, x.size());
@@ -438,5 +434,9 @@ public class ProfileFragment extends Fragment {
             });
             return v;
         }
+    }
+
+    public void onDataChange(DataSnapshot dataSnapshot) {
+        Post post = dataSnapshot.getValue(Post.class);
     }
 }

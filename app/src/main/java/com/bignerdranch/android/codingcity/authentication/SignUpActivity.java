@@ -101,7 +101,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     mAuth.getCurrentUser().getDisplayName() == null || mAuth.getCurrentUser().getDisplayName() == "" ?
                                             "No username" : mAuth.getCurrentUser().getDisplayName());
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("email").setValue(mAuth.getCurrentUser().getEmail());
-
+                            rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("profileImageUri").setValue("@drawable/user_photo");
                         } else {
                             // account creation failed
                             showMessage("account creation failed" + task.getException().getMessage());
