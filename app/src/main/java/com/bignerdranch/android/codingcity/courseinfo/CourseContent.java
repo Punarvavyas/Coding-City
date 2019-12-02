@@ -42,17 +42,18 @@ public class CourseContent extends AppCompatActivity {
     List<Lessons> courseLessons = new ArrayList<>();
     ListView listView;
     ListView quizListView;
-
+    ImageView headerImage;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_content);
         listView = findViewById(R.id.list_lesson);
         quizListView = findViewById(R.id.quiz_list);
-
+        headerImage = findViewById(R.id.lesson_picture);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        context = getApplicationContext();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -108,6 +109,8 @@ public class CourseContent extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                headerImage.setImageResource(getResources().getIdentifier(dataSnapshot.child("courseImageUri").getValue().toString(),
+                        "drawable", context.getPackageName()));
                 populateLessonContent(dataSnapshot);
                 getVisitedLessons();
                 CourseContentAdapter adapter = getCourseContentAdapter();

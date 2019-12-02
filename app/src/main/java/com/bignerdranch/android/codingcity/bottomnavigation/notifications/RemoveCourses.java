@@ -42,10 +42,7 @@ public class RemoveCourses extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.remove_courses);
-        listItems.add("CSCI 5408");
         dataListView = findViewById(R.id.list);
-//        itemText = (EditText) findViewById(R.id.itemText);
-//        findButton = (Button) findViewById(R.id.findButton);
         deleteButton = findViewById(R.id.remove);
         deleteButton.setEnabled(false);
         addButton = findViewById(R.id.add);
@@ -110,19 +107,6 @@ public class RemoveCourses extends AppCompatActivity {
         dbRef.addChildEventListener(childListener);
     }
 
-    //if wants to add something written in edittext
-//    public void addItem(View view) {
-//
-//        String item = itemText.getText().toString();
-//        String key = dbRef.push().getKey();
-//
-//        itemText.setText("");
-//        dbRef.child(key).child("courses").setValue(item);
-//
-//        adapter.notifyDataSetChanged();
-//    }
-
-
     private class CourseAdapter extends ArrayAdapter<String> {
         public CourseAdapter(Context context, ArrayList<String> users) {
             super(context, 0, users);
@@ -137,10 +121,6 @@ public class RemoveCourses extends AppCompatActivity {
                 v = convertView;
             }
             String user = getItem(position);
-            // Lookup view for data population
-//            TextView tvName = (TextView) v.findViewById(R.id.tex);
-//            tvHome.setText(user.hometown);
-//            // Return the completed view to render on screen
             return convertView;
         }
     }

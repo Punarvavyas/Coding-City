@@ -99,7 +99,7 @@ public class SignUpActivity extends AppCompatActivity {
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("courses").child("starter").setValue("");
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("name").setValue(
                                     mAuth.getCurrentUser().getDisplayName() == null || mAuth.getCurrentUser().getDisplayName() == "" ?
-                                            "Dummy" : mAuth.getCurrentUser().getDisplayName());
+                                            "No username" : mAuth.getCurrentUser().getDisplayName());
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("email").setValue(mAuth.getCurrentUser().getEmail());
 
                         } else {
