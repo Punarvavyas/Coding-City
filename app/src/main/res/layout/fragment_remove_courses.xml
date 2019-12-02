@@ -3,11 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <TextView
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="hello word">
-        <!-- list view to show courses -->
-    </TextView>
+        android:layout_height="150dp"
+        android:id="@+id/expand_listview">
+    </ListView>
 </LinearLayout>

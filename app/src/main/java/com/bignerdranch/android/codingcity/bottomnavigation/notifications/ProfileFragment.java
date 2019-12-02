@@ -2,6 +2,7 @@ package com.bignerdranch.android.codingcity.bottomnavigation.notifications;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,9 +15,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,15 +28,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.alespero.expandablecardview.ExpandableCardView;
 import com.bignerdranch.android.codingcity.R;
+import com.bignerdranch.android.codingcity.enrollment.CourseEnrollmentActivity;
 import com.bignerdranch.android.codingcity.setting.SettingActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -46,6 +55,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -73,61 +83,46 @@ public class ProfileFragment extends Fragment {
     private Button Delete_acc;
     private int contentView;
     private int GALLERY = 1, CAMERA = 2;
-
+    ExpandableCardView card;
+    ListView expandList;
+    Context context;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        //    profileViewModel =
-        //            ViewModelProviders.of(this).get(ProfileViewModel.class);
-
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-
+        card = root.findViewById(R.id.profile_expand);
         user_image = root.findViewById(R.id.img_profile);
         edit_image = root.findViewById(R.id.img_plus);
         user_Name = root.findViewById(R.id.tvName);
         Email = root.findViewById(R.id.tvEmail);
         settings = root.findViewById(R.id.settingsButton);
-//        scoreboard = root.findViewById(R.id.btn_scoreboard);
-//        removeCourse = root.findViewById(R.id.btn_removeCourse);
-      editProfile = root.findViewById(R.id.btn_editProfile);
+        editProfile = root.findViewById(R.id.btn_editProfile);
         editedName = root.findViewById(R.id.etName);
         editedEmail = root.findViewById(R.id.etEmail);
         saveProfile = root.findViewById(R.id.btn_saveProfile);
-//        Delete_acc = root.findViewById(R.id.btn_deleteAccount);
-        // created firebase instance
-        //            .child(intent.getStringExtra("name"));
-        //to print user name from firebase
+        Delete_acc = root.findViewById(R.id.btn_deleteAccount);
+        card = root.findViewById(R.id.profile_expand);
+        expandList = root.findViewById(R.id.expand_listview);
+        context = getActivity().getApplicationContext();
         if (currentUser == null) {
-//put default values n give sign in button
-//      user_image.setImageURI(Uri.parse("https://picsum.photos/id/975/200/200"));
-            user_image.setImageURI(Uri.parse("@drawable/baseline_account_circle_black_48"));
+            //put default values n give sign in button
+            //      user_image.setImageURI(Uri.parse("https://picsum.photos/id/975/200/200"));
+//            user_image.setImageResource(R.drawable.baseline_account_circle_black_48);
 
             user_Name.setText("Not Signed");
             Email.setText("coding city");
         } else {
-//      editedName.setVisibility(View.GONE);
-//      editedEmail.setVisibility(View.GONE);
-            user_image.setImageURI(currentUser.getPhotoUrl());
+//            user_image.setImageURI(currentUser.getPhotoUrl());
+//            user_image.setImageResource(R.drawable.baseline_account_circle_black_48);
             if (currentUser.getPhotoUrl() == null) {
                 user_image.setImageURI(Uri.parse("@drawable/baseline_account_circle_black_48"));
             }
-//      ImageView imageView = findViewById(R.id.imageView2);
-//      String imageUrl = "https://via.placeholder.com/500";
 
             //Loading image using Picasso
-            Picasso.get().load(currentUser.getPhotoUrl()).into(user_image);
+//            Picasso.get().load(currentUser.getPhotoUrl()).into(user_image);
             user_Name.setText(currentUser.getDisplayName());
             Email.setText(currentUser.getEmail());
 
-
-//      scoreboard.setOnClickListener(new View.OnClickListener() {
-//        @Override
-//        public void onClick(View view) {
-//          Intent intent = new Intent(getContext(), ScoreTableActivity.class);
-//          startActivity(intent);
-//          //setContentView(R.layout.fragment_score);
-//        }
-//      });
             editProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -363,5 +358,85 @@ public class ProfileFragment extends Fragment {
         super.onPause();
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<String> x = new ArrayList<>();
+                for (DataSnapshot y : dataSnapshot.child(FirebaseAuth.getInstance().
+                        getCurrentUser().getUid()).child("courses").getChildren()) {
+                    if(y.getKey() != "starter")
+                        x.add(y.getKey());
+                }
+                LessonAdapter ls = new LessonAdapter(context, x, x.size());
+                expandList.setAdapter(ls);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.e("main activity", "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+    private class LessonAdapter extends BaseAdapter {
+        Context context;
+        ArrayList<String> courseList;
+        LayoutInflater inflater;
+        int listSize;
+
+        LessonAdapter(Context context, ArrayList<String> courseList, int size) {
+            this.context = context;
+            this.courseList = courseList;
+            this.listSize = size;
+            inflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        //How many items are in the data set represented by this Adapter.
+        public int getCount() {
+            return listSize;
+        }
+
+        @Override
+        //Get the data item associated with the specified position in the data set.
+        public Object getItem(int position) {
+            return courseList.get(position);
+        }
+
+        @Override
+        //Get the row id associated with the specified position in the list.
+        public long getItemId(int position) {
+            return 0; //courseList.get(position).getId();
+        }
+
+        @Override
+        //Get a View that displays the data at the specified position in the data set.
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            View v;
+            if (convertView == null) {
+                v = View.inflate(parent.getContext(), R.layout.remove_course_item, null);
+            } else {
+                v = convertView;
+            }
+            TextView tv = v.findViewById(R.id.lesson_item_tv);
+            tv.setText(courseList.get(position));
+            ImageButton mt = v.findViewById(R.id.remove_icon);
+
+            mt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.e("onClick", String.valueOf(position));
+                    myRef.child(currentUser.getUid()).child("courses").child(courseList.get(position)).removeValue();
+                }
+            });
+            return v;
+        }
     }
 }

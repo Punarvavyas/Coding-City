@@ -111,38 +111,34 @@
         android:layout_alignRight="@+id/imageView"></com.google.android.material.button.MaterialButton>
 
     <Button
-            android:id="@+id/btn_saveProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="317dp"
-            android:layout_marginLeft="317dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="650dp"
-            android:text="Save"
-            android:visibility="invisible" />
+        android:id="@+id/btn_saveProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="317dp"
+        android:layout_marginLeft="317dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="650dp"
+        android:text="Save"
+        android:visibility="invisible" />
 
-        <Button
-            android:id="@+id/btn_removeCourse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="430dp"
-            android:text="Remove Courses" />
+    <com.alespero.expandablecardview.ExpandableCardView
+        android:id="@+id/profile_expand"
+        android:layout_below="@+id/tvEmail"
+        android:layout_width="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        app:title="Remove courses"
+        app:inner_view="@layout/fragment_remove_courses"
+        app:expandOnClick="true"/>
 
-        <Button
-            android:id="@+id/btn_deleteAccount"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="490dp"
-            android:text="DELETE MY ACCOUNT" />
-<!--        <com.alespero.expandablecardview.ExpandableCardView-->
-<!--            android:id="@+id/profile_expand"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:title="Passengers"-->
-<!--            app:inner_view="@layout/fragment_remove_courses"-->
-<!--            app:expandOnClick="true"/>-->
+    <Button
+        android:id="@+id/btn_deleteAccount"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="490dp"
+        android:text="DELETE MY ACCOUNT"
+        android:backgroundTint="#ff3333"/>
 
 
 </RelativeLayout>
