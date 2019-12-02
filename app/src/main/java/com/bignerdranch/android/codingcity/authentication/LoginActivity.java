@@ -1,6 +1,9 @@
 package com.bignerdranch.android.codingcity.authentication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -93,25 +96,37 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void signIn(String mail, String password) {
-        mAuth.signInWithEmailAndPassword(mail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    loginProgress.setVisibility(View.INVISIBLE);
-                    signIn.setVisibility(View.VISIBLE);
-                    Intent toHome = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(toHome);
-                    finish();
-                } else {
-                    showMessage(task.getException().getMessage());
-                    signIn.setVisibility(View.VISIBLE);
-                    loginProgress.setVisibility(View.INVISIBLE);
+        if(isNetworkAvailable()) {
+            mAuth.signInWithEmailAndPassword(mail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        loginProgress.setVisibility(View.INVISIBLE);
+                        signIn.setVisibility(View.VISIBLE);
+                        Intent toHome = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(toHome);
+                        finish();
+                    } else {
+                        showMessage(task.getException().getMessage());
+                        signIn.setVisibility(View.VISIBLE);
+                        loginProgress.setVisibility(View.INVISIBLE);
+                    }
                 }
-            }
-        });
+            });
+        } else{
+            showMessage("Make sure you turn of your network");
+        }
     }
 
     @Override
     public void onBackPressed() {
+    }
+
+    // Check the user's network state
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }
