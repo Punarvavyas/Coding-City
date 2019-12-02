@@ -20,9 +20,13 @@ import com.bignerdranch.android.codingcity.R;
 //import io.github.kbiakov.codeview.highlight.Font;
 //import io.github.kbiakov.codeview.highlight.FontCache;
 
+/**
+ * @Athor: Akshay Singh
+ * Description: This class is responsible for displaying the lesson contents.
+ */
 public class LessonContent extends AppCompatActivity {
     TextView lessonText;
-
+    TextView lessonTitle;
     //CodeView lessonText;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,6 +36,7 @@ public class LessonContent extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         lessonText = findViewById(R.id.ml_lesson_content);
+        lessonTitle = findViewById(R.id.ml_lesson_title);
     }
 
     @Override
@@ -46,7 +51,9 @@ public class LessonContent extends AppCompatActivity {
         super.onStart();
         Intent intent = getIntent();
         String lessonContent = intent.getStringExtra("lessonContent").trim();
+        String lessonTitleText = intent.getStringExtra("lessonTitle").trim();
         Spanned htmlString = Html.fromHtml(lessonContent);
         lessonText.setText(htmlString);
+        lessonTitle.setText(lessonTitleText);
     }
 }

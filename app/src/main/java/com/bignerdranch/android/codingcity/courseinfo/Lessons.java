@@ -3,6 +3,21 @@ package com.bignerdranch.android.codingcity.courseinfo;
 public class Lessons {
     String lessonName;
     String lessonText;
+    boolean isVisited;
+
+    public void setVisited(boolean visited) {
+        isVisited = visited;
+    }
+
+    public boolean isVisited() {
+        return isVisited;
+    }
+
+    public Lessons(String lessonName, String lessonText, boolean isVisited) {
+        this.lessonName = lessonName;
+        this.lessonText = lessonText;
+        this.isVisited = isVisited;
+    }
 
     public Lessons(String lessonName, String lessonText) {
         this.lessonName = lessonName;

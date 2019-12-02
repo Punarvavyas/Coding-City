@@ -2,6 +2,7 @@ package com.bignerdranch.android.codingcity.courseinfo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -54,8 +56,11 @@ public class CourseContent extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String lessonTitle = courseLessons.get(position).getLessonName();
                 Intent intent = new Intent(getApplicationContext(), LessonContent.class);
                 intent.putExtra("lessonContent", courseLessons.get(position).getLessonText());
+                intent.putExtra("lessonTitle", lessonTitle);
+                populateVisitedLessons(lessonTitle);
                 startActivity(intent);
             }
         });
@@ -104,6 +109,7 @@ public class CourseContent extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 populateLessonContent(dataSnapshot);
+                getVisitedLessons();
                 CourseContentAdapter adapter = getCourseContentAdapter();
                 listView.setAdapter(adapter);
             }
@@ -135,6 +141,84 @@ public class CourseContent extends AppCompatActivity {
                 }
                 QuizListAdapter qz = new QuizListAdapter(getApplicationContext(), quizIds, quizIds.size(), courseId, quizzesAttempted, quizzesAttemptedMarks);
                 quizListView.setAdapter(qz);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void populateVisitedLessons(final String lessonTitle){
+        final StringBuilder sb_lessons = new StringBuilder();
+        final String courseId = getIntent().getStringExtra("courseId");
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference coursesRef = rootDatabase.child("users").child(userId).child("courses");
+        coursesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+
+                    for(DataSnapshot course : dataSnapshot.getChildren()){
+                        if(course.getKey().equalsIgnoreCase(courseId)){
+                            sb_lessons.append(course.getValue());
+                        }
+                    }
+
+                    if(sb_lessons.indexOf(lessonTitle) < 0){
+                        if(sb_lessons.length() == 0){
+                            sb_lessons.append(lessonTitle);
+                        }
+                        else{
+                            sb_lessons.append(",");
+                            sb_lessons.append(lessonTitle);
+                        }
+                        coursesRef.child(courseId).setValue(sb_lessons.toString());
+                    }
+                }
+                catch(Exception ex){
+                    Log.e("ERROR",ex.getMessage());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void getVisitedLessons(){
+        final StringBuilder sb_lessons = new StringBuilder();
+        final String courseId = getIntent().getStringExtra("courseId");
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference coursesRef = rootDatabase.child("users").child(userId).child("courses");
+        coursesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+
+                    for(DataSnapshot course : dataSnapshot.getChildren()){
+                        if(course.getKey().equalsIgnoreCase(courseId)){
+                            sb_lessons.append(course.getValue());
+                        }
+                    }
+
+                   String[] lessons = sb_lessons.toString().split(",");
+                    for(String lesson : lessons){
+                        for(Lessons lessonObj : courseLessons){
+                            if(lessonObj.getLessonName().equalsIgnoreCase(lesson)){
+                                lessonObj.setVisited(true);
+                            }
+                        }
+                    }
+                }
+                catch(Exception ex){
+                    Log.e("ERROR",ex.getMessage());
+                }
             }
 
             @Override
@@ -197,13 +281,17 @@ public class CourseContent extends AppCompatActivity {
             inflater = LayoutInflater.from(getApplicationContext());
             View thisView = View.inflate(parent.getContext(), R.layout.list_lesson_item, null);
             TextView tvLessonTitle = thisView.findViewById(R.id.tv_title);
+            ImageView visitedIcon = thisView.findViewById(R.id.icon_visited);
             //TextView tvLessonText = (TextView) thisView.findViewById(R.id.tv_lesson_text);
 
             List<Lessons> lessonsList = lessons;
             String lesson_topic = lessonsList.get(position).getLessonName();
             String lesson_text = lessonsList.get(position).getLessonText();
-
+            boolean isVisited = lessonsList.get(position).isVisited();
             tvLessonTitle.setText(lesson_topic);
+            if(isVisited){
+                visitedIcon.setVisibility(View.VISIBLE);
+            }
             //tvLessonText.setText(lesson_text);
             return thisView;
         }
