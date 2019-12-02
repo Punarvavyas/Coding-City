@@ -17,37 +17,50 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".authentication.ResetPasswordActivity"></activity>
-        <activity android:name=".authentication.SignUpActivity" />
-        <activity android:name=".authentication.LoginActivity" />
-        <activity android:name=".tutorial.IntroActivity">
+        android:theme="@style/AppTheme"
+        android:screenOrientation="portrait">
+        <activity android:name=".authentication.ResetPasswordActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".authentication.SignUpActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".authentication.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".tutorial.IntroActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".enrollment.Payments" />
-        <activity android:name=".setting.SettingActivity" />
+        <activity android:name=".enrollment.Payments" android:screenOrientation="portrait"/>
+        <activity android:name=".setting.SettingActivity" android:screenOrientation="portrait"/>
         <activity
             android:name=".enrollment.CourseEnrollmentActivity"
-            android:label="Enroll" />
+            android:label="Enroll"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".enrollment.SearchActivity"
-            android:label="All Courses" />
-        <activity android:name=".MainActivity" />
+            android:label="All Courses"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".MainActivity" android:screenOrientation="portrait"/>
         <activity
             android:name=".courseinfo.CourseContent"
-            android:label="Course" />
+            android:label="Course"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".courseinfo.LessonContent"
-            android:label="Lesson" />
+            android:label="Lesson"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".quizinfo.QuizActivity"
-            android:label="Quiz" />
-        <activity android:name=".Help" />
-        <activity android:name=".bottomnavigation.notifications.RemoveCourses" />
+            android:label="Quiz"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Help"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".bottomnavigation.notifications.RemoveCourses"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
