@@ -59,14 +59,6 @@ public class CourseContent extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        quizListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), LessonContent.class);
-                intent.putExtra("lessonContent", courseLessons.get(position).getLessonText());
-                startActivity(intent);
-            }
-        });
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -143,10 +135,6 @@ public class CourseContent extends AppCompatActivity {
                 }
                 QuizListAdapter qz = new QuizListAdapter(getApplicationContext(), quizIds, quizIds.size(), courseId, quizzesAttempted, quizzesAttemptedMarks);
                 quizListView.setAdapter(qz);
-
-//                populateQuizContent(dataSnapshot);
-//                CourseContentAdapter adapter = getCourseContentAdapter();
-//                listView.setAdapter(adapter);
             }
 
             @Override

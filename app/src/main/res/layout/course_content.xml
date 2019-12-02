@@ -41,6 +41,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/tabs"
-        android:visibility="invisible"/>
+        android:visibility="gone"/>
 
 </RelativeLayout>

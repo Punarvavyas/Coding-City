@@ -31,9 +31,7 @@ public class LessonContent extends AppCompatActivity {
         setContentView(R.layout.lesson_content);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //lessonText = (CodeView)findViewById(R.id.ml_lesson_content);
         lessonText = findViewById(R.id.ml_lesson_content);
-        //lessonText.setMovementMethod(new ScrollingMovementMethod());
     }
 
     @Override
@@ -49,31 +47,6 @@ public class LessonContent extends AppCompatActivity {
         Intent intent = getIntent();
         String lessonContent = intent.getStringExtra("lessonContent").trim();
         Spanned htmlString = Html.fromHtml(lessonContent);
-        //lessonText.append(lessonContent);
-        //lessonText.setCode(lessonContent);
-
-        // expanded form of initialization
-
-
-//        lessonText.setOptions(new Options(
-//                this,                                   // context
-//                lessonContent,                                  // code
-//                "java",                                // language
-//                ColorTheme.SOLARIZED_LIGHT.theme(),             // theme (data)
-//                FontCache.get(this).getTypeface(this, Font.DroidSansMonoSlashed),   // font
-//                Format.Default.getMedium(),                     // format
-//                true,                          // animate on highlight
-//                true,                                   // shadows visible
-//                true,                                   // shortcut
-//                getString(R.string.show_all),                    // shortcut note
-//                1000,                                   // max lines
-//                new OnCodeLineClickListener() {                  // line click listener
-//                    @Override
-//                    public void onCodeLineClicked(int n, @NotNull String line) {
-//                        Log.i("ListingsActivity", "On " + (n + 1) + " line clicked");
-//                    }
-//                }));
-
         lessonText.setText(htmlString);
     }
 }

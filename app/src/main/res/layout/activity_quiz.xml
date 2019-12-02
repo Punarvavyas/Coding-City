@@ -2,43 +2,80 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/question_text_view"
-        android:layout_width="wrap_content"
+    android:orientation="vertical"
+    android:backgroundTint="#222">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp" />
+        android:layout_marginHorizontal="50dp"
+        android:elevation="10dp"
+        android:minHeight="200dp"
+        android:layout_marginTop="-100dp"
+        android:layout_marginBottom="50dp">
+        <TextView
+            android:id="@+id/question_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="24dp"
+            android:text="@string/sample_text_medium"
+            android:textSize="20sp"/>
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/answerLayout"
+        android:visibility="gone"
+        >
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/true_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:text="TRUE" />
+            android:text="True"
+            android:layout_marginRight="70dp"
+            android:backgroundTint="@color/coloreGreen"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/false_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FALSE" />
+            android:text="False"
+            android:backgroundTint="@color/cancel_red"/>
+
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/resultCard"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_marginHorizontal="50dp"
+        android:elevation="10dp"
+        android:paddingVertical="20dp"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/resultTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Correct!"
+            android:textColor="#000"
+            android:textSize="20sp"></TextView>
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/nextQuizQue"
+        android:layout_width="57dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <!--            android:src="@drawable/arrow_right"  //ImageButton-->
-
-    </LinearLayout>
+        android:layout_gravity="end"
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="30dp"
+        app:icon="@drawable/ic_arrow_forward"
+        android:visibility="gone"/>
 
 </LinearLayout>
