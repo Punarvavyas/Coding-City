@@ -369,7 +369,7 @@ public class ProfileFragment extends Fragment {
                 ArrayList<String> x = new ArrayList<>();
                 for (DataSnapshot y : dataSnapshot.child(FirebaseAuth.getInstance().
                         getCurrentUser().getUid()).child("courses").getChildren()) {
-                    if(y.getKey() != "starter")
+                    if(!y.getKey().equals("starter"))
                         x.add(y.getKey());
                 }
                 LessonAdapter ls = new LessonAdapter(context, x, x.size());
