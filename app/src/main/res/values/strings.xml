@@ -44,4 +44,10 @@
     <string name="sample">sample</string>
     <string name="forgot_your_password">Forgot your password?</string>
     <string name="query_unsuccessful">Query sending unsuccesful</string>
+    <string name="build_des">This is a simple example. This is a simple example. This is a simple example.</string>
+    <string name="build_intro">Build Your Knowledge</string>
+    <string name="learn_intro">Learn Coding</string>
+    <string name="comp_intro">Complete Task</string>
+    <string name="learn_des">This is a simple example. This is a simple example. This is a simple example.</string>
+    <string name="comp_des">This is a simple example. This is a simple example. This is a simple example</string>
 </resources>

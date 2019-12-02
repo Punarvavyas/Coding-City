@@ -48,9 +48,9 @@ public class IntroActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         final List<TutorialItem> mList = new ArrayList<>();
-        mList.add(new TutorialItem("Build Your Knowledge", "This is a simple example. This is a simple example. This is a simple example.", R.drawable.intro_1));
-        mList.add(new TutorialItem("Learn Coding", "This is a simple example. This is a simple example. This is a simple example.", R.drawable.intro_2));
-        mList.add(new TutorialItem("Complete Task", "This is a simple example. This is a simple example. This is a simple example", R.drawable.intro_3));
+        mList.add(new TutorialItem(getResources().getString(R.string.build_intro), getResources().getString(R.string.build_des), R.drawable.intro_1));
+        mList.add(new TutorialItem(getResources().getString(R.string.learn_intro), getResources().getString(R.string.learn_des), R.drawable.intro_2));
+        mList.add(new TutorialItem(getResources().getString(R.string.comp_intro), getResources().getString(R.string.comp_des), R.drawable.intro_3));
 
         tutorialPager = findViewById(R.id.viewPager);
         tutorialViewPagerAdapter = new TutorialViewPagerAdapter(this, mList);
