@@ -1,7 +1,6 @@
 package com.bignerdranch.android.codingcity.authentication;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,7 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class SignUpActivity extends AppCompatActivity {
 
-    DatabaseReference rootDatabase;
+    private DatabaseReference rootDatabase;
     private EditText userName, userEmail, userPassword;
     private Button regBtn;
     private FirebaseAuth mAuth;
@@ -45,6 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
         getSupportActionBar().hide();
 
+        // find specific component using id
         userName = findViewById(R.id.signup_user_name);
         userEmail = findViewById(R.id.signup_user_email);
         userPassword = findViewById(R.id.signup_user_password);
@@ -52,6 +52,8 @@ public class SignUpActivity extends AppCompatActivity {
         regBtn = findViewById(R.id.signup_btn);
         progressBar = findViewById(R.id.signup_progressBar);
         progressBar.setVisibility(View.INVISIBLE);
+
+        // get firebase auth instance and firebase realtime database instance
         mAuth = FirebaseAuth.getInstance();
         rootDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -65,43 +67,54 @@ public class SignUpActivity extends AppCompatActivity {
                 final String password = userPassword.getText().toString();
                 name = userName.getText().toString();
                 Log.e("Sign up", name);
+
+                // check the field in order to register the account
                 if (email.isEmpty() || name.isEmpty() || password.isEmpty() || !radio.isChecked()) {
                     showMessage("Please Verify all fields");
                     regBtn.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.INVISIBLE);
                 } else {
-                    CreateUserAccount(email, name, password);
+
+                    //create a account using Firebase SDK
+                    createUserAccount(email, name, password);
                 }
             }
         });
     }
 
+    // show error message
     private void showMessage(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
-    private void CreateUserAccount(String email, final String name, String password) {
+    private void createUserAccount(String email, final String name, String password) {
+
+        //create a account using Firebase SDK
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("courses").child("starter").setValue("");
                             showMessage("Account created");
                             progressBar.setVisibility(View.INVISIBLE);
                             Intent toSignUp = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(toSignUp);
+
+                            // update the profile when user success create the account
                             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                     .setDisplayName(name)
                                     .build();
                             mAuth.getCurrentUser().updateProfile(profileUpdates);
+
+                            // update information on Firebase Realtime database
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("courses").child("starter").setValue("");
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("name").setValue(
                                     mAuth.getCurrentUser().getDisplayName() == null || mAuth.getCurrentUser().getDisplayName() == "" ?
                                             "No username" : mAuth.getCurrentUser().getDisplayName());
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("email").setValue(mAuth.getCurrentUser().getEmail());
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("profileImageUri").setValue("@drawable/user_photo");
+
                         } else {
                             // account creation failed
                             showMessage("account creation failed" + task.getException().getMessage());

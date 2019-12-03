@@ -34,9 +34,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
 
+        // enable the go back button on top left side
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // find specific component using id
         resetEmail = findViewById(R.id.reset_user_email);
         sendEmail = findViewById(R.id.reset_send_email);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -46,11 +48,15 @@ public class ResetPasswordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!TextUtils.isEmpty(resetEmail.getText())){
                     userEmail = resetEmail.getText().toString();
+
+                    // using Firebase SDK to send the reset password email
                     firebaseAuth.sendPasswordResetEmail(userEmail)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){
+
+                                    //give hint when email sent
                                     Toast.makeText(getApplicationContext(), "Reset Password Email Sended", Toast.LENGTH_SHORT).show();
                                     Intent toHome = new Intent(getApplicationContext(), LoginActivity.class);
                                     startActivity(toHome);
@@ -58,6 +64,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                             }
                         });
                 }else{
+                    // avoid empty email address
                     Toast.makeText(getApplicationContext(), "Please Enter Email Address", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -65,6 +72,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
     }
 
+    // finish activity when back button on top left side clicked
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();

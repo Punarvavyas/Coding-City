@@ -56,4 +56,15 @@
     <string name="description">Description</string>
     <string name="_40">40%</string>
     <string name="attempt">Attempt</string>
+    <string name="login_subtitle">Learn anything from anywhere</string>
+    <string name="login_email_hint">EMAIL</string>
+    <string name="login_password_hint">PASSWORD</string>
+    <string name="login_sign_in">Sign In</string>
+    <string name="login_create_hint">Don’t you have an account?</string>
+    <string name="login_create_tv">Create</string>
+    <string name="send_reset_emial">SEND RESET EMIAL</string>
+    <string name="username">USERNAME</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="we_are_glad">WE ARE GLAD</string>
+    <string name="to_meet_you">TO MEET YOU</string>
 </resources>

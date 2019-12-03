@@ -56,7 +56,7 @@
 
     <Button
         android:id="@+id/btn_start"
-        android:layout_width="155dp"
+        android:layout_width="160dp"
         android:layout_height="58dp"
         android:background="@color/colorAccent"
         android:text="GET STARTED"
