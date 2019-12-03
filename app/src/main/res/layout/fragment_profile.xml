@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:scaleType="centerCrop"
         android:src="@drawable/profile_background" />
 
@@ -27,7 +27,7 @@
             android:layout_height="150dp"
             android:layout_alignParentTop="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/user_photo" />
+            android:src="@drawable/user_photo"/>
 
 
         <ImageView
@@ -101,6 +101,7 @@
 
     <com.alespero.expandablecardview.ExpandableCardView
         android:id="@+id/profile_expand"
+        android:layout_marginTop="@dimen/dimen_20dp"
         android:layout_below="@+id/tvEmail"
         android:layout_width="300dp"
         android:layout_centerHorizontal="true"
