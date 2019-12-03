@@ -90,13 +90,19 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //temp array
                 ArrayList<String> coursesTemp = new ArrayList<>();
+//<<<<<<< HEAD
 //<<<<<<< Updated upstream
                 // get list of courses
-                for (DataSnapshot coursesList : dataSnapshot.child("users").child(currentUser.
-                        getUid()).child("courses").getChildren()) {
+//                for (DataSnapshot coursesList : dataSnapshot.child("users").child(currentUser.
+//                        getUid()).child("courses").getChildren()) {
 //=======
 //                for (DataSnapshot coursesList : dataSnapshot.child("users").child(currentUser.getUid()).child("courses").getChildren()) {
 //>>>>>>> Stashed changes
+//=======
+                // get list of courses
+                for (DataSnapshot coursesList : dataSnapshot.child("users").child(currentUser.
+                        getUid()).child("courses").getChildren()) {
+//>>>>>>> 81ce512693eda816c96479203aeac20ebc22e9ba
                     coursesTemp.add(coursesList.getKey());
                 }
                 //if course is enrolled
