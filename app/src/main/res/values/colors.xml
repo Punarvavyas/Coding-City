@@ -25,4 +25,5 @@
     <color name="black">#000</color>
     <color name="cancel_red">#ff3333</color>
     <color name="whitee">#fff</color>
+    <color name="danger_red">#ff3333</color>
 </resources>

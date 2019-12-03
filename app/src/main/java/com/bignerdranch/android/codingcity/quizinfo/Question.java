@@ -7,7 +7,9 @@ public class Question {
     private boolean mAnswerTrue;
 
     public Question(String textResId, boolean answerTrue) {
+
         //Setting the question and its answers
+
 
         mTextResId = textResId;
         mAnswerTrue = answerTrue;

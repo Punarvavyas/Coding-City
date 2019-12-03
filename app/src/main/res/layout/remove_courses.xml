@@ -18,14 +18,14 @@
             android:id="@+id/remove"
             android:layout_width="107dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:text="Remove" />
+            android:layout_marginStart="50dp"
+            android:text="@string/remove" />
 
         <Button
             android:id="@+id/add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:text="Add" />
+            android:layout_marginStart="80dp"
+            android:text="@string/add" />
     </LinearLayout>
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.bignerdranch.android.codingcity.enrollment;
 
+// Course structure
 public class Course {
 
     private String name;

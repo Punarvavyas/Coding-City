@@ -33,26 +33,28 @@ import java.util.ArrayList;
 public class SearchActivity extends AppCompatActivity {
 
     DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference myRef = rootDatabase.child("courses");
+    DatabaseReference courseRef = rootDatabase.child("courses");
     ArrayList<Course> courseData = new ArrayList<>();
     ArrayList<Course> courseFilteredData = new ArrayList<>();
     ListView listView;
-    TextInputEditText searchbar;
+    TextInputEditText searchBar;
     DataSnapshot CourseDataSnapshot;
-    CourseAdapter courseAdpaterData;
+    CourseAdapter courseAdapterData;
     MaterialButton searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        //fetch xml elements
         listView = findViewById(R.id.search_courses);
         courseFilteredData = courseData;
-        courseAdpaterData = new CourseAdapter(SearchActivity.this, courseFilteredData, courseFilteredData.size());
-        listView.setAdapter(courseAdpaterData);
+        courseAdapterData = new CourseAdapter(SearchActivity.this, courseFilteredData, courseFilteredData.size());
+        listView.setAdapter(courseAdapterData);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         searchButton = findViewById(R.id.searchButton);
+        // sense of completion
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,8 +69,9 @@ public class SearchActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        searchbar = findViewById(R.id.search_edit_text);
-        searchbar.addTextChangedListener(new TextWatcher() {
+        searchBar = findViewById(R.id.search_edit_text);
+        //React on text change in search bar
+        searchBar.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -89,9 +92,9 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 }
 
-                courseAdpaterData = new CourseAdapter(SearchActivity.this, courseFilteredData, courseFilteredData.size());
-                listView.setAdapter(courseAdpaterData);
-                courseAdpaterData.notifyDataSetChanged();
+                courseAdapterData = new CourseAdapter(SearchActivity.this, courseFilteredData, courseFilteredData.size());
+                listView.setAdapter(courseAdapterData);
+                courseAdapterData.notifyDataSetChanged();
             }
         });
 
@@ -107,12 +110,12 @@ public class SearchActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         courseData = new ArrayList<>();
-        myRef.addValueEventListener(new ValueEventListener() {
+        courseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 CourseDataSnapshot = dataSnapshot;
+                // get course data
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    //TODO: img
                     courseData.add(new Course(postSnapshot.child("courseName").getValue().toString(),
                             postSnapshot.child("courseDescription").getValue().toString(), postSnapshot.child("courseName").getValue().toString(),
                             postSnapshot.child("courseImageUri").getValue().toString(), postSnapshot.child("courseId").getValue().toString()));
@@ -124,7 +127,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Log.e("main activity", "Failed to read value.", error.toException());
+                Toast.makeText(getApplicationContext(), "Error retrieving data: check help section", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -171,6 +174,7 @@ public class SearchActivity extends AppCompatActivity {
             } else {
                 v = convertView;
             }
+            // fill datat in item view
             TextView tv = v.findViewById(R.id.tv_title_course);
             tv.setText(courseList.get(position).getName());
             TextView tv2 = v.findViewById(R.id.tv_description_course);
