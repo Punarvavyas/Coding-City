@@ -331,9 +331,23 @@ public class ProfileFragment extends Fragment {
                 ArrayList<String> x = new ArrayList<>();
                 for (DataSnapshot y : dataSnapshot.child(FirebaseAuth.getInstance().
                         getCurrentUser().getUid()).child("courses").getChildren()) {
-                   if(!y.getKey().equals("starter"))
-
-                        x.add(y.getKey());
+                   switch(y.getKey().toString()) {
+                       case "c1001":
+                           x.add("Python Tutorial");
+                           break;
+                       case "c1002":
+                           x.add("C Tutorial");
+                           break;
+                       case "c1003":
+                           x.add("C# Tutorial");
+                           break;
+                       case "c1004":
+                           x.add("Scala Tutorial");
+                           break;
+                       case "c1005":
+                           x.add("Android Tutorial");
+                           break;
+                   }
                 }
                 LessonAdapter ls = new LessonAdapter(context, x, x.size());
                 expandList.setAdapter(ls);
@@ -394,7 +408,25 @@ public class ProfileFragment extends Fragment {
             mt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    myRef.child(currentUser.getUid()).child("courses").child(courseList.get(position)).removeValue();
+                    String x = "";
+                    switch(courseList.get(position)) {
+                        case "Python Tutorial":
+                            x = "c1001";
+                            break;
+                        case "C Tutorial":
+                            x = "c1002";
+                            break;
+                        case "C# Tutorial":
+                            x = "c1003";
+                            break;
+                        case "Scala Tutorial":
+                            x = "c1004";
+                            break;
+                        case "Android Tutorial":
+                            x = "c1005";
+                            break;
+                    }
+                    myRef.child(currentUser.getUid()).child("courses").child(x).removeValue();
                 }
             });
             return v;

@@ -177,8 +177,13 @@ public class LeaderboardFragment extends Fragment {
                 String uri = userDataList.get(position).getUserProfileImage();
                 //int icon = getResources().getIdentifier(uri, "drawable", getPackageName());
                 //imageView.setImageResource(icon);
-                Uri imageFilePath = Uri.parse(uri);
-                imageView.setImageURI(imageFilePath);
+                if(!uri.isEmpty() && !uri.contains("drawable/user_photo")){
+                    Uri imageFilePath = Uri.parse(uri);
+                    imageView.setImageURI(imageFilePath);
+                }
+                else{
+                    imageView.setImageDrawable(getResources().getDrawable(R.drawable.user_photo));
+                }
 
                 // highlight card view
                 cardView.setBackgroundColor(getResources().getColor(R.color.leaderboard_highlight));
