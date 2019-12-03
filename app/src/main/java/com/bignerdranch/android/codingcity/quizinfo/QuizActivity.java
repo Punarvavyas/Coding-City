@@ -109,28 +109,6 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkAnswer(true);
-                if ((mCurrentIndex + 1) == mQuestionBank.length) {//Generating the sound and displaying score
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(QuizActivity.this);
-                    builder.setMessage("Your Score is: " + score).setTitle("Quiz result").setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            MediaPlayer mp = MediaPlayer.create(getApplicationContext(),R.raw.song);
-                            mp.start();
-
-                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference mRef = database.getReference().child("users");
-                            mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("quizzes").child(getIntent().getStringExtra("courseId"))
-                                    .child(getIntent().getStringExtra("quizId")).setValue(Integer.toString(score));
-                            finish();
-                        }
-                    });
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
-                } else {
-                    mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                    updateQuestion(); //update  the question
-                }
-
             }
         });
 
@@ -139,35 +117,6 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkAnswer(false);
-                if ((mCurrentIndex + 1) == mQuestionBank.length) {
-
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(QuizActivity.this);
-                    builder.setMessage("Your Score is:" + score).setTitle("Quiz result").setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference mRef = database.getReference().child("users");
-                            MediaPlayer mp = MediaPlayer.create(getApplicationContext(),R.raw.song);
-                            mp.start();
-                            //mRef.child(UserLogin.getInstance(getApplicationContext()).getUser().getUid()).child("score").setValue(Integer.toString(score));
-                            mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("score").setValue(Integer.toString(score));
-
-                            mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("quizzes").child(getIntent().getStringExtra("courseId"))
-                                    .child(getIntent().getStringExtra("quizId")).setValue(Integer.toString(score));
-                            finish();
-
-
-                        }
-                    });
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
-
-
-                } else {
-                    mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                    updateQuestion();
-                }
-
             }
         });
     }
