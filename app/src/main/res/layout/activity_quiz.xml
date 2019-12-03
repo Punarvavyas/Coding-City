@@ -19,8 +19,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_24"
-            android:text="@string/sample_text_medium"
-            android:textSize="@dimen/sp_20"/>
+            android:text="sample_text_medium"
+            android:textSize="@dimen/sp_20"
+            android:layout_gravity="center"/>
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
