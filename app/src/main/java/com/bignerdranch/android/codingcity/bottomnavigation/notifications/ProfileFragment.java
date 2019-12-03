@@ -94,11 +94,11 @@ public class ProfileFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         card = root.findViewById(R.id.profile_expand);
-        user_image = root.findViewById(R.id.img_profile);
+        user_image = root.findViewById(R.id.profile_bundle);
         edit_image = root.findViewById(R.id.img_plus);
         user_Name = root.findViewById(R.id.tvName);
         Email = root.findViewById(R.id.tvEmail);
-        settings = root.findViewById(R.id.settingsButton);
+        settings = root.findViewById(R.id.btn_settings);
         editProfile = root.findViewById(R.id.btn_editProfile);
         editedName = root.findViewById(R.id.etName);
         editedEmail = root.findViewById(R.id.etEmail);
@@ -398,9 +398,9 @@ public class ProfileFragment extends Fragment {
             } else {
                 v = convertView;
             }
-            TextView tv = v.findViewById(R.id.lesson_item_tv);
+            TextView tv = v.findViewById(R.id.tvLessonItem);
             tv.setText(courseList.get(position));
-            ImageButton mt = v.findViewById(R.id.remove_icon);
+            ImageButton mt = v.findViewById(R.id.removeIcon);
 
             mt.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -411,5 +411,4 @@ public class ProfileFragment extends Fragment {
             return v;
         }
     }
-
 }
