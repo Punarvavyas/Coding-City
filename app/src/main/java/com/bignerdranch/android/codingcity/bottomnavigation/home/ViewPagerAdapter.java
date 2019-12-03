@@ -23,10 +23,13 @@ import java.util.List;
  * @author Ruize Nie
  */
 public class ViewPagerAdapter extends PagerAdapter {
+
+    // attribute
     Context context;
     LayoutInflater inflater;
     private List<SlideItem> mList;
 
+    // constructor
     public ViewPagerAdapter(Context context, List<SlideItem> mList) {
         this.context = context;
         this.mList = mList;
@@ -42,6 +45,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         return view == object;
     }
 
+    // inflate each item on view pager
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

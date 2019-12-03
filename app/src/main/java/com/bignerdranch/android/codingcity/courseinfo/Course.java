@@ -1,5 +1,10 @@
 package com.bignerdranch.android.codingcity.courseinfo;
 
+/**
+ * This is simple Course item
+ *
+ * @author Ruize Nie
+ */
 public class Course {
     String courseId;
     String courseName;

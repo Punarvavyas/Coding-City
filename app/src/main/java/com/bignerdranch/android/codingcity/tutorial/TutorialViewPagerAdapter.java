@@ -22,14 +22,17 @@ import java.util.List;
  */
 public class TutorialViewPagerAdapter extends PagerAdapter {
 
+    // attribute
     Context mContext;
     List<TutorialItem> mListItem;
 
+    // constructor
     public TutorialViewPagerAdapter(Context mContext, List<TutorialItem> mList) {
         this.mContext = mContext;
         this.mListItem = mList;
     }
 
+    // inflate each item on view pager
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
