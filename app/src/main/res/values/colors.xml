@@ -24,4 +24,5 @@
     <color name="grey">#999999</color>
     <color name="black">#000</color>
     <color name="cancel_red">#ff3333</color>
+    <color name="whitee">#fff</color>
 </resources>

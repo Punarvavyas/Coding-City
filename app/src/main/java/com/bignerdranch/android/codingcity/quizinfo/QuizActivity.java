@@ -55,16 +55,18 @@ public class QuizActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;//checks the number of questions exceed the quiz question length
                 if ((mCurrentIndex + 1) == mQuestionBank.length) {
+                    // Gets the score count in the quiz and display in the final dialog
                     final AlertDialog.Builder builder = new AlertDialog.Builder(QuizActivity.this);
                     builder.setMessage("Your Score is: " + score).setTitle("Quiz result").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference mRef = database.getReference().child("users");
+                            DatabaseReference mRef = database.getReference().child("users");//insert score into database
                             mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("quizzes").child(getIntent().getStringExtra("courseId"))
                                     .child(getIntent().getStringExtra("quizId")).setValue(Integer.toString(score));
+                            //insert each quiz score in front of the quiz
                             finish();
                         }
                     });
@@ -84,14 +86,14 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    boolean m;
+                    boolean answer;
                     String s = "True";
                     if (postSnapshot.getValue().toString().equals(s)) {
-                        m = true;
+                        answer = true;
                     } else {
-                        m = false;
+                        answer = false;
                     }
-                    mQuestionBank[i] = new Question(postSnapshot.getKey(), m);
+                    mQuestionBank[i] = new Question(postSnapshot.getKey(), answer);
                     i++;
                     updateQuestion();
                 }
@@ -107,7 +109,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkAnswer(true);
-                if ((mCurrentIndex + 1) == mQuestionBank.length) {
+                if ((mCurrentIndex + 1) == mQuestionBank.length) {//Generating the sound and displaying score
                     final AlertDialog.Builder builder = new AlertDialog.Builder(QuizActivity.this);
                     builder.setMessage("Your Score is: " + score).setTitle("Quiz result").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
@@ -126,7 +128,7 @@ public class QuizActivity extends AppCompatActivity {
                     alertDialog.show();
                 } else {
                     mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                    updateQuestion();
+                    updateQuestion(); //update  the question
                 }
 
             }
@@ -194,7 +196,7 @@ public class QuizActivity extends AppCompatActivity {
             score++;
 
 
-        } else {
+        } else {//Generating vibration
             messageResId = R.string.incorrect_toast;
             Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             if (vibrator.hasVibrator()) {

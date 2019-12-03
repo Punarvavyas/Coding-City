@@ -51,7 +51,7 @@
         android:layout_below="@id/profile_bundle"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="Shubham Suri"
+        android:text="@string/shubham_suri"
         android:textSize="22sp"
         android:textStyle="bold" />
 
@@ -63,7 +63,7 @@
         android:layout_below="@+id/tvName"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="ry623754@dal.ca"
+        android:text="@string/ry623754_dal_ca"
         android:textSize="18sp"
         android:textStyle="italic" />
 
@@ -74,7 +74,7 @@
         android:layout_below="@id/profile_bundle"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="Shubham Suri"
+        android:text="@string/shubham_suri"
         android:textSize="18sp"
         android:textStyle="bold"
         android:visibility="invisible" />
@@ -86,7 +86,7 @@
         android:layout_below="@id/etName"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="Shubham.suri@dal.ca"
+        android:text="@string/shubham_suri_dal_ca"
         android:textSize="18sp"
         android:textStyle="bold"
         android:visibility="invisible" />
@@ -116,7 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="490dp"
-        android:text="DELETE MY ACCOUNT"
+        android:text="@string/delete_my_account"
         android:backgroundTint="#ff3333"/>
 
     <com.google.android.material.button.MaterialButton

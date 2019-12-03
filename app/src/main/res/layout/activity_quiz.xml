@@ -35,7 +35,7 @@
             android:id="@+id/true_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="True"
+            android:text="@string/True"
             android:layout_marginRight="70dp"
             android:backgroundTint="@color/coloreGreen"/>
 
@@ -43,7 +43,7 @@
             android:id="@+id/false_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="False"
+            android:text="@string/False"
             android:backgroundTint="@color/cancel_red"/>
 
 
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Correct!"
+            android:text="@string/Correctianswer"
             android:textColor="#000"
             android:textSize="20sp"></TextView>
     </androidx.cardview.widget.CardView>
