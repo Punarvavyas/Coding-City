@@ -93,7 +93,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        card = root.findViewById(R.id.profile_expand);
+        card = root.findViewById(R.id.userImage);
         user_image = root.findViewById(R.id.profile_bundle);
         edit_image = root.findViewById(R.id.img_plus);
         user_Name = root.findViewById(R.id.tvName);
