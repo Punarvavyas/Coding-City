@@ -93,8 +93,8 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        card = root.findViewById(R.id.userImage);
-        user_image = root.findViewById(R.id.profile_bundle);
+        card = root.findViewById(R.id.profile_expand);
+        user_image = root.findViewById(R.id.userImage);
         edit_image = root.findViewById(R.id.img_plus);
         user_Name = root.findViewById(R.id.tvName);
         Email = root.findViewById(R.id.tvEmail);
@@ -111,14 +111,6 @@ public class ProfileFragment extends Fragment {
 
 
         if (currentUser != null) {
-//            user_image.setImageURI(currentUser.getPhotoUrl());
-//            user_image.setImageResource(R.drawable.baseline_account_circle_black_48);
-//            if (currentUser.getPhotoUrl() == null) {
-//                user_image.setImageURI(Uri.parse("@drawable/baseline_account_circle_black_48"));
-//            }
-
-            //Loading image using Picasso
-//            Picasso.get().load(currentUser.getPhotoUrl()).into(user_image);
             user_Name.setText(currentUser.getDisplayName());
             Email.setText(currentUser.getEmail());
 
@@ -161,15 +153,7 @@ public class ProfileFragment extends Fragment {
 
                 }
             });
-//            removeCourse.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//
-//                    Intent i = new Intent(getActivity(), RemoveCourses.class);
-//                    startActivity(i);
-//
-//                }
-//            });
+
             Delete_acc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -337,8 +321,13 @@ public class ProfileFragment extends Fragment {
                 Email.setText(dataSnapshot.child(currentUser.getUid()).child("email").getValue().toString());
                 user_Name.setText(dataSnapshot.child(currentUser.getUid()).child("name").getValue().toString());
                 String image_path = dataSnapshot.child(currentUser.getUid()).child("profileImageUri").getValue().toString();
-                Uri imageFilePath = Uri.parse(image_path);
-                user_image.setImageURI(imageFilePath);
+                if(image_path.contains("drawable")) {
+                    Log.e("s", image_path);
+                }
+                else {
+                    Uri imageFilePath = Uri.parse(image_path);
+                    user_image.setImageURI(imageFilePath);
+                }
                 ArrayList<String> x = new ArrayList<>();
                 for (DataSnapshot y : dataSnapshot.child(FirebaseAuth.getInstance().
                         getCurrentUser().getUid()).child("courses").getChildren()) {

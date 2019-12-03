@@ -97,7 +97,7 @@
         android:layout_height="50dp"
         android:layout_alignEnd="@+id/imageView"
         app:icon="@drawable/settings_white_27x27"
-        android:layout_alignRight="@+id/imageView"></com.google.android.material.button.MaterialButton>
+        android:layout_alignRight="@+id/imageView"/>
 
     <com.alespero.expandablecardview.ExpandableCardView
         android:id="@+id/profile_expand"
