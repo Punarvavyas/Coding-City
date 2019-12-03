@@ -1,16 +1,16 @@
 package com.bignerdranch.android.codingcity.quizinfo;
 
-/**
- * This is the Quiz item which can used for create quiz question
- *
- * @author Ruize Nie
- */
+
 public class Question {
 
     private String mTextResId;
     private boolean mAnswerTrue;
 
     public Question(String textResId, boolean answerTrue) {
+
+        //Setting the question and its answers
+
+
         mTextResId = textResId;
         mAnswerTrue = answerTrue;
     }

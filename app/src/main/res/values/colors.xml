@@ -22,7 +22,11 @@
     <color name="colorDarkYellow">#F0B701</color>
     <color name="white">#FFFFFF</color>
     <color name="grey">#999999</color>
-    <color name="black">#000</color>
     <color name="cancel_red">#ff3333</color>
+    <color name="whitee">#fff</color>
     <color name="danger_red">#ff3333</color>
+    <color name="yellow">#f00202</color>
+    <color name="red">#f00202</color>
+    <color name="blue">#FC090B75</color>
+    <color name="black">#000</color>
 </resources>

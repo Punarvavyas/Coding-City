@@ -22,7 +22,7 @@
         android:gravity="center">
 
         <ImageView
-            android:id="@+id/img_profile"
+            android:id="@+id/userImage"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_alignParentTop="true"
@@ -34,13 +34,13 @@
             android:id="@+id/img_plus"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:layout_alignBottom="@id/img_profile"
+            android:layout_alignBottom="@id/userImage"
             android:layout_marginStart="-32dp"
             android:layout_marginBottom="4dp"
-            android:layout_toEndOf="@+id/img_profile"
+            android:layout_toEndOf="@+id/userImage"
             android:src="@drawable/ic_plus"
             android:layout_marginLeft="-32dp"
-            android:layout_toRightOf="@+id/img_profile" />
+            android:layout_toRightOf="@+id/userImage" />
 
     </RelativeLayout>
 
@@ -51,7 +51,7 @@
         android:layout_below="@id/profile_bundle"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="Shubham Suri"
+        android:text="@string/shubham_suri"
         android:textSize="22sp"
         android:textStyle="bold" />
 
@@ -63,7 +63,7 @@
         android:layout_below="@+id/tvName"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="ry623754@dal.ca"
+        android:text="@string/ry623754_dal_ca"
         android:textSize="18sp"
         android:textStyle="italic" />
 
@@ -74,7 +74,7 @@
         android:layout_below="@id/profile_bundle"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="Shubham Suri"
+        android:text="@string/shubham_suri"
         android:textSize="18sp"
         android:textStyle="bold"
         android:visibility="invisible" />
@@ -86,13 +86,13 @@
         android:layout_below="@id/etName"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="Shubham.suri@dal.ca"
+        android:text="@string/shubham_suri_dal_ca"
         android:textSize="18sp"
         android:textStyle="bold"
         android:visibility="invisible" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/settingsButton"
+        android:id="@+id/btn_settings"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignEnd="@+id/imageView"
@@ -116,7 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="490dp"
-        android:text="DELETE MY ACCOUNT"
+        android:text="@string/delete_my_account"
         android:backgroundTint="#ff3333"/>
 
     <com.google.android.material.button.MaterialButton

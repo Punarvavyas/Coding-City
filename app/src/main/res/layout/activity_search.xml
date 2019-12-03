@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_weight="6"
-            android:hint="Search courses">
+            android:hint="@string/search_courses">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/search_edit_text"

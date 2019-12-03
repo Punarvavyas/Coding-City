@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         >
         <TextView
-            android:id="@+id/lesson_item_tv"
+            android:id="@+id/tvLessonItem"
             android:layout_width="wrap_content"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
             android:paddingStart="20dp"
             android:textSize="15sp"/>
         <ImageButton
-            android:id="@+id/remove_icon"
+            android:id="@+id/removeIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/baseline_remove_circle_outline_black_36dp"

@@ -90,9 +90,13 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //temp array
                 ArrayList<String> coursesTemp = new ArrayList<>();
+<<<<<<< Updated upstream
                 // get list of courses
                 for (DataSnapshot coursesList : dataSnapshot.child("users").child(currentUser.
                         getUid()).child("courses").getChildren()) {
+=======
+                for (DataSnapshot coursesList : dataSnapshot.child("users").child(currentUser.getUid()).child("courses").getChildren()) {
+>>>>>>> Stashed changes
                     coursesTemp.add(coursesList.getKey());
                 }
                 //if course is enrolled
@@ -188,7 +192,7 @@ public class CourseEnrollmentActivity extends AppCompatActivity {
             } else {
                 v = convertView;
             }
-            TextView tv = v.findViewById(R.id.lesson_item_tv);
+            TextView tv = v.findViewById(R.id.tvLessonItem);
             tv.setText(courseList.get(position));
             return v;
         }

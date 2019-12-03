@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
+import com.bignerdranch.android.codingcity.Help;
 import com.bignerdranch.android.codingcity.R;
 import com.bignerdranch.android.codingcity.authentication.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -66,6 +67,8 @@ public class SettingActivity extends AppCompatActivity {
         documentation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent help = new Intent(getApplicationContext(), Help.class);
+                startActivity(help);
                 Toast.makeText(getApplicationContext(), "documentation", Toast.LENGTH_SHORT).show();
             }
         });

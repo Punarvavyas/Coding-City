@@ -109,9 +109,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                             // update information on Firebase Realtime database
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("courses").child("starter").setValue("");
-                            rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("name").setValue(
-                                    mAuth.getCurrentUser().getDisplayName() == null || mAuth.getCurrentUser().getDisplayName() == "" ?
-                                            "No username" : mAuth.getCurrentUser().getDisplayName());
+                            rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("name").setValue(name);
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("email").setValue(mAuth.getCurrentUser().getEmail());
                             rootDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("profileImageUri").setValue("@drawable/user_photo");
 
