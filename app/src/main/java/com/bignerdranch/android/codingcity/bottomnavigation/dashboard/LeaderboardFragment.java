@@ -80,7 +80,8 @@ public class LeaderboardFragment extends Fragment {
                         DataSnapshot quizSnapshot = postSnapshot.child("quizzes");
                         for (DataSnapshot enrolledCourse : quizSnapshot.getChildren()) {
                             for (DataSnapshot quiz : enrolledCourse.getChildren()) {
-                                userScore = +Integer.parseInt(String.valueOf(quiz.getValue()).trim());
+
+                                userScore += Integer.parseInt(String.valueOf(quiz.getValue()).trim());
                             }
                         }
                     }
