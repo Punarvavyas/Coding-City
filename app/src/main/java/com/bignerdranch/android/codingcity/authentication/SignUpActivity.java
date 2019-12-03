@@ -69,7 +69,7 @@ public class SignUpActivity extends AppCompatActivity {
                 Log.e("Sign up", name);
 
                 // check the field in order to register the account
-                if (email.isEmpty() || name.isEmpty() || password.isEmpty() || !radio.isChecked()) {
+                if (email.isEmpty() || name.isEmpty() || password.isEmpty()) {
                     showMessage("Please Verify all fields");
                     regBtn.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.INVISIBLE);
