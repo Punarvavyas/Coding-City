@@ -315,8 +315,13 @@ public class ProfileFragment extends Fragment {
                 userEmail.setText(dataSnapshot.child(currentUser.getUid()).child("email").getValue().toString());
                 userName.setText(dataSnapshot.child(currentUser.getUid()).child("name").getValue().toString());
                 String image_path = dataSnapshot.child(currentUser.getUid()).child("profileImageUri").getValue().toString();
-                Uri imageFilePath = Uri.parse(image_path);
-                user_image.setImageURI(imageFilePath);
+                if(image_path.contains("drawable")) {
+                    Uri imageFilePath = Uri.parse(image_path);
+                    user_image.setImageURI(imageFilePath);
+                }
+                else {
+                    user_image.setImageResource(R.drawable.user_photo);
+                }
                 ArrayList<String> x = new ArrayList<>();
                 for (DataSnapshot y : dataSnapshot.child(FirebaseAuth.getInstance().
                         getCurrentUser().getUid()).child("courses").getChildren()) {
@@ -331,7 +336,6 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Log.e("main activity", "Failed to read value.", error.toException());
             }
         });
     }
@@ -384,7 +388,6 @@ public class ProfileFragment extends Fragment {
             mt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.e("onClick", String.valueOf(position));
                     myRef.child(currentUser.getUid()).child("courses").child(courseList.get(position)).removeValue();
                 }
             });
