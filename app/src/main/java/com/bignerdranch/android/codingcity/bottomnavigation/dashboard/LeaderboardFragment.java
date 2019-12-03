@@ -1,6 +1,8 @@
 package com.bignerdranch.android.codingcity.bottomnavigation.dashboard;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -149,14 +152,12 @@ public class LeaderboardFragment extends Fragment {
             TextView tvUserName = thisView.findViewById(R.id.tv_username);
             TextView tvScore = thisView.findViewById(R.id.tv_score);
             ImageView imageView = thisView.findViewById(R.id.iv_profile_picture);
+            CardView cardView = thisView.findViewById(R.id.ly_root);
 
-            // User profile image
-            String uri = userDataList.get(position).getUserProfileImage();
-            int icon = getResources().getIdentifier(uri, "drawable", getContext().getPackageName());
-            imageView.setImageResource(icon);
+            //User Id
+            String userId = userDataList.get(position).getUserId();
 
             // User rank
-            String userId = userDataList.get(position).getUserId();
             String rank = String.valueOf(getUserRank(userId));
             tvRank.setText(rank);
 
@@ -171,11 +172,17 @@ public class LeaderboardFragment extends Fragment {
             // highlight logged in user in leader board
             boolean isLoggedIn = userDataList.get(position).isLoggedIn();
             if (isLoggedIn) {
-                tvRank.setBackgroundColor(getResources().getColor(R.color.coloreGreen));
-                tvUserName.setBackgroundColor(getResources().getColor(R.color.coloreGreen));
-                tvScore.setBackgroundColor(getResources().getColor(R.color.coloreGreen));
-            }
 
+                // Set user profile image
+                String uri = userDataList.get(position).getUserProfileImage();
+                //int icon = getResources().getIdentifier(uri, "drawable", getPackageName());
+                //imageView.setImageResource(icon);
+                Uri imageFilePath = Uri.parse(uri);
+                imageView.setImageURI(imageFilePath);
+
+                // highlight card view
+                cardView.setBackgroundColor(getResources().getColor(R.color.leaderboard_highlight));
+            }
             return thisView;
         }
     }
