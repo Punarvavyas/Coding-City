@@ -138,12 +138,10 @@
         android:paddingRight="@dimen/dp_15"
         android:text="Sign In"
         android:textSize="@dimen/sp_18"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.924"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_forget_password"
-        tools:ignore="RtlSymmetry" />
+        app:layout_constraintTop_toBottomOf="@+id/login_forget_password" />
 
     <TextView
         android:id="@+id/login_bottom_text_tv"
