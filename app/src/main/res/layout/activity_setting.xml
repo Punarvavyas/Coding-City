@@ -228,7 +228,7 @@
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:text="Switch Account"
+        android:text="Log out"
         android:textSize="18dp" />
 
 

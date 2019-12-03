@@ -62,6 +62,8 @@ public class QuizActivity extends AppCompatActivity {
                     builder.setMessage("Your Score is: " + score).setTitle("Quiz result").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            MediaPlayer mp = MediaPlayer.create(getApplicationContext(),R.raw.song);
+                            mp.start();
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
                             DatabaseReference mRef = database.getReference().child("users");//insert score into database
                             mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("quizzes").child(getIntent().getStringExtra("courseId"))

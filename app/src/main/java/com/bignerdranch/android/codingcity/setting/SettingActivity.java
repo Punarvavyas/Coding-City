@@ -73,7 +73,6 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent help = new Intent(getApplicationContext(), Help.class);
                 startActivity(help);
-                Toast.makeText(getApplicationContext(), "documentation", Toast.LENGTH_SHORT).show();
             }
         });
 
