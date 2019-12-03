@@ -37,11 +37,14 @@ public class SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+
+        // enable the go back button on top left side
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        // find specific component using id
         mSwitchV = findViewById(R.id.vibration);
         mSwitchN = findViewById(R.id.notification);
-
         privacy = findViewById(R.id.privacy);
         documentation = findViewById(R.id.documentation);
         aboutUs = findViewById(R.id.about_us);
@@ -87,6 +90,7 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
+        // store the vibration and notification status using sharepreference
         final SharedPreferences spv = getSharedPreferences("Vibration", MODE_PRIVATE);
         switchStatusV = spv.getBoolean("Status", false);
         final SharedPreferences spn = getSharedPreferences("Notification", MODE_PRIVATE);
@@ -94,6 +98,8 @@ public class SettingActivity extends AppCompatActivity {
 
         mSwitchV.setChecked(switchStatusV);
         mSwitchN.setChecked(switchStatusN);
+
+        // set to on or off according to user's action
         mSwitchV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -24,14 +24,17 @@ import java.util.List;
  */
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHolder> {
 
+    // attribute
     Context context;
     List<Course> mData;
 
+    // constructor
     public RecycleAdapter(Context context, List<Course> data) {
         this.context = context;
         this.mData = data;
     }
 
+    // inflate view on each view holder
     @NonNull
     @Override
     public RecycleAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,6 +43,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
         return new MyViewHolder(view);
     }
 
+    // bind the view into each view holder
     @Override
     public void onBindViewHolder(@NonNull RecycleAdapter.MyViewHolder holder, final int position) {
         holder.TvTitle.setText(mData.get(position).getCourseName());
@@ -48,6 +52,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
         int icon = context.getResources().getIdentifier(uri, "drawable", context.getPackageName());
         holder.ImgMovie.setImageResource(icon);
 
+        // item click listener
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,10 +77,10 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            // find the component using specific id
             TvTitle = itemView.findViewById(R.id.tv_title_course);
             Descrip = itemView.findViewById(R.id.tv_description_course);
             ImgMovie = itemView.findViewById(R.id.iv_course);
-
 
         }
     }

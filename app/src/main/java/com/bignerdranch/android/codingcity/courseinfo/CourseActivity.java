@@ -83,7 +83,6 @@ public class CourseActivity extends AppCompatActivity {
             }
         });
     }
-    //TODO: search filter implementation
 
     private class CourseAdapter extends BaseAdapter {
 
