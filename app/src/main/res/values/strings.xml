@@ -77,4 +77,26 @@
     <string name="_40">40%</string>
     <string name="attempt">Attempt</string>
     <string name="shubham_suri">ss</string>
+    <string name="help_and_documentation">Help and documentation</string>
+    <string name="coding_city_is_basically_developed_to_provide_basic_knowledge_of_prgramming_to_its_users_user_can_have_benefits_of_free_courses_and_to_increase_the_knowledge_one_can_buy_the_courses_as_well">Coding city is basically developed to provide basic knowledge of prgramming to its users.User can have benefits of free courses and to increase the knowledge, one can buy the courses as well.</string>
+    <string name="how_to_check_enrolled_courses">How to check enrolled courses?</string>
+    <string name="home_page_registered_courses"><![CDATA[Home page --> Registered Courses]]></string>
+    <string name="how_to_buy_new_course">How to buy new course?</string>
+    <string name="search_select_course_enroll"><![CDATA[Search --> Select Course --> Enroll]]></string>
+    <string name="how_to_check_quiz_score">How to check quiz score?</string>
+    <string name="quiz_score_is_mentioned_beside_your_quiz_title">Quiz score is mentioned beside your quiz title</string>
+    <string name="how_to_take_quiz">How to take quiz?</string>
+    <string name="course_quiz_tab_select_the_quiz"><![CDATA[Course --> Quiz tab --> select the quiz]]></string>
+    <string name="how_to_remove_courses">How to remove courses?</string>
+    <string name="profile_remove_courses"><![CDATA[Profile --> Remove Courses]]></string>
+    <string name="any_other_queries">Any other Queries:</string>
+    <string name="write_your_queries_here">write your queries here</string>
+    <string name="send_email">Send Email</string>
+    <string name="general_queries">General Queries:</string>
+    <string name="email">EMAIL</string>
+    <string name="don_t_you_have_an_account">Don’t you have an account?</string>
+    <string name="pay_now">Pay now</string>
+    <string name="correct">Correct!</string>
+    <string name="send_reset_emial">SEND RESET EMIAL</string>
+    <string name="description">Descripton</string>
 </resources>

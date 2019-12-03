@@ -26,17 +26,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.alespero.expandablecardview.ExpandableCardView;
 import com.bignerdranch.android.codingcity.R;
 import com.bignerdranch.android.codingcity.authentication.LoginActivity;
-import com.bignerdranch.android.codingcity.authentication.SignUpActivity;
-import com.bignerdranch.android.codingcity.enrollment.CourseEnrollmentActivity;
 import com.bignerdranch.android.codingcity.setting.SettingActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -52,7 +47,6 @@ import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -65,26 +59,21 @@ import java.util.List;
 import static android.app.Activity.RESULT_CANCELED;
 
 public class ProfileFragment extends Fragment {
-    //set image directory path as firebase path..
+
     private static final String IMAGE_DIRECTORY = "/sample_images";
     final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference rootDatabase = FirebaseDatabase.getInstance().getReference();
     final DatabaseReference myRef = rootDatabase.child("users");
     MaterialButton settings;
     private ImageView user_image;
-    private ImageView edit_image;
-    private TextView user_Name;
-    private TextView Email;
+    private ImageView editImagePlus;
+    private TextView userName;
+    private TextView userEmail;
     private EditText editedName;
     private EditText editedEmail;
     MaterialButton editProfile;
-    //    private Button scoreboard;
-//    private Button removeCourse;
     MaterialButton saveProfile;
-    private String Name;
-    private String emailId;
-    private Button Delete_acc;
-    private int contentView;
+    private Button deleteAcc;
     private int GALLERY = 1, CAMERA = 2;
     ExpandableCardView card;
     ListView expandList;
@@ -94,16 +83,16 @@ public class ProfileFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         card = root.findViewById(R.id.profile_expand);
-        user_image = root.findViewById(R.id.img_profile);
-        edit_image = root.findViewById(R.id.img_plus);
-        user_Name = root.findViewById(R.id.tvName);
-        Email = root.findViewById(R.id.tvEmail);
-        settings = root.findViewById(R.id.settingsButton);
+        user_image = root.findViewById(R.id.userImage);
+        editImagePlus = root.findViewById(R.id.img_plus);
+        userName = root.findViewById(R.id.tvName);
+        userEmail = root.findViewById(R.id.tvEmail);
+        settings = root.findViewById(R.id.btn_settings);
         editProfile = root.findViewById(R.id.btn_editProfile);
         editedName = root.findViewById(R.id.etName);
         editedEmail = root.findViewById(R.id.etEmail);
         saveProfile = root.findViewById(R.id.btn_saveProfile);
-        Delete_acc = root.findViewById(R.id.btn_deleteAccount);
+        deleteAcc = root.findViewById(R.id.btn_deleteAccount);
         card = root.findViewById(R.id.profile_expand);
         expandList = root.findViewById(R.id.expand_listview);
         context = getActivity().getApplicationContext();
@@ -111,32 +100,28 @@ public class ProfileFragment extends Fragment {
 
 
         if (currentUser != null) {
-//            user_image.setImageURI(currentUser.getPhotoUrl());
-//            user_image.setImageResource(R.drawable.baseline_account_circle_black_48);
-//            if (currentUser.getPhotoUrl() == null) {
-//                user_image.setImageURI(Uri.parse("@drawable/baseline_account_circle_black_48"));
-//            }
 
-            //Loading image using Picasso
-//            Picasso.get().load(currentUser.getPhotoUrl()).into(user_image);
-            user_Name.setText(currentUser.getDisplayName());
-            Email.setText(currentUser.getEmail());
+            userName.setText(currentUser.getDisplayName());
+            userEmail.setText(currentUser.getEmail());
 
+            //to edit name & email
             editProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     editProfile.setVisibility(View.GONE);
                     saveProfile.setVisibility(View.VISIBLE);
-                    editedName.setText(user_Name.getText());
-                    user_Name.setVisibility(View.GONE);
-                    editedEmail.setText(Email.getText());
-                    Email.setVisibility(View.GONE);
+                    editedName.setText(userName.getText());
+                    userName.setVisibility(View.GONE);
+                    editedEmail.setText(userEmail.getText());
+                    userEmail.setVisibility(View.GONE);
                     editedName.setVisibility(View.VISIBLE);
                     editedEmail.setVisibility(View.VISIBLE);
                     card.setVisibility(View.GONE);
                 }
             });
-            edit_image.setOnClickListener(new View.OnClickListener() {
+
+            //to edit user_image
+            editImagePlus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     requestMultiplePermissions();
@@ -144,33 +129,27 @@ public class ProfileFragment extends Fragment {
                 }
             });
 
+            //to save changes of name & email
             saveProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     saveProfile.setVisibility(View.GONE);
                     editProfile.setVisibility(View.VISIBLE);
-                    user_Name.setVisibility(View.VISIBLE);
-                    user_Name.setText(editedName.getText());
-                    Email.setVisibility(View.VISIBLE);
-                    Email.setText(editedEmail.getText());
+                    userName.setVisibility(View.VISIBLE);
+                    userName.setText(editedName.getText());
+                    userEmail.setVisibility(View.VISIBLE);
+                    userEmail.setText(editedEmail.getText());
                     editedName.setVisibility(View.GONE);
                     editedEmail.setVisibility(View.GONE);
                     card.setVisibility(View.VISIBLE);
-                    myRef.child(currentUser.getUid()).child("name").setValue(user_Name.getText().toString());
-                    myRef.child(currentUser.getUid()).child("email").setValue(Email.getText().toString());
+                    myRef.child(currentUser.getUid()).child("name").setValue(userName.getText().toString());
+                    myRef.child(currentUser.getUid()).child("email").setValue(userEmail.getText().toString());
 
                 }
             });
-//            removeCourse.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//
-//                    Intent i = new Intent(getActivity(), RemoveCourses.class);
-//                    startActivity(i);
-//
-//                }
-//            });
-            Delete_acc.setOnClickListener(new View.OnClickListener() {
+
+            //to delete the user account
+            deleteAcc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     myRef.child(currentUser.getUid()).removeValue();
@@ -183,7 +162,6 @@ public class ProfileFragment extends Fragment {
         activateListeners();
         return root;
 
-        // return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
     private void showPictureDialog() {
@@ -334,8 +312,8 @@ public class ProfileFragment extends Fragment {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Email.setText(dataSnapshot.child(currentUser.getUid()).child("email").getValue().toString());
-                user_Name.setText(dataSnapshot.child(currentUser.getUid()).child("name").getValue().toString());
+                userEmail.setText(dataSnapshot.child(currentUser.getUid()).child("email").getValue().toString());
+                userName.setText(dataSnapshot.child(currentUser.getUid()).child("name").getValue().toString());
                 String image_path = dataSnapshot.child(currentUser.getUid()).child("profileImageUri").getValue().toString();
                 Uri imageFilePath = Uri.parse(image_path);
                 user_image.setImageURI(imageFilePath);
@@ -387,7 +365,7 @@ public class ProfileFragment extends Fragment {
         @Override
         //Get the row id associated with the specified position in the list.
         public long getItemId(int position) {
-            return 0; //courseList.get(position).getId();
+            return 0;
         }
 
         @Override
@@ -399,9 +377,9 @@ public class ProfileFragment extends Fragment {
             } else {
                 v = convertView;
             }
-            TextView tv = v.findViewById(R.id.lesson_item_tv);
+            TextView tv = v.findViewById(R.id.tvLessonItem);
             tv.setText(courseList.get(position));
-            ImageButton mt = v.findViewById(R.id.remove_icon);
+            ImageButton mt = v.findViewById(R.id.removeIcon);
 
             mt.setOnClickListener(new View.OnClickListener() {
                 @Override
